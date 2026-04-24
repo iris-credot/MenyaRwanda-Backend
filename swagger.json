@@ -1,1565 +1,360 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "BistrouPulse-API",
-      "description": "BistouPulse-API",
-      "version": "1.0.0"
-    },
-    "schemes": ["http", "https"],
-    "securityDefinitions":{
-      "Bearer":{
-       "type":"apiKey",
-       "name":"Authorization",
-       "in":"header",
-       "description":"Enter the token for Authorization"
-      }
-      },
+  "swagger": "2.0",
+  "info": {
+    "title": "MenyaRwanda-API",
+    "description": "Tourism & Discovery API for Rwanda",
+    "version": "1.0.0"
+  },
+  "schemes": ["http", "https"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter JWT token"
+    }
+  },
+
   "paths": {
-  "/user/signup": {
-    "post": {
-      "summary": "Create a new user account",
-      "description": "Create a new user account with profile image upload",
-      "tags": ["User"],
-      "consumes": ["multipart/form-data"],
-      "parameters": [
-        {
-          "name": "image",
-          "in": "formData",
-          "type": "file",
-          "description": "Profile image"
-        },
-        {
-          "name": "userData",
-          "in": "formData",
-          "schema": {
-            "$ref": "#/definitions/User"
-          },
-          "description": "User account data"
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "User created successfully"
-        },
-        "400": {
-          "description": "Invalid input"
-        }
-      }
-    }
-  },
-  "/user/login": {
-    "post": {
-      "summary": "User login",
-      "description": "Authenticate user with email and password",
-      "tags": ["Authentication"],
-      "parameters": [
-        {
-          "name": "credentials",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email"
-              },
-              "password": {
-                "type": "string"
-              }
-            },
-            "required": ["email", "password"]
+
+    "/users/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register new user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/User" }
           }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Login successful",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "description": "JWT access token"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "401": {
-          "description": "Invalid credentials"
-        }
-      }
-    }
-  },
-  "/user/forgot": {
-    "post": {
-      "summary": "Request password reset",
-      "description": "Send password reset email",
-      "tags": ["Authentication"],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email"
-              }
-            },
-            "required": ["email"]
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Password reset email sent"
-        }
-      }
-    }
-  },
-  "/user/resetpassword/{token}": {
-    "post": {
-      "summary": "Reset user password",
-      "description": "Reset password using token from email",
-      "tags": ["Authentication"],
-      "parameters": [
-        {
-          "name": "token",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "password": {
-                "type": "string",
-                "minLength": 8
-              },
-              "confirmPassword": {
-                "type": "string",
-                "minLength": 8
-              }
-            },
-            "required": ["password", "confirmPassword"]
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Password reset successful"
-        }
-      }
-    }
-  },
-  "/user/logout": {
-    "post": {
-      "summary": "User logout",
-      "description": "Invalidate user session",
-      "tags": ["Authentication"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "Logout successful"
-        }
-      }
-    }
-  },
-  "/user/all": {
-    "get": {
-      "summary": "Get all users",
-      "description": "Retrieve all user accounts (admin only)",
-      "tags": ["User"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of users",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/user/getOne/{id}": {
-    "get": {
-      "summary": "Get user by ID",
-      "description": "Retrieve user account details",
-      "tags": ["User"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "User details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/user/delete/{id}": {
-    "delete": {
-      "summary": "Delete user account",
-      "description": "Delete a user account",
-      "tags": ["User"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "User deleted successfully"
-        }
-      }
-    }
-  },
-  "/user/profile/{id}": {
-    "put": {
-      "summary": "Update user profile",
-      "description": "Update user account information",
-      "tags": ["User"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/User"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "User updated successfully"
-        }
-      }
-    }
-  },
-  "/user/password": {
-    "put": {
-      "summary": "Update user password",
-      "description": "Change authenticated user's password",
-      "tags": ["User"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "currentPassword": {
-                "type": "string"
-              },
-              "newPassword": {
-                "type": "string",
-                "minLength": 8
-              }
-            },
-            "required": ["currentPassword", "newPassword"]
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Password updated successfully"
-        }
-      }
-    }
-  },
-  "/client": {
-    "get": {
-      "summary": "Get all clients",
-      "description": "Retrieve all client profiles (owner/admin only)",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of clients",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Client"
-                }
-              }
-            }
-          }
+        ],
+        "responses": {
+          "201": { "description": "User created" }
         }
       }
     },
-    "post": {
-      "summary": "Create a new client",
-      "description": "Create a new client profile",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Client"
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Client created successfully"
-        }
-      }
-    }
-  },
-  "/client/{id}": {
-    "get": {
-      "summary": "Get client by ID",
-      "description": "Retrieve client profile by ID",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Client details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Client"
-              }
-            }
-          }
-        }
-      }
-    },
-    "put": {
-      "summary": "Update client profile",
-      "description": "Update client information",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Client"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Client updated successfully"
-        }
-      }
-    },
-    "delete": {
-      "summary": "Delete client profile",
-      "description": "Delete a client profile",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Client deleted successfully"
-        }
-      }
-    }
-  },
-  "/client/user/{userId}": {
-    "get": {
-      "summary": "Get client by user ID",
-      "description": "Retrieve client profile by user ID",
-      "tags": ["Client"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Client details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Client"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/menu": {
-    "get": {
-      "summary": "Get all menu items",
-      "description": "Retrieve all menu items",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of menu items",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/MenuItem"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "post": {
-      "summary": "Create new menu item",
-      "description": "Create a new menu item (owner only)",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/MenuItem"
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Menu item created"
-        }
-      }
-    }
-  },
-  "/menu/{id}": {
-    "get": {
-      "summary": "Get menu item by ID",
-      "description": "Retrieve menu item details",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Menu item details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/MenuItem"
-              }
-            }
-          }
-        }
-      }
-    },
-    "put": {
-      "summary": "Update menu item",
-      "description": "Update menu item information (owner only)",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/MenuItem"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Menu item updated"
-        }
-      }
-    },
-    "delete": {
-      "summary": "Delete menu item",
-      "description": "Delete a menu item (owner only)",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Menu item deleted"
-        }
-      }
-    }
-  },
-  "/menu/restaurant/{restaurantId}": {
-    "get": {
-      "summary": "Get menu items by restaurant",
-      "description": "Retrieve menu items for a specific restaurant",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "restaurantId",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "List of menu items",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/MenuItem"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/menu/category/{category}": {
-    "get": {
-      "summary": "Get menu items by category",
-      "description": "Retrieve menu items in a specific category",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "category",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "enum": ["Appetizer", "Main Course", "Dessert", "Drinks"]
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "List of menu items",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/MenuItem"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/menu/{id}/toggle-availability": {
-    "patch": {
-      "summary": "Toggle menu item availability",
-      "description": "Enable/disable availability of a menu item",
-      "tags": ["Menu"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Availability status updated"
-        }
-      }
-    }
-  },
-  "/order": {
-    "get": {
-      "summary": "Get all orders",
-      "description": "Retrieve all orders (owner/admin only)",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of orders",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Order"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "post": {
-      "summary": "Create new order",
-      "description": "Place a new food order",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Order"
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Order created"
-        }
-      }
-    }
-  },
-  "/order/{id}": {
-    "get": {
-      "summary": "Get order by ID",
-      "description": "Retrieve order details",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Order details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Order"
-              }
-            }
-          }
-        }
-      }
-    },
-    "put": {
-      "summary": "Update order",
-      "description": "Update order information",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Order"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Order updated"
-        }
-      }
-    },
-    "delete": {
-      "summary": "Delete order",
-      "description": "Cancel/delete an order",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Order deleted"
-        }
-      }
-    }
-  },
-  "/order/user/{userId}": {
-    "get": {
-      "summary": "Get orders by user",
-      "description": "Retrieve orders for a specific user",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "List of user orders",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Order"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/order/{id}/pay": {
-    "patch": {
-      "summary": "Mark order as paid",
-      "description": "Update payment status to paid (owner only)",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Order payment status updated"
-        }
-      }
-    }
-  },
-  "/order/{id}/deliver": {
-    "patch": {
-      "summary": "Mark order as delivered",
-      "description": "Update delivery status to delivered (owner only)",
-      "tags": ["Order"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Order delivery status updated"
-        }
-      }
-    }
-  },
-  "/owner": {
-    "get": {
-      "summary": "Get all owners",
-      "description": "Retrieve all owner profiles (admin only)",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of owners",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Owner"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "post": {
-      "summary": "Create owner profile",
-      "description": "Create a new owner profile (admin only)",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Owner"
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Owner created"
-        }
-      }
-    }
-  },
-  "/owner/{id}": {
-    "get": {
-      "summary": "Get owner by ID",
-      "description": "Retrieve owner profile",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Owner details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Owner"
-              }
-            }
-          }
-        }
-      }
-    },
-    "put": {
-      "summary": "Update owner profile",
-      "description": "Update owner information",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Owner"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Owner updated"
-        }
-      }
-    },
-    "delete": {
-      "summary": "Delete owner profile",
-      "description": "Delete owner profile (admin only)",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Owner deleted"
-        }
-      }
-    }
-  },
-  "/owner/me/profile": {
-    "get": {
-      "summary": "Get current owner profile",
-      "description": "Retrieve profile of authenticated owner",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "Owner profile",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Owner"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/owner/user/{userId}": {
-    "get": {
-      "summary": "Get owner by user ID",
-      "description": "Retrieve owner profile by user ID",
-      "tags": ["Owner"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Owner details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Owner"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/restaurant": {
-    "get": {
-      "summary": "Get all restaurants",
-      "description": "Retrieve all restaurants",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "responses": {
-        "200": {
-          "description": "List of restaurants",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Restaurant"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "post": {
-      "summary": "Create new restaurant",
-      "description": "Create a new restaurant (owner/admin only)",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Restaurant"
-          }
-        }
-      ],
-      "responses": {
-        "201": {
-          "description": "Restaurant created"
-        }
-      }
-    }
-  },
-  "/restaurant/{id}": {
-    "get": {
-      "summary": "Get restaurant by ID",
-      "description": "Retrieve restaurant details",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Restaurant details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Restaurant"
-              }
-            }
-          }
-        }
-      }
-    },
-    "put": {
-      "summary": "Update restaurant",
-      "description": "Update restaurant information (owner/admin only)",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "$ref": "#/definitions/Restaurant"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Restaurant updated"
-        }
-      }
-    },
-    "delete": {
-      "summary": "Delete restaurant",
-      "description": "Delete a restaurant (owner/admin only)",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Restaurant deleted"
-        }
-      }
-    }
-  },
-  "/restaurant/owner/{ownerId}": {
-    "get": {
-      "summary": "Get restaurants by owner",
-      "description": "Retrieve restaurants owned by a specific owner (admin only)",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "ownerId",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "List of restaurants",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Restaurant"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "/restaurant/{id}/toggle-status": {
-    "patch": {
-      "summary": "Toggle restaurant status",
-      "description": "Enable/disable restaurant (owner/admin only)",
-      "tags": ["Restaurant"],
-      "security": [{"Bearer": []}],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Restaurant status updated"
-        }
-      }
-    }
-  },
-   "/notification/getall": {
-                "get": {
-                  "tags": ["Notification"],
-                  "summary": "Get all notifications (Admin only)",
-                  "security": [
-                    {
-                      "Bearer": []
-                    }
-                  ],
-                  "responses": {
-                    "200": {
-                      "description": "List of all notifications",
-                      "content": {
-                        "application/json": {
-                          "schema": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/definitions/Notification"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "403": { "description": "Unauthorized" }
-                  }
-                }
-              },
-              "/notification/get/{id}": {
-                "get": {
-                  "tags": ["Notification"],
-                  "summary": "Get notifications for a specific user",
-                  "security": [
-                    {
-                      "Bearer": []
-                    }
-                  ],
-                  "parameters": [
-                    {
-                      "name": "id",
-                      "in": "path",
-                      "required": true,
-                      "schema": {
-                        "type": "string"
-                      },
-                      "description": "User ID"
-                    }
-                  ],
-                  "responses": {
-                    "200": {
-                      "description": "Notifications for the user",
-                      "content": {
-                        "application/json": {
-                          "schema": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/definitions/Notification"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "404": { "description": "User not found or no notifications" }
-                  }
-                }
-              }
-},
-   "definitions": {
-  "User": {
-    "type": "object",
-    "properties": {
-      "username": {
-        "type": "string"
-      },
-      "firstName": {
-        "type": "string"
-      },
-      "lastName": {
-        "type": "string"
-      },
-      "names": {
-        "type": "string"
-      },
-      "image": {
-        "type": "string"
-      },
-      "bio": {
-        "type": "string"
-      },
-      "role": {
-        "type": "string",
-        "enum": ["client", "owner", "admin"],
-        "default": "client"
-      },
-      "address": {
-        "type": "string"
-      },
-      "phoneNumber": {
-        "type": "string"
-      },
-      "dateOfBirth": {
-        "type": "string",
-        "format": "date"
-      },
-      "email": {
-        "type": "string",
-        "required": true,
-        "unique": true,
-        "description": "Must be a valid email format"
-      },
-      "gender": {
-        "type": "string",
-        "enum": ["Male", "Female", "Other"]
-      },
-      "password": {
-        "type": "string",
-        "required": true,
-        "minLength": 8
-      },
-      "otpExpires": {
-        "type": "string"
-      },
-      "otp": {
-        "type": "string"
-      },
-      "verified": {
-        "type": "boolean",
-        "default": false
-      }
-    },
-    "required": ["email", "password"]
-  },
-  "Client": {
-    "type": "object",
-    "properties": {
-      "user": {
-        "type": "string",
-        "description": "Reference to User ID",
-        "required": true
-      },
-      "favoriteCuisines": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "favoriteRestaurants": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "description": "Reference to Restaurant IDs"
-        }
-      },
-      "orderHistory": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "description": "Reference to Order IDs"
-        }
-      }
-    }
-  },
-  "Menu": {
-    "type": "object",
-    "properties": {
-      "restaurant": {
-        "type": "string",
-        "description": "Reference to Restaurant ID",
-        "required": true
-      },
-      "name": {
-        "type": "string",
-        "required": true
-      },
-      "description": {
-        "type": "string"
-      },
-      "price": {
-        "type": "number",
-        "required": true
-      },
-      "image": {
-        "type": "string"
-      },
-      "category": {
-        "type": "string",
-        "enum": ["Appetizer", "Main Course", "Dessert", "Drinks"],
-        "required": true
-      },
-      "isAvailable": {
-        "type": "boolean",
-        "default": true
-      }
-    }
-  },
-  "Order": {
-    "type": "object",
-    "properties": {
-      "user": {
-        "type": "string",
-        "description": "Reference to User ID",
-        "required": true
-      },
-      "restaurant": {
-        "type": "string",
-        "description": "Reference to Restaurant ID",
-        "required": true
-      },
-      "items": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "menuItem": {
-              "type": "string",
-              "description": "Reference to MenuItem ID",
-              "required": true
-            },
-            "quantity": {
-              "type": "number",
-              "required": true,
-              "minimum": 1
-            }
-          }
-        }
-      },
-      "totalPrice": {
-        "type": "number",
-        "required": true
-      },
-      "status": {
-        "type": "string",
-        "enum": ["Pending", "Preparing", "Ready", "Completed", "Cancelled"],
-        "default": "Pending"
-      },
-      "paymentMethod": {
-        "type": "string",
-        "enum": ["Cash", "Card", "Mobile Money"],
-        "required": true
-      },
-      "isPaid": {
-        "type": "boolean",
-        "default": false
-      },
-      "paidAt": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "deliveryAddress": {
-        "type": "string"
-      },
-      "isDelivered": {
-        "type": "boolean",
-        "default": false
-      },
-      "deliveredAt": {
-        "type": "string",
-        "format": "date-time"
-      }
-    }
-  },
-  "Owner": {
-    "type": "object",
-    "properties": {
-      "user": {
-        "type": "string",
-        "description": "Reference to User ID",
-        "required": true
-      },
-      "restaurants": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "description": "Reference to Restaurant IDs"
-        }
-      },
-      "businessName": {
-        "type": "string"
-      }
-    }
-  },
-  "Restaurant": {
-    "type": "object",
-    "properties": {
-      "owner": {
-        "type": "string",
-        "description": "Reference to Owner ID",
-        "required": true
-      },
-      "name": {
-        "type": "string",
-        "required": true
-      },
-      "description": {
-        "type": "string"
-      },
-      "address": {
-        "type": "object",
-        "properties": {
-          "street": {"type": "string"},
-          "city": {"type": "string"},
-          "state": {"type": "string"},
-          "country": {"type": "string"},
-          "zipCode": {"type": "string"}
-        }
-      },
-      "phone": {
-        "type": "string",
-        "required": true
-      },
-      "email": {
-        "type": "string"
-      },
-      "image": {
-        "type": "string"
-      },
-      "openingHours": {
-        "type": "string"
-      },
-      "categories": {
-        "type": "array",
-        "items": {"type": "string"}
-      },
-      "menu": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "description": "Reference to MenuItem IDs"
-        }
-      },
-      "isActive": {
-        "type": "boolean",
-        "default": true
-      }
-    }
-  },
-   "Notification": {
+
+    "/users/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "credentials",
+            "required": true,
+            "schema": {
               "type": "object",
               "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "MongoDB ObjectId of the notification"
-                },
-                "user_id": {
-                  "type": "string",
-                  "description": "Reference to User ID who receives notification"
-                },
-                "message": {
-                  "type": "string",
-                  "description": "Notification message content"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": ["pending", "sent", "failed"],
-                  "default": "pending"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": ["Notification", "complaint", "response", "category"],
-                  "default": "Notification",
-                  "description": "Type/category of notification"
-                },
-                "createdAt": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updatedAt": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              },
-              "required": ["user_id", "message", "type"]
+                "email": { "type": "string" },
+                "password": { "type": "string" }
+              }
             }
-}
+          }
+        ],
+        "responses": {
+          "200": { "description": "JWT token returned" }
+        }
+      }
+    },
+
+    "/owners": {
+      "get": {
+        "tags": ["Owner"],
+        "summary": "Get all owners (admin)",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": { "description": "List of owners" }
+        }
+      },
+      "post": {
+        "tags": ["Owner"],
+        "summary": "Create owner",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Owner" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Owner created" }
+        }
+      }
+    },
+
+    "/owners/{id}": {
+      "get": {
+        "tags": ["Owner"],
+        "summary": "Get owner by ID",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "Owner details" }
+        }
+      },
+      "put": {
+        "tags": ["Owner"],
+        "summary": "Update owner",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Owner" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Updated" }
+        }
+      },
+      "delete": {
+        "tags": ["Owner"],
+        "summary": "Delete owner",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" }
+        }
+      }
+    },
+
+    "/owners/me/profile": {
+      "get": {
+        "tags": ["Owner"],
+        "summary": "Get my owner profile",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": { "description": "Owner profile" }
+        }
+      }
+    },
+
+    "/owners/{ownerId}/listings": {
+      "get": {
+        "tags": ["Owner"],
+        "summary": "Get owner listings",
+        "parameters": [
+          { "name": "ownerId", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "Listings returned" }
+        }
+      }
+    },
+
+    "/attractions": {
+      "get": {
+        "tags": ["Attraction"],
+        "summary": "Get all attractions",
+        "responses": {
+          "200": { "description": "List of attractions" }
+        }
+      },
+      "post": {
+        "tags": ["Attraction"],
+        "summary": "Create attraction",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Attraction" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Created" }
+        }
+      }
+    },
+
+    "/reviews": {
+      "get": {
+        "tags": ["Review"],
+        "summary": "Get all reviews",
+        "responses": {
+          "200": { "description": "Reviews list" }
+        }
+      },
+      "post": {
+        "tags": ["Review"],
+        "summary": "Create review",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Review" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Review created" }
+        }
+      }
+    },
+
+    "/favorites": {
+      "get": {
+        "tags": ["Favorite"],
+        "summary": "Get user favorites",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": { "description": "Favorites list" }
+        }
+      },
+      "post": {
+        "tags": ["Favorite"],
+        "summary": "Add to favorites",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Favorite" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Added" }
+        }
+      }
+    },
+
+    "/notifications": {
+      "get": {
+        "tags": ["Notification"],
+        "summary": "Get my notifications",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": { "description": "Notifications list" }
+        }
+      }
+    },
+
+    "/chat": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get my chat",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": { "description": "Chat data" }
+        }
+      }
+    },
+
+    "/chat/send": {
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Send message",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Message" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Message sent" }
+        }
+      }
+    },
+
+    "/events": {
+      "get": {
+        "tags": ["Event"],
+        "summary": "Get all events",
+        "responses": {
+          "200": { "description": "Events list" }
+        }
+      },
+      "post": {
+        "tags": ["Event"],
+        "summary": "Create event",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/Event" }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Event created" }
+        }
+      }
+    }
+
+  },
+
+  "definitions": {
+
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+
+    "Owner": {
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "businessName": { "type": "string" }
+      }
+    },
+
+    "Attraction": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" }
+      }
+    },
+
+    "Review": {
+      "type": "object",
+      "properties": {
+        "user": { "type": "string" },
+        "attraction": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" }
+      }
+    },
+
+    "Favorite": {
+      "type": "object",
+      "properties": {
+        "user": { "type": "string" },
+        "attraction": { "type": "string" }
+      }
+    },
+
+    "Event": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "location": { "type": "string" }
+      }
+    },
+
+    "Message": {
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" }
+      }
+    }
+
   }
-      
-  
-  
-  
+}
