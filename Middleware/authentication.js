@@ -76,7 +76,7 @@ const requireAuth = {
     const decoded = verifyToken(token, res);
     if (!decoded) return;
 
-    if (!['owner', 'admin'].includes(decoded.role)) {
+    if (!['staff', 'admin'].includes(decoded.role)) {
       return res.status(401).json({ error: 'You are not authorized to access this route.' });
     }
 
