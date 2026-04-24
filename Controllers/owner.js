@@ -1,6 +1,7 @@
 const asyncWrapper = require('../Middleware/async');
 const Owner = require('../Models/owners');
 const User = require('../Models/user');
+const Attraction = require('../Models/attraction');
 const NotFound = require('../Error/NotFound');
 const BadRequest = require('../Error/BadRequest');
 const sendEmail = require('../Middleware/sendMail');

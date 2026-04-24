@@ -116,7 +116,9 @@ const reviewController = {
     const attractionId = review.attraction;
 
     await review.deleteOne();
-const owner = await Owner.findById(attractionId.owner);
+
+const attraction = await Attraction.findById(attractionId);
+const owner = await Owner.findById(attraction.owner);
 
 if (owner) {
   await createNotification({
