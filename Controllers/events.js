@@ -151,6 +151,10 @@ const eventController = {
 
     } catch (err) {
       console.error('Error during event creation:', err);
+        console.error('🔥 FULL EVENT ERROR:', err);
+  console.error('🔥 ERROR MESSAGE:', err.message);
+  console.error('🔥 STACK:', err.stack);
+
       // Check if the error is from Cloudinary
       if (err.http_code && err.http_code === 400) {
         return next(new BadRequest('Error uploading image to Cloudinary.'));

@@ -73,7 +73,7 @@ router.post(
 // Update owner
 router.put(
   '/:id',
-  auth.adminJWT,
+  auth.BothJWT,
   ownerController.updateOwner
 );
 
