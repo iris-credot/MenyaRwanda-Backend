@@ -229,48 +229,41 @@ updateUser: asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
   const updateData = { ...req.body };
 
-  // IMAGE UPLOAD
-  if (req.file) {
-    try {
+  try {
+    if (req.file) {
+      console.log("FILE:", req.file);
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: 'Menya-Rwanda',
         public_id: `PROFILE_${id}_${Date.now()}`
       });
 
       updateData.image = result.secure_url;
-
-    } catch (err) {
-      console.error('Cloudinary error:', err);
-
-      return res.status(400).json({
-        success: false,
-        message: 'Error uploading new profile image.'
-      });
     }
-  }
 
-  // UPDATE USER
-  const updatedUser = await userModel.findByIdAndUpdate(
-    id,
-    updateData,
-    {
-      new: true,
-      runValidators: true
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!updatedUser) {
+      return next(new Notfound('User not found'));
     }
-  );
 
-  if (!updatedUser) {
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
+    return res.status(200).json({
+      success: true,
+      message: 'User updated successfully',
+      user: updatedUser
     });
-  }
 
-  return res.status(200).json({
-    success: true,
-    message: 'User updated successfully',
-    user: updatedUser
-  });
+  } catch (err) {
+    console.error("UPDATE USER ERROR:", err);
+    return next(err);
+  }
 }),
  
  
