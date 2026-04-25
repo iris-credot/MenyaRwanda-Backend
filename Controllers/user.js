@@ -3,7 +3,7 @@ const userModel= require('../Models/user');
 const otpModel = require('../Models/otpModel'); 
 const jwt = require('jsonwebtoken');
 const Badrequest=require('../Error/BadRequest');
-const cloudinary =require('cloudinary');
+const cloudinary =require('cloudinary').v2;
 const Notfound=require('../Error/NotFound');
 const bcrypt = require('bcryptjs');
 const { createNotification } = require('./notification');
@@ -31,10 +31,10 @@ const userController ={
   res.status(200).json({ clients });
 }),
 
-   createUser: asyncWrapper(async (req, res, next) => {
-      console.log('=== CREATE USER STARTED ===');
-  console.log('next type:', typeof next);
-  console.log('next is function?', typeof next === 'function');
+ createUser: asyncWrapper(async (req, res, next) => {
+  console.log('=== CREATE USER STARTED ===');
+  console.log('next type at start:', typeof next);
+  
   const {
     email,
     username,
@@ -48,18 +48,29 @@ const userController ={
     password,
     gender
   } = req.body;
-
+  
+  console.log('1. Body parsed');
+  
   const emaill = email.toLowerCase();
+  console.log('2. Email lowercased');
+  
   const foundUser = await userModel.findOne({ email: emaill });
+  console.log('3. User search completed');
+  
   if (foundUser) {
+    console.log('4a. User found, calling next with error');
     return next(new Badrequest("Email already in use"));
   }
-
+  
+  console.log('4b. No existing user');
+  
   const otp = Math.floor(Math.random() * 8000000);
   const otpExpirationDate = new Date(Date.now() + 5 * 60 * 1000);
-
-  let imageUrl = ""; // Default to empty string or a default image URL
+  console.log('5. OTP generated');
+  
+  let imageUrl = "";
   if (req.file) {
+    console.log('6. File detected, uploading to Cloudinary');
     try {
       const images = `IMAGE_${Date.now()}`;
       const ImageCloudinary = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -67,18 +78,20 @@ const userController ={
         public_id: images
       });
       imageUrl = ImageCloudinary.secure_url;
+      console.log('7. Image uploaded successfully');
     } catch (err) {
-      console.error('Error uploading image to Cloudinary:', err);
+      console.error('Error uploading image:', err);
       return next(new Badrequest('Error uploading image to Cloudinary.'));
     }
   }
-
+  
+  console.log('8. Creating new user object');
   const newUser = new userModel({
     username,
     firstName,
     lastName,
     names,
-    image: imageUrl, // Assign image (either uploaded or default)
+    image: imageUrl,
     profile,
     address,
     phoneNumber,
@@ -89,39 +102,33 @@ const userController ={
     otp: otp,
     otpExpires: otpExpirationDate,
   });
-
+  
+  console.log('9. Saving user');
   const savedUser = await newUser.save();
- await createNotification({
-  user: savedUser._id,
-  title: 'Welcome 🎉',
-  message: 'Your account has been created successfully. Please verify your email.',
-  type: 'account'
-});
-  // Prepare email body
-  const emailBody = `
-    Welcome to Menya-Rwanda!
-    Your OTP for verification is: ${otp}
-    This OTP is valid for 5 minutes.
-    If you did not request this, please ignore this email.
-
-    Best regards,
-    Menya-Rwanda Team
-  `;
-
+  console.log('10. User saved');
+  
+  console.log('11. Creating notification');
+  await createNotification({
+    user: savedUser._id,
+    title: 'Welcome 🎉',
+    message: 'Your account has been created successfully. Please verify your email.',
+    type: 'account'
+  });
+  
+  console.log('12. Sending email');
+  const emailBody = `Welcome to Menya-Rwanda! Your OTP for verification is: ${otp}...`;
+  
   try {
-    // Send OTP email
     await sendEmail(emaill, 'Menya-Rwanda System: Verify your account', emailBody);
-    console.log('Verification email sent successfully');
+    console.log('13. Email sent successfully');
   } catch (emailError) {
-    console.error('Failed to send verification email:', emailError.message);
-    // You might want to continue or fail here based on your app needs
-    // For example, you can return an error or just log it
+    console.error('Failed to send verification email:', emailError);
   }
-
+  
+  console.log('14. Sending response');
   res.status(201).json({ user: savedUser, message: 'User created successfully, OTP sent to email' });
-
+  console.log('15. Response sent');
 }),
-
       getUserById: asyncWrapper(async (req, res, next) => {
         const { id } = req.params;
         const user = await userModel.findById(id);
