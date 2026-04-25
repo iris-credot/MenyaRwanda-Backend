@@ -21,11 +21,11 @@ const userController ={
         const users = await userModel.find({})
         res.status(200).json({ users })
       }),
-  getAllClients: asyncWrapper(async (req, res, next) => {
-  const clients = await userModel.find({ role: 'client' });
+  getAllUserRole: asyncWrapper(async (req, res, next) => {
+  const clients = await userModel.find({ role: 'user' });
 
   if (!clients || clients.length === 0) {
-    return next(new Notfound('No clients found'));
+    return next(new Notfound('No users roles found'));
   }
 
   res.status(200).json({ clients });
@@ -63,8 +63,7 @@ createUser: asyncWrapper(async (req, res, next) => {
   }
   
   console.log('4b. No existing user');
-  
-  const otp = Math.floor(Math.random() * 8000000);
+  const otp = Math.floor(100000 + Math.random() * 900000);
   const otpExpirationDate = new Date(Date.now() + 5 * 60 * 1000);
   console.log('5. OTP generated');
   

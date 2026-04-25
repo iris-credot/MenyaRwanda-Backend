@@ -20,7 +20,7 @@ router.post('/reset-password/:token', userController.ResetPassword);
 
 // USER
 router.get('/', auth.adminJWT, userController.getAllUsers);
-router.get('/users', auth.adminJWT, userController.getAllClients);
+router.get('/users', auth.adminJWT, userController.getAllUserRole);
 router.get('/:id', auth.AuthJWT, userController.getUserById);
 router.put('/:id', auth.AuthJWT, upload.single('image'), userController.updateUser);
 router.put('/password/update', auth.AuthJWT, userController.updatePassword);
