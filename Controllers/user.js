@@ -225,11 +225,11 @@ createUser: asyncWrapper(async (req, res, next) => {
  // ... other code in userController.js
 
 // THIS IS THE CORRECTED FUNCTION
-updateUser: asyncWrapper(async (req, res, next) => {
+updateUser: asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const updateData = { ...req.body };
 
-  // 1. Handle image upload
+  // IMAGE UPLOAD
   if (req.file) {
     try {
       console.log("FILE:", req.file);
@@ -243,12 +243,7 @@ updateUser: asyncWrapper(async (req, res, next) => {
       updateData.image = result.secure_url;
 
     } catch (err) {
-      console.error('Cloudinary upload error:', err);
-
-      // SAFE next handling (prevents crash)
-      if (next) {
-        return next(new Badrequest('Error uploading new profile image.'));
-      }
+      console.error('Cloudinary error:', err);
 
       return res.status(400).json({
         success: false,
@@ -257,25 +252,20 @@ updateUser: asyncWrapper(async (req, res, next) => {
     }
   }
 
-  // 2. Update user
+  // UPDATE USER
   const updatedUser = await userModel.findByIdAndUpdate(id, updateData, {
     new: true,
     runValidators: true
   });
 
-  // 3. User not found safety
   if (!updatedUser) {
-    if (next) {
-      return next(new Notfound('User not found'));
-    }
-
     return res.status(404).json({
       success: false,
       message: 'User not found'
     });
   }
 
-  // 4. Success response
+  // SUCCESS
   res.status(200).json({
     success: true,
     message: 'User updated successfully',
