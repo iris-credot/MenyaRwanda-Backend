@@ -22,7 +22,23 @@ router.post('/reset-password/:token', userController.ResetPassword);
 router.get('/', auth.adminJWT, userController.getAllUsers);
 router.get('/users', auth.adminJWT, userController.getAllUserRole);
 router.get('/:id', auth.AuthJWT, userController.getUserById);
-router.put('/:id', auth.AuthJWT, upload.single('image'), userController.updateUser);
+router.put('/:id',
+  (req, res, next) => {
+    console.log("1️⃣ AUTH middleware entered");
+    console.log("next type:", typeof next);
+    next();
+  },
+
+  upload.single('image'),
+
+  (req, res, next) => {
+    console.log("2️⃣ MULTER passed");
+    console.log("next type:", typeof next);
+    next();
+  },
+
+  userController.updateUser
+);
 router.put('/password/update', auth.AuthJWT, userController.updatePassword);
 router.delete('/:id', auth.adminJWT, userController.deleteUser);
 
