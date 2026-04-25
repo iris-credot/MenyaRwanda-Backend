@@ -84,11 +84,22 @@ const attractionController = {
     details
   } = req.body;
 
-  // Find logged-in staff owner
-  const owner = await Owner.findOne({ user: req.userId });
+   let ownerId = null;
 
-  if (!owner) {
-    return next(new BadRequest('Only staff can create attractions'));
+  // STAFF must have Owner profile
+  if (req.role === 'staff') {
+    const owner = await Owner.findOne({ user: req.userId });
+
+    if (!owner) {
+      return next(new BadRequest('Staff profile not found'));
+    }
+
+    ownerId = owner._id;
+  }
+
+  // ADMIN can create directly
+  if (req.role === 'admin') {
+    ownerId = null;
   }
 
   // Required fields
