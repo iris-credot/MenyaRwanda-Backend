@@ -235,7 +235,7 @@ updateUser: asyncWrapper(async (req, res, next) => {
         console.log("FILE:", req.file);
 console.log("FILE PATH:", req.file?.path);
         // 2. If yes, upload this new file to Cloudinary.
-        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        const result = await cloudinary.uploader.upload(req.file.path, {
           folder: 'Menya-Rwanda', // Or your desired folder
           public_id: `PROFILE_${id}_${Date.now()}` // A unique public_id
         });
