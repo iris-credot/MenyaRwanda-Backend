@@ -73,71 +73,92 @@ const attractionController = {
 
   //  CREATE (STAFF ONLY)
   createAttraction: asyncWrapper(async (req, res, next) => {
-    const {
-      name,
-      description,
-      location,
-      type,
-      phone,
-      email,
-      openingHours,
-      details
-    } = req.body;
+  const {
+    name,
+    description,
+    location,
+    type,
+    phone,
+    email,
+    openingHours,
+    details
+  } = req.body;
 
-    // Find owner from logged-in user
-    const owner = await Owner.findOne({ user: req.user.id });
+  // Find logged-in staff owner
+  const owner = await Owner.findOne({ user: req.userId });
 
-    if (!owner) {
-      return next(new BadRequest('Only staff can create attractions'));
-    }
+  if (!owner) {
+    return next(new BadRequest('Only staff can create attractions'));
+  }
 
-    if (!name || !location || !type) {
-      return next(new BadRequest('Missing required fields'));
-    }
+  // Required fields
+  if (!name || !location || !type) {
+    return next(new BadRequest('name, location and type are required'));
+  }
 
-    if (!['place', 'hotel', 'restaurant'].includes(type)) {
-      return next(new BadRequest('Invalid type'));
-    }
+  // Allowed types based on your model
+  const allowedTypes = [
+    'national_park',
+    'mountain',
+    'lake',
+    'waterfall',
+    'forest',
+    'museum',
+    'cultural_site',
+    'historical_site',
+    'memorial',
+    'hotel',
+    'restaurant',
+    'city_attraction',
+    'viewpoint',
+    'resort',
+    'park',
+    'other'
+  ];
 
-    if (!req.files || req.files.length === 0) {
-      return next(new BadRequest('Upload at least one image'));
-    }
+  if (!allowedTypes.includes(type)) {
+    return next(new BadRequest('Invalid attraction type'));
+  }
 
-    // Upload images
-    const uploadedImages = [];
+  // Require at least one image
+  if (!req.files || req.files.length === 0) {
+    return next(new BadRequest('Upload at least one image'));
+  }
 
-    for (let file of req.files) {
-      const result = await cloudinary.v2.uploader.upload(file.path, {
-        folder: `MenyaRwanda/Attractions/${type}`
-      });
+  // Upload multiple images to Cloudinary
+  const uploadedImages = [];
 
-      uploadedImages.push({
-        url: result.secure_url,
-        public_id: result.public_id
-      });
-    }
-
-    const attraction = await Attraction.create({
-      name,
-      description,
-      location,
-      type,
-      phone,
-      email,
-      openingHours,
-      details: details ? JSON.parse(details) : {},
-      images: uploadedImages,
-      owner: owner._id,
-      user: req.user.id,
-      status: 'pending'
+  for (const file of req.files) {
+    const result = await cloudinary.uploader.upload(file.path, {
+      folder: `MenyaRwanda/Attractions/${type}`
     });
 
-    res.status(201).json({
-      success: true,
-      message: 'Attraction created and pending approval',
-      attraction
-    });
-  }),
+    uploadedImages.push(result.secure_url);
+  }
+
+  // Create attraction
+  const attraction = await Attraction.create({
+    name,
+    description,
+    location,
+    type,
+    images: uploadedImages,
+    phone,
+    email,
+    openingHours,
+    rating: 0,
+    owner: owner._id,
+    user: req.userId,
+    status: 'pending',
+    details: details ? JSON.parse(details) : {}
+  });
+
+  return res.status(201).json({
+    success: true,
+    message: 'Attraction created successfully and pending approval',
+    attraction
+  });
+}),
 
   //  UPDATE (OWNER ONLY)
   updateAttraction: asyncWrapper(async (req, res, next) => {

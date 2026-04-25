@@ -17,7 +17,24 @@ const attractionSchema = new mongoose.Schema({
 
   type: {
     type: String,
-    enum: ['place', 'hotel', 'restaurant'],
+    enum: [
+      'national_park',
+      'mountain',
+      'lake',
+      'waterfall',
+      'forest',
+      'museum',
+      'cultural_site',
+      'historical_site',
+      'memorial',
+      'hotel',
+      'restaurant',
+      'city_attraction',
+      'viewpoint',
+      'resort',
+      'park',
+      'other'
+    ],
     required: true
   },
 
