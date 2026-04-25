@@ -49,7 +49,7 @@ const userController ={
   const emaill = email.toLowerCase();
   const foundUser = await userModel.findOne({ email: emaill });
   if (foundUser) {
-   throw new Badrequest("Email already in use");
+    return next(new Badrequest("Email already in use"));
   }
 
   const otp = Math.floor(Math.random() * 8000000);
@@ -66,7 +66,7 @@ const userController ={
       imageUrl = ImageCloudinary.secure_url;
     } catch (err) {
       console.error('Error uploading image to Cloudinary:', err);
-      throw new Badrequest("Error uploading image to Cloudinary.");
+      return next(new Badrequest('Error uploading image to Cloudinary.'));
     }
   }
 
@@ -130,36 +130,35 @@ const userController ={
     
     
     
-    OTP: asyncWrapper(async(req,res,next) =>{
-    
-      const foundUser = await userModel.findOne({ otp: req.body.otp });
-      if (!foundUser) {
-          next(new UnauthorizedError('Authorization denied'));
-      };
-  
-      // Checking if the otp is expired or not.
-      console.log('otpExpires:', new Date(foundUser.otpExpires));
-      console.log('Current time:', new Date());
-      if (foundUser.otpExpires < new Date().getTime()) {
-          next(new UnauthorizedError('OTP expired'));
-      }
-  
-      // Updating the user to verified
-      foundUser.verified = true;
-      const savedUser = await foundUser.save();
+   OTP: asyncWrapper(async (req, res, next) => {
+
+  const foundUser = await userModel.findOne({ otp: req.body.otp });
+
+  if (!foundUser) {
+    return next(new UnauthorizedError('Authorization denied'));
+  }
+
+  const otpExpired = new Date(foundUser.otpExpires) < new Date();
+
+  if (otpExpired) {
+    return next(new UnauthorizedError('OTP expired'));
+  }
+
+  foundUser.verified = true;
+  const savedUser = await foundUser.save();
+
   await createNotification({
-  user: savedUser._id,
-  title: 'Account Verified ✅',
-  message: 'Your account has been successfully verified.',
-  type: 'account'
-});
-      if (savedUser) {
-          return res.status(201).json({
-              message: "User account verified!",
-              user: savedUser
-          });
-      
-      }}),
+    user: savedUser._id,
+    title: 'Account Verified ✅',
+    message: 'Your account has been successfully verified.',
+    type: 'account'
+  });
+
+  return res.status(201).json({
+    message: "User account verified!",
+    user: savedUser
+  });
+}),
 
     deleteUser: asyncWrapper(async (req, res, next) => {
       const { id: userID } = req.params;
