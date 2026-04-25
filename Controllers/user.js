@@ -49,7 +49,7 @@ const userController ={
   const emaill = email.toLowerCase();
   const foundUser = await userModel.findOne({ email: emaill });
   if (foundUser) {
-    return next(new Badrequest("Email already in use"));
+   throw new Badrequest("Email already in use");
   }
 
   const otp = Math.floor(Math.random() * 8000000);
@@ -66,7 +66,7 @@ const userController ={
       imageUrl = ImageCloudinary.secure_url;
     } catch (err) {
       console.error('Error uploading image to Cloudinary:', err);
-      return next(new Badrequest('Error uploading image to Cloudinary.'));
+      throw new Badrequest("Error uploading image to Cloudinary.");
     }
   }
 
