@@ -39,12 +39,12 @@ router.get('/:id', attractionController.getAttractionById);
 // ===============================
 
 // Get all (admin / filtered)
-router.get('/', auth.adminJWT, attractionController.getAllAttractions);
+router.get('/', auth.AuthJWT, attractionController.getAllAttractions);
 
 // Create attraction (STAFF)
 router.post(
   '/create',
-  auth.AuthJWT,
+  auth.BothJWT,
   upload.array('images'), // 👈 MULTIPLE FILES
   attractionController.createAttraction
 );
@@ -52,7 +52,7 @@ router.post(
 // Update attraction (OWNER)
 router.put(
   '/update/:id',
-  auth.AuthJWT,
+  auth.BothJWT,
   upload.array('images'),
   attractionController.updateAttraction
 );
@@ -60,7 +60,7 @@ router.put(
 // Delete image
 router.delete(
   '/image/:id/:imageIndex',
-  auth.AuthJWT,
+  auth.BothJWT,
   attractionController.deleteAttractionImage
 );
 
