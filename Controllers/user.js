@@ -32,6 +32,9 @@ const userController ={
 }),
 
    createUser: asyncWrapper(async (req, res, next) => {
+      console.log('=== CREATE USER STARTED ===');
+  console.log('next type:', typeof next);
+  console.log('next is function?', typeof next === 'function');
   const {
     email,
     username,
