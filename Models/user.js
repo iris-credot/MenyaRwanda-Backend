@@ -85,22 +85,30 @@ const userSchema = new mongoose.Schema({
 });
 
 // PRE-SAVE HOOK - Hash password before saving
+
 userSchema.pre('save', async function (next) {
-  // Only hash the password if it has been modified (or is new)
+  console.log('=== PRE-SAVE HOOK STARTED ===');
+  console.log('Password modified:', this.isModified('password'));
+  console.log('Has next function:', typeof next === 'function');
+  
   if (!this.isModified('password')) {
+    console.log('Password not modified, calling next');
     return next();
   }
   
   try {
-    // Generate salt and hash password
+    console.log('Hashing password...');
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    console.log('Password hashed successfully');
+    console.log('Calling next()');
     next();
+    console.log('Next called');
   } catch (error) {
+    console.error('Error in pre-save hook:', error);
     next(error);
   }
 });
-
 // PRE-FINDONEANDUPDATE HOOK - Hash password if being updated
 userSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate();

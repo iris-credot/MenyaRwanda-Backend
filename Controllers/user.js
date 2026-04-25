@@ -31,7 +31,7 @@ const userController ={
   res.status(200).json({ clients });
 }),
 
- createUser: asyncWrapper(async (req, res, next) => {
+createUser: asyncWrapper(async (req, res, next) => {
   console.log('=== CREATE USER STARTED ===');
   console.log('next type at start:', typeof next);
   
@@ -70,64 +70,110 @@ const userController ={
   
   let imageUrl = "";
   if (req.file) {
-    console.log('6. File detected, uploading to Cloudinary');
+    console.log('6. File detected');
     try {
       const images = `IMAGE_${Date.now()}`;
-      const ImageCloudinary = await cloudinary.v2.uploader.upload(req.file.path, {
+      const ImageCloudinary = await cloudinary.uploader.upload(req.file.path, {
         folder: 'Menya-Rwanda',
         public_id: images
       });
       imageUrl = ImageCloudinary.secure_url;
-      console.log('7. Image uploaded successfully');
+      console.log('7. Image uploaded');
     } catch (err) {
-      console.error('Error uploading image:', err);
+      console.error('Cloudinary error:', err);
       return next(new Badrequest('Error uploading image to Cloudinary.'));
     }
   }
   
   console.log('8. Creating new user object');
+  console.log('Password type:', typeof password);
+  console.log('Password length:', password?.length);
+  
+  // Test creating user object without saving
   const newUser = new userModel({
-    username,
-    firstName,
-    lastName,
-    names,
+    username: username || '',
+    firstName: firstName || '',
+    lastName: lastName || '',
+    names: names || '',
     image: imageUrl,
-    profile,
-    address,
-    phoneNumber,
-    dateOfBirth,
+    profile: profile || '',
+    address: address || '',
+    phoneNumber: phoneNumber || '',
+    dateOfBirth: dateOfBirth || null,
     email: emaill,
-    password,
-    gender,
-    otp: otp,
+    password: password,
+    gender: gender || '',
+    otp: otp.toString(), // Ensure OTP is string
     otpExpires: otpExpirationDate,
   });
   
-  console.log('9. Saving user');
-  const savedUser = await newUser.save();
-  console.log('10. User saved');
+  console.log('8a. User object created successfully');
+  console.log('8b. Object keys:', Object.keys(newUser.toObject()));
   
-  console.log('11. Creating notification');
-  await createNotification({
-    user: savedUser._id,
-    title: 'Welcome 🎉',
-    message: 'Your account has been created successfully. Please verify your email.',
-    type: 'account'
-  });
+  console.log('9. About to save user');
   
-  console.log('12. Sending email');
-  const emailBody = `Welcome to Menya-Rwanda! Your OTP for verification is: ${otp}...`;
-  
+  // Try-catch specifically for save
   try {
-    await sendEmail(emaill, 'Menya-Rwanda System: Verify your account', emailBody);
-    console.log('13. Email sent successfully');
-  } catch (emailError) {
-    console.error('Failed to send verification email:', emailError);
+    console.log('9a. Calling newUser.save()...');
+    const savedUser = await newUser.save();
+    console.log('10. User saved successfully!');
+    console.log('11. Saved user ID:', savedUser._id);
+    
+    console.log('12. Creating notification');
+    try {
+      await createNotification({
+        user: savedUser._id,
+        title: 'Welcome 🎉',
+        message: 'Your account has been created successfully. Please verify your email.',
+        type: 'account'
+      });
+      console.log('12a. Notification created');
+    } catch (notifError) {
+      console.error('Notification error:', notifError.message);
+      // Don't fail the whole request for notification error
+    }
+    
+    console.log('13. Preparing email');
+    const emailBody = `
+      Welcome to Menya-Rwanda!
+      Your OTP for verification is: ${otp}
+      This OTP is valid for 5 minutes.
+      If you did not request this, please ignore this email.
+
+      Best regards,
+      Menya-Rwanda Team
+    `;
+    
+    console.log('14. Sending email');
+    try {
+      await sendEmail(emaill, 'Menya-Rwanda System: Verify your account', emailBody);
+      console.log('15. Email sent successfully');
+    } catch (emailError) {
+      console.error('Email error:', emailError.message);
+      // Don't fail the whole request for email error
+    }
+    
+    console.log('16. Sending success response');
+    return res.status(201).json({ 
+      user: savedUser, 
+      message: 'User created successfully, OTP sent to email' 
+    });
+    
+  } catch (saveError) {
+    console.error('!!! SAVE ERROR !!!');
+    console.error('Error name:', saveError.name);
+    console.error('Error message:', saveError.message);
+    console.error('Error stack:', saveError.stack);
+    console.error('Complete error object:', JSON.stringify(saveError, Object.getOwnPropertyNames(saveError)));
+    
+    // Check if it's a validation error
+    if (saveError.name === 'ValidationError') {
+      const errors = Object.values(saveError.errors).map(e => e.message);
+      return res.status(400).json({ message: 'Validation failed', errors });
+    }
+    
+    return next(new Badrequest(`Save failed: ${saveError.message}`));
   }
-  
-  console.log('14. Sending response');
-  res.status(201).json({ user: savedUser, message: 'User created successfully, OTP sent to email' });
-  console.log('15. Response sent');
 }),
       getUserById: asyncWrapper(async (req, res, next) => {
         const { id } = req.params;
