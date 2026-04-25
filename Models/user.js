@@ -94,27 +94,20 @@ userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 // PRE-FINDONEANDUPDATE HOOK - Hash password if being updated
-userSchema.pre('findOneAndUpdate', async function (next) {
+userSchema.pre('findOneAndUpdate', async function () {
   const update = this.getUpdate();
-  
-  // Check if password is being updated
+
   if (update.password || (update.$set && update.$set.password)) {
-    try {
-      const passwordToHash = update.password || update.$set.password;
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(passwordToHash, salt);
-      
-      if (update.password) {
-        update.password = hashedPassword;
-      } else if (update.$set && update.$set.password) {
-        update.$set.password = hashedPassword;
-      }
-      next();
-    } catch (error) {
-      next(error);
+    const passwordToHash = update.password || update.$set.password;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(passwordToHash, salt);
+
+    if (update.password) {
+      update.password = hashedPassword;
+    } else {
+      update.$set.password = hashedPassword;
     }
-  } else {
-    next();
   }
 });
 
