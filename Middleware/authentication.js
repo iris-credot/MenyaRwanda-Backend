@@ -10,29 +10,38 @@ const extractToken = (req) => {
   return req.cookies.jwt;
 };
 
-const verifyToken = (token, res) => {
+const verifyToken = (token) => {
   try {
     return jwt.verify(token, SECRET);
   } catch (err) {
-    res.status(403).json({ error: 'Failed to authenticate token. Please login again.' });
     return null;
   }
 };
 
 const requireAuth = {
-  AuthJWT: async (req, res, next) => {
-    const token = extractToken(req);
-    if (!token) return res.status(401).json({ error: 'Authentication required. Please log in.' });
+  AuthJWT: (req, res, next) => {
+  const token = extractToken(req);
 
-    const decoded = verifyToken(token, res);
-    if (!decoded) return;
+  if (!token) {
+    return res.status(401).json({
+      error: 'Authentication required. Please log in.'
+    });
+  }
 
-    req.userId = decoded.userId;
-    req.role = decoded.role;
-    req.username = decoded.username;
+  const decoded = verifyToken(token);
 
-    next();
-  },
+  if (!decoded) {
+    return res.status(403).json({
+      error: 'Invalid or expired token. Please login again.'
+    });
+  }
+
+  req.userId = decoded.userId;
+  req.role = decoded.role;
+  req.username = decoded.username;
+
+  next();
+},
 
   ownerJWT: async (req, res, next) => {
     const token = extractToken(req);
