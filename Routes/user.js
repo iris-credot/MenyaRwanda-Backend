@@ -24,6 +24,6 @@ router.get('/users', auth.adminJWT, userController.getAllUserRole);
 router.get('/:id', auth.AuthJWT, userController.getUserById);
 router.put('/:id', auth.AuthJWT, upload.single('image'), userController.updateUser);
 router.put('/password/update', auth.AuthJWT, userController.updatePassword);
-router.delete('/:id', auth.BothJWT, userController.deleteUser);
+router.delete('/:id', auth.adminJWT, userController.deleteUser);
 
 module.exports = router;
