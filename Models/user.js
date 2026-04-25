@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
   username: { 
       type: String
   },
+   names: { 
+      type: String
+  },
+  
   firstName: {
     type: String
 },
