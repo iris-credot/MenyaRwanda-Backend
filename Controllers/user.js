@@ -226,42 +226,61 @@ createUser: asyncWrapper(async (req, res, next) => {
 
 // THIS IS THE CORRECTED FUNCTION
 updateUser: asyncWrapper(async (req, res, next) => {
-    const { id } = req.params;
-    const updateData = { ...req.body };
+  const { id } = req.params;
+  const updateData = { ...req.body };
 
-    // 1. Check if a new file was uploaded via multer.
-    if (req.file) {
-      try {
-        console.log("FILE:", req.file);
-console.log("FILE PATH:", req.file?.path);
-        // 2. If yes, upload this new file to Cloudinary.
-        const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: 'Menya-Rwanda', // Or your desired folder
-          public_id: `PROFILE_${id}_${Date.now()}` // A unique public_id
-        });
+  // 1. Handle image upload
+  if (req.file) {
+    try {
+      console.log("FILE:", req.file);
+      console.log("FILE PATH:", req.file?.path);
 
-        // 3. IMPORTANT: Add the secure public URL from Cloudinary to our update data.
-        updateData.image = result.secure_url;
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'Menya-Rwanda',
+        public_id: `PROFILE_${id}_${Date.now()}`
+      });
 
-      } catch (err) {
-        console.error('Error uploading image to Cloudinary during update:', err);
+      updateData.image = result.secure_url;
+
+    } catch (err) {
+      console.error('Cloudinary upload error:', err);
+
+      // SAFE next handling (prevents crash)
+      if (next) {
         return next(new Badrequest('Error uploading new profile image.'));
       }
+
+      return res.status(400).json({
+        success: false,
+        message: 'Error uploading new profile image.'
+      });
+    }
+  }
+
+  // 2. Update user
+  const updatedUser = await userModel.findByIdAndUpdate(id, updateData, {
+    new: true,
+    runValidators: true
+  });
+
+  // 3. User not found safety
+  if (!updatedUser) {
+    if (next) {
+      return next(new Notfound('User not found'));
     }
 
-    // 4. Find the user and update them with all the data 
-    //    (text fields and potentially the new Cloudinary image URL).
-    const updatedUser = await userModel.findByIdAndUpdate(id, updateData, {
-      new: true, // Return the modified document
-      runValidators: true // Run schema validators
+    return res.status(404).json({
+      success: false,
+      message: 'User not found'
     });
+  }
 
-    if (!updatedUser) {
-      return next(new Notfound(`User not found`));
-    }
-
-    // 5. Send the fully updated user object back to the frontend.
-    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  // 4. Success response
+  res.status(200).json({
+    success: true,
+    message: 'User updated successfully',
+    user: updatedUser
+  });
 }),
  
 
