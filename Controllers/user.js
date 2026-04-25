@@ -232,6 +232,8 @@ updateUser: asyncWrapper(async (req, res, next) => {
     // 1. Check if a new file was uploaded via multer.
     if (req.file) {
       try {
+        console.log("FILE:", req.file);
+console.log("FILE PATH:", req.file?.path);
         // 2. If yes, upload this new file to Cloudinary.
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
           folder: 'Menya-Rwanda', // Or your desired folder
