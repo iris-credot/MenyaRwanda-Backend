@@ -35,6 +35,7 @@ const userController ={
   const {
     email,
     username,
+    names,
     firstName,
     lastName,
     profile,
