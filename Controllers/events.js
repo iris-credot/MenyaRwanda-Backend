@@ -142,7 +142,9 @@ const eventController = {
         capacity: capacity || null,
         price: price !== undefined ? price : 0
       });
-
+console.log("Event =", Event);
+console.log("Event type =", typeof Event);
+console.log("Event.create =", Event?.create);
       res.status(201).json({ 
         success: true,
         message: 'Event created successfully',
