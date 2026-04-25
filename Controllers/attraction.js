@@ -72,7 +72,7 @@ const attractionController = {
   }),
 
   //  CREATE (STAFF ONLY)
-  createAttraction: asyncWrapper(async (req, res, next) => {
+ createAttraction: asyncWrapper(async (req, res, next) => {
   const {
     name,
     description,
@@ -84,59 +84,28 @@ const attractionController = {
     details
   } = req.body;
 
-   let ownerId = null;
-
-  // STAFF must have Owner profile
-  if (req.role === 'staff') {
-    const owner = await Owner.findOne({ user: req.userId });
-
-    if (!owner) {
-      return next(new BadRequest('Staff profile not found'));
-    }
-
-    ownerId = owner._id;
-  }
-
-  // ADMIN can create directly
-  if (req.role === 'admin') {
-    ownerId = null;
-  }
-
-  // Required fields
+  // Validate required fields
   if (!name || !location || !type) {
     return next(new BadRequest('name, location and type are required'));
   }
 
-  // Allowed types based on your model
+  // Validate type
   const allowedTypes = [
-    'national_park',
-    'mountain',
-    'lake',
-    'waterfall',
-    'forest',
-    'museum',
-    'cultural_site',
-    'historical_site',
-    'memorial',
-    'hotel',
-    'restaurant',
-    'city_attraction',
-    'viewpoint',
-    'resort',
-    'park',
-    'other'
+    'national_park','mountain','lake','waterfall','forest','museum',
+    'cultural_site','historical_site','memorial','hotel','restaurant',
+    'city_attraction','viewpoint','resort','park','other'
   ];
 
   if (!allowedTypes.includes(type)) {
     return next(new BadRequest('Invalid attraction type'));
   }
 
-  // Require at least one image
+  // Validate images
   if (!req.files || req.files.length === 0) {
     return next(new BadRequest('Upload at least one image'));
   }
 
-  // Upload multiple images to Cloudinary
+  // Upload images to Cloudinary
   const uploadedImages = [];
 
   for (const file of req.files) {
@@ -145,6 +114,34 @@ const attractionController = {
     });
 
     uploadedImages.push(result.secure_url);
+  }
+
+  let ownerId = null;
+
+  // 🔐 STAFF → must have owner profile
+  if (req.role === 'staff') {
+    const owner = await Owner.findOne({ user: req.userId });
+
+    if (!owner) {
+      return next(new BadRequest('Staff must have an owner profile'));
+    }
+
+    ownerId = owner._id;
+  }
+
+  // 🛡 ADMIN → optional owner
+  if (req.role === 'admin') {
+    // Option 1: allow admin to pass ownerId in body
+    if (req.body.owner) {
+      const owner = await Owner.findById(req.body.owner);
+      if (!owner) {
+        return next(new BadRequest('Invalid owner ID'));
+      }
+      ownerId = owner._id;
+    }
+
+    // Option 2: allow admin without owner
+    // ownerId can stay null (if schema allows)
   }
 
   // Create attraction
@@ -158,15 +155,14 @@ const attractionController = {
     email,
     openingHours,
     rating: 0,
-    owner: owner._id,
-    user: req.userId,
+    owner: ownerId,
     status: 'pending',
     details: details ? JSON.parse(details) : {}
   });
 
   return res.status(201).json({
     success: true,
-    message: 'Attraction created successfully and pending approval',
+    message: 'Attraction created successfully',
     attraction
   });
 }),
