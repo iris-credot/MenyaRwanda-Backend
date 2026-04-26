@@ -4,6 +4,10 @@ const router = express.Router();
 const reviewController = require('../Controllers/review');
 const auth = require('../Middleware/authentication');
 
+router.get(
+  '/all',
+  reviewController.getAllReviews
+);
 // CREATE or UPDATE review
 router.post(
   '/',
@@ -36,9 +40,6 @@ router.get(
   '/:id',
   reviewController.getReviewById
 );
-router.get(
-  '/all',
-  reviewController.getAllReviews
-);
+
 
 module.exports = router;

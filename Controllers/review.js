@@ -79,18 +79,18 @@ getAllReviews: asyncWrapper(async (req, res) => {
 
   // GET REVIEWS FOR AN ATTRACTION
   getAttractionReviews: asyncWrapper(async (req, res, next) => {
-    const { attractionId } = req.params;
+  const { attractionId } = req.params;
 
-    const reviews = await Review.find({ attraction: attractionId })
-      .populate('user', 'username image')
-      .sort({ createdAt: -1 });
+  const reviews = await Review.find({ attractionId }) // ✅ FIXED
+    .populate('user', 'username image')
+    .sort({ createdAt: -1 });
 
-    res.status(200).json({
-      success: true,
-      count: reviews.length,
-      reviews
-    });
-  }),
+  res.status(200).json({
+    success: true,
+    count: reviews.length,
+    reviews
+  });
+}),
 
   //  GET MY REVIEWS
   getMyReviews: asyncWrapper(async (req, res) => {
