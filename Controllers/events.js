@@ -4,6 +4,14 @@ const NotFound = require('../Error/NotFound');
 const BadRequest = require('../Error/BadRequest');
 const cloudinary = require('cloudinary');
 
+
+console.log('=== DEBUGGING EVENT MODEL ===');
+console.log('Event module:', Event);
+console.log('Event type:', typeof Event);
+console.log('Event.create:', Event?.create);
+console.log('Event keys:', Object.keys(Event || {}));
+console.log('===============================');
+
 cloudinary.v2.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -142,6 +150,9 @@ const eventController = {
         capacity: capacity || null,
         price: price !== undefined ? price : 0
       });
+      
+console.log("EVENT KEYS:", Object.keys(Event || {}));
+
 console.log("Event =", Event);
 console.log("Event type =", typeof Event);
 console.log("Event.create =", Event?.create);

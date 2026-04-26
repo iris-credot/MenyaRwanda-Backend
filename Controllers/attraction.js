@@ -174,7 +174,7 @@ const attractionController = {
     const attraction = await Attraction.findById(id);
     if (!attraction) return next(new NotFound('Attraction not found'));
 
-    const owner = await Owner.findOne({ user: req.user.id });
+    const owner = await Owner.findOne({ user: req.userId });
 
     if (!owner || attraction.owner.toString() !== owner._id.toString()) {
       return next(new BadRequest('Not authorized'));
@@ -223,7 +223,7 @@ const attractionController = {
     const attraction = await Attraction.findById(id);
     if (!attraction) return next(new NotFound('Attraction not found'));
 
-    const owner = await Owner.findOne({ user: req.user.id });
+    const owner = await Owner.findOne({ user: req.userId });
 
     if (!owner || attraction.owner.toString() !== owner._id.toString()) {
       return next(new BadRequest('Not authorized'));
@@ -252,10 +252,10 @@ const attractionController = {
     const attraction = await Attraction.findById(id);
     if (!attraction) return next(new NotFound('Attraction not found'));
 
-    const owner = await Owner.findOne({ user: req.user.id });
+    const owner = await Owner.findOne({ user: req.userId });
 
     if (
-      req.user.role !== 'admin' &&
+      req.role !== 'admin' &&
       (!owner || attraction.owner.toString() !== owner._id.toString())
     ) {
       return next(new BadRequest('Not authorized'));

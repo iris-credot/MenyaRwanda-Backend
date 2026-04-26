@@ -94,57 +94,59 @@ getAllReviews: asyncWrapper(async (req, res) => {
 
   //  GET MY REVIEWS
   getMyReviews: asyncWrapper(async (req, res) => {
-    const reviews = await Review.find({ user: req.user.id })
-      .populate('attraction', 'name location');
+  const reviews = await Review.find({ user: req.userId })
+    .populate('attractionId', 'name location');
 
-    res.status(200).json({
-      success: true,
-      count: reviews.length,
-      reviews
-    });
-  }),
+  res.status(200).json({
+    success: true,
+    count: reviews.length,
+    reviews
+  });
+}),
 
   //  DELETE REVIEW
-  deleteReview: asyncWrapper(async (req, res, next) => {
-    const { id } = req.params;
+ deleteReview: asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
 
-    const review = await Review.findById(id);
+  const review = await Review.findById(id);
 
-    if (!review) {
-      return next(new NotFound('Review not found'));
+  if (!review) {
+    return next(new NotFound('Review not found'));
+  }
+
+  if (
+    review.user.toString() !== req.userId &&
+    req.role !== 'admin'
+  ) {
+    return next(new BadRequest('Not authorized'));
+  }
+
+  const attractionId = review.attractionId; // ✅ FIX
+
+  await review.deleteOne();
+
+  const attraction = await Attraction.findById(attractionId);
+
+  if (attraction && attraction.owner) {
+    const owner = await Owner.findById(attraction.owner);
+
+    if (owner) {
+      await createNotification({
+        user: owner.user,
+        title: 'Review Removed',
+        message: `A review on your attraction was removed.`,
+        type: 'review'
+      });
     }
+  }
 
-    // Only owner or admin
-    if (
-      review.user.toString() !== req.user.id &&
-      req.user.role !== 'admin'
-    ) {
-      return next(new BadRequest('Not authorized'));
-    }
+  await updateAttractionRating(attractionId);
 
-    const attractionId = review.attraction;
-
-    await review.deleteOne();
-
-const attraction = await Attraction.findById(attractionId);
-const owner = await Owner.findById(attraction.owner);
-
-if (owner) {
-  await createNotification({
-    user: owner.user,
-    title: 'Review Removed',
-    message: `A review on your attraction was removed.`,
-    type: 'review'
+  res.status(200).json({
+    success: true,
+    message: 'Review deleted'
   });
-}
-    // Recalculate rating after deletion
-    await updateAttractionRating(attractionId);
-
-    res.status(200).json({
-      success: true,
-      message: 'Review deleted'
-    });
-  }),
+}),
 
   // GET SINGLE REVIEW
   getReviewById: asyncWrapper(async (req, res, next) => {
@@ -152,7 +154,7 @@ if (owner) {
 
     const review = await Review.findById(id)
       .populate('user', 'username image')
-      .populate('attraction', 'name');
+      .populate('attractionId', 'name');
 
     if (!review) {
       return next(new NotFound('Review not found'));
@@ -171,7 +173,7 @@ module.exports = reviewController;
 
 //  HELPER FUNCTION (IMPORTANT)
 async function updateAttractionRating(attractionId) {
-  const reviews = await Review.find({ attraction: attractionId });
+  const reviews = await Review.find({ attractionId });
 
   if (reviews.length === 0) {
     await Attraction.findByIdAndUpdate(attractionId, { rating: 0 });
@@ -182,6 +184,6 @@ async function updateAttractionRating(attractionId) {
   const average = total / reviews.length;
 
   await Attraction.findByIdAndUpdate(attractionId, {
-    rating: average.toFixed(1)
+    rating: Number(average.toFixed(1)) // cleaner
   });
 }

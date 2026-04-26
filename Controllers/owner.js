@@ -28,7 +28,7 @@ const ownerController = {
 
   //  Get logged-in owner's profile
   getMyOwnerProfile: asyncWrapper(async (req, res, next) => {
-    const owner = await Owner.findOne({ user: req.user.id }).populate('user');
+    const owner = await Owner.findOne({ user: req.userId }).populate('user');
 
     if (!owner) {
       return next(new NotFound('Owner profile not found'));
@@ -46,7 +46,7 @@ getOwnerListings: asyncWrapper(async (req, res, next) => {
   }
 
   // 2. Get all attractions belonging to this owner
-  const listings = await Attraction.find({ owner: ownerId });
+  const listings = await Attraction.find({ owner: ownerId }).populate('owner', 'businessName').sort({ createdAt: -1 });
 
   res.status(200).json({
     count: listings.length,
