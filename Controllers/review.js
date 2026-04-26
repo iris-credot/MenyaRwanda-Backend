@@ -6,7 +6,19 @@ const BadRequest = require('../Error/BadRequest');
 const { createNotification } = require('./notification');
 const Owner = require('../Models/owners');
 const reviewController = {
+// GET ALL REVIEWS (Admin / global)
+getAllReviews: asyncWrapper(async (req, res) => {
+  const reviews = await Review.find()
+    .populate('user', 'username image email')
+    .populate('attractionId', 'name location type')
+    .sort({ createdAt: -1 });
 
+  res.status(200).json({
+    success: true,
+    count: reviews.length,
+    reviews
+  });
+}),
   //  CREATE OR UPDATE REVIEW
   createOrUpdateReview: asyncWrapper(async (req, res, next) => {
   const { attractionId, rating, comment } = req.body;

@@ -36,5 +36,9 @@ router.get(
   '/:id',
   reviewController.getReviewById
 );
+router.get(
+  '/all',
+  reviewController.getAllReviews
+);
 
 module.exports = router;
