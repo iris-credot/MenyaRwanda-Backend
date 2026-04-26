@@ -7,39 +7,37 @@ const BadRequest = require('../Error/BadRequest');
 const favoriteController = {
 
   //  ADD TO FAVORITES
-  addFavorite: asyncWrapper(async (req, res, next) => {
-    const { attractionId } = req.body;
+ addFavorite: asyncWrapper(async (req, res, next) => {
+  const { attractionId } = req.body;
 
-    if (!attractionId) {
-      return next(new BadRequest('Attraction ID is required'));
+  if (!attractionId) {
+    return next(new BadRequest('Attraction ID is required'));
+  }
+
+  const attraction = await Attraction.findById(attractionId);
+  if (!attraction) {
+    return next(new NotFound('Attraction not found'));
+  }
+
+  try {
+    const favorite = await Favorite.create({
+      user: req.userId,          // ✅ FIXED
+      attractionId: attractionId // ✅ FIXED
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Added to favorites',
+      favorite
+    });
+
+  } catch (err) {
+    if (err.code === 11000) {
+      return next(new BadRequest('Already in favorites'));
     }
-
-    // Check attraction exists
-    const attraction = await Attraction.findById(attractionId);
-    if (!attraction) {
-      return next(new NotFound('Attraction not found'));
-    }
-
-    try {
-      const favorite = await Favorite.create({
-        user: req.user.id,
-        attraction: attractionId
-      });
-
-      res.status(201).json({
-        success: true,
-        message: 'Added to favorites',
-        favorite
-      });
-
-    } catch (err) {
-      // Duplicate (already favorited)
-      if (err.code === 11000) {
-        return next(new BadRequest('Already in favorites'));
-      }
-      throw err;
-    }
-  }),
+    throw err;
+  }
+}),
 
   //  REMOVE FROM FAVORITES
   removeFavorite: asyncWrapper(async (req, res, next) => {
