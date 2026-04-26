@@ -9,64 +9,61 @@ const reviewController = {
 
   //  CREATE OR UPDATE REVIEW
   createOrUpdateReview: asyncWrapper(async (req, res, next) => {
-    const { attractionId, rating, comment } = req.body;
+  const { attractionId, rating, comment } = req.body;
 
-    if (!attractionId || !rating) {
-      return next(new BadRequest('Attraction and rating are required'));
-    }
+  if (!attractionId || !rating) {
+    return next(new BadRequest('Attraction and rating are required'));
+  }
 
-    if (rating < 1 || rating > 5) {
-      return next(new BadRequest('Rating must be between 1 and 5'));
-    }
+  if (rating < 1 || rating > 5) {
+    return next(new BadRequest('Rating must be between 1 and 5'));
+  }
 
-    // Check attraction exists
-    const attraction = await Attraction.findById(attractionId);
-    if (!attraction) {
-      return next(new NotFound('Attraction not found'));
-    }
+  const attraction = await Attraction.findById(attractionId);
+  if (!attraction) {
+    return next(new NotFound('Attraction not found'));
+  }
 
-    // Check if user already reviewed
-    let review = await Review.findOne({
-      user: req.user.id,
-      attraction: attractionId
-    });
-
-   if (review) {
-  // UPDATE
-  review.rating = rating;
-  review.comment = comment;
-  await review.save();
-
-} else {
-  // CREATE
-  review = await Review.create({
-    user: req.user.id,
-    attraction: attractionId,
-    rating,
-    comment
+  let review = await Review.findOne({
+    user: req.userId,
+    attractionId: attractionId
   });
 
-  // 🔔 NOTIFY OWNER (ONLY ON NEW REVIEW)
-  const owner = await Owner.findById(attraction.owner);
-
-  if (owner) {
-    await createNotification({
-      user: owner.user, // owner is linked to a user
-      title: 'New Review ⭐',
-      message: `Your attraction "${attraction.name}" received a new review.`,
-      type: 'review'
+  if (review) {
+    review.rating = rating;
+    review.comment = comment;
+    await review.save();
+  } else {
+    review = await Review.create({
+      user: req.userId,
+      attractionId: attractionId,
+      rating,
+      comment
     });
+
+    // Notify owner
+    if (attraction.owner) {
+      const owner = await Owner.findById(attraction.owner);
+
+      if (owner) {
+        await createNotification({
+          user: owner.user,
+          title: 'New Review ⭐',
+          message: `Your attraction "${attraction.name}" received a new review.`,
+          type: 'review'
+        });
+      }
+    }
   }
-}
-    //  Recalculate rating
-    await updateAttractionRating(attractionId);
 
-    res.status(200).json({
-      success: true,
-      message: 'Review submitted successfully',
-      review
-    });
-  }),
+  await updateAttractionRating(attractionId);
+
+  res.status(200).json({
+    success: true,
+    message: 'Review submitted successfully',
+    review
+  });
+}),
 
   // GET REVIEWS FOR AN ATTRACTION
   getAttractionReviews: asyncWrapper(async (req, res, next) => {
