@@ -17,6 +17,6 @@ const favoriteSchema = new mongoose.Schema({
 
 
 // ❗ Prevent duplicate favorites (VERY IMPORTANT)
-favoriteSchema.index({ user: 1, attraction: 1 }, { unique: true });
+favoriteSchema.index({ user: 1, attractionId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Favorite', favoriteSchema);
