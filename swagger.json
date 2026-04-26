@@ -58,7 +58,203 @@
         }
       }
     },
+"/users/logout": {
+  "post": {
+    "tags": ["Authentication"],
+    "summary": "Logout user",
+    "responses": {
+      "200": { "description": "Logged out successfully" }
+    }
+  }
+},
 
+"/users/forgot": {
+  "post": {
+    "tags": ["Authentication"],
+    "summary": "Request password reset (send OTP)",
+    "parameters": [
+      {
+        "in": "body",
+        "name": "email",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "OTP sent to email" }
+    }
+  }
+},
+
+"/users/verify-otp": {
+  "post": {
+    "tags": ["Authentication"],
+    "summary": "Verify OTP",
+    "parameters": [
+      {
+        "in": "body",
+        "name": "otp",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "string" },
+            "otp": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "OTP verified" }
+    }
+  }
+},
+
+"/users/reset-password/{token}": {
+  "post": {
+    "tags": ["Authentication"],
+    "summary": "Reset password",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "token",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "password",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "password": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Password reset successful" }
+    }
+  }
+},
+"/users": {
+  "get": {
+    "tags": ["User"],
+    "summary": "Get all users (Admin only)",
+    "security": [{ "bearerAuth": [] }],
+    "responses": {
+      "200": { "description": "List of users" }
+    }
+  }
+},
+"/users/users": {
+  "get": {
+    "tags": ["User"],
+    "summary": "Get all users that have role as user",
+    "security": [{ "bearerAuth": [] }],
+    "responses": {
+      "200": { "description": "Users grouped by role" }
+    }
+  }
+},
+"/users/:{id}": {
+  "get": {
+    "tags": ["User"],
+    "summary": "Get user by ID",
+    "security": [{ "bearerAuth": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "User data" },
+      "404": { "description": "User not found" }
+    }
+  },
+  "put": {
+    "tags": ["User"],
+    "summary": "Update user (with image upload)",
+    "security": [{ "bearerAuth": [] }],
+    "consumes": ["multipart/form-data"],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "username",
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "image",
+        "type": "file"
+      }
+    ],
+    "responses": {
+      "200": { "description": "User updated" }
+    }
+  },
+  "delete": {
+    "tags": ["User"],
+    "summary": "Delete user (Admin only)",
+    "security": [{ "bearerAuth": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "User deleted" }
+    }
+  }
+},
+
+"/users/password/update": {
+  "put": {
+    "tags": ["User"],
+    "summary": "Update password",
+    "security": [{ "bearerAuth": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "passwords",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "currentPassword": { "type": "string" },
+            "newPassword": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Password updated" }
+    }
+  }
+},
     "/owners": {
       "get": {
         "tags": ["Owner"],
