@@ -13,7 +13,7 @@ const errorHandling = require('./Middleware/errorHandler');
 const AllRoutes = require('./Routes/app');
 
  app.use(cors({
-    origin: ["http://localhost:3000","http://localhost:5174"],
+    origin: ["http://localhost:3000","http://localhost:5174","https://menyarwanda.vercel.app"],
      credentials: true,
      allowedHeaders: ['Content-Type', 'Authorization'],
      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
