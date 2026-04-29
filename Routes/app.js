@@ -12,39 +12,44 @@ const favoriteRoutes = require('./favorite');
 const notificationRoutes = require('./notification');
 const chatRoutes = require('./chat');
 const eventRoutes = require('./event');
+const foodRoutes = require('./foods');
 
-// ===============================
-// 🔗 REGISTER ROUTES
-// ===============================
 
-// 👤 USER AUTH & PROFILE
+//  REGISTER ROUTES
+
+
+//  USER AUTH & PROFILE
 Router.use('/users', userRoutes);
 
-// 🧑‍💼 OWNERS (STAFF)
+//  OWNERS (STAFF)
 Router.use('/owners', ownerRoutes);
 
-// 📍 ATTRACTIONS
+//  ATTRACTIONS
 Router.use('/attractions', attractionRoutes);
 
-// ⭐ REVIEWS
+//  REVIEWS
 Router.use('/reviews', reviewRoutes);
 
-// ❤️ FAVORITES
+// FAVORITES
 Router.use('/favorites', favoriteRoutes);
 
-// 🔔 NOTIFICATIONS
+//  NOTIFICATIONS
 Router.use('/notifications', notificationRoutes);
 
-// 💬 CHAT (AI / assistant)
+//  CHAT (AI / assistant)
 Router.use('/chat', chatRoutes);
 
-// 🎉 EVENTS
+//  EVENTS
 Router.use('/events', eventRoutes);
 
+// FOODS
+console.log('foodRoutes:', foodRoutes);
+console.log('type:', typeof foodRoutes);
+Router.use('/foods', foodRoutes);
 
-// ===============================
-// 🚫 FALLBACK ROUTE
-// ===============================
+
+//  FALLBACK ROUTE
+
 Router.use((req, res) => {
   res.status(404).json({
     success: false,
