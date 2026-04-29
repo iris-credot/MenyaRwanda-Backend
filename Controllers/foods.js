@@ -11,7 +11,11 @@ cloudinary.v2.config({
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 });
+const Food = require('../Models/foods');
 
+console.log("Food Model:", Food);
+console.log("Food.create:", Food.create);
+console.log("Type:", typeof Food);
 const foodController = {
 
  
