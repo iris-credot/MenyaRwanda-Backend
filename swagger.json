@@ -368,7 +368,181 @@
         "responses": {
           "201": { "description": "Created" }
         }
+      },
+      "/approved": {
+  "get": {
+    "tags": ["Attraction"],
+    "summary": "Get approved attractions",
+    "responses": {
+      "200": { "description": "List of approved attractions" }
+    }
+  }
+},
+
+"/search": {
+  "get": {
+    "tags": ["Attraction"],
+    "summary": "Search attractions",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "q",
+        "required": true,
+        "type": "string"
       }
+    ],
+    "responses": {
+      "200": { "description": "Search results" }
+    }
+  }
+},
+
+"/top": {
+  "get": {
+    "tags": ["Attraction"],
+    "summary": "Get top rated attractions",
+    "responses": {
+      "200": { "description": "Top rated attractions list" }
+    }
+  }
+},
+
+"/{id}": {
+  "get": {
+    "tags": ["Attraction"],
+    "summary": "Get single attraction by ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Attraction details" },
+      "404": { "description": "Not found" }
+    }
+  }
+},
+
+"/update/{id}": {
+  "put": {
+    "tags": ["Attraction"],
+    "summary": "Update attraction (Owner only)",
+    "security": [{ "Bearer": [] }],
+    "consumes": ["multipart/form-data"],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "in": "formData",
+        "name": "images",
+        "type": "file",
+        "collectionFormat": "multi"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Attraction updated" }
+    }
+  }
+},
+
+"/image/{id}/{imageIndex}:": {
+  "delete": {
+    "tags": ["Attraction"],
+    "summary": "Delete attraction image",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "path",
+        "name": "imageIndex",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Image deleted" }
+    }
+  }
+},
+
+"/delete/{id}": {
+  "delete": {
+    "tags": ["Attraction"],
+    "summary": "Delete attraction (Admin or Owner)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Attraction deleted" }
+    }
+  }
+},
+
+"/status/{id}": {
+  "put": {
+    "tags": ["Attraction"],
+    "summary": "Approve or reject attraction (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "status",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["approved", "rejected", "pending"]
+            }
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Status updated" }
+    }
+  }
+}
     },
 
     "/reviews": {
@@ -393,45 +567,272 @@
         "responses": {
           "201": { "description": "Review created" }
         }
+      },
+      "/attraction/{attractionId}": {
+  "get": {
+    "tags": ["Review"],
+    "summary": "Get reviews for a specific attraction",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "attractionId",
+        "required": true,
+        "type": "string"
       }
+    ],
+    "responses": {
+      "200": { "description": "List of reviews for attraction" }
+    }
+  }
+},
+
+"/my-reviews": {
+  "get": {
+    "tags": ["Review"],
+    "summary": "Get logged-in user's reviews",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "User reviews list" }
+    }
+  }
+},
+
+"/{id}": {
+  "get": {
+    "tags": ["Review"],
+    "summary": "Get single review by ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Review details" },
+      "404": { "description": "Review not found" }
+    }
+  },
+
+  "delete": {
+    "tags": ["Review"],
+    "summary": "Delete review (User only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Review deleted successfully" }
+    }
+  }
+}
     },
 
     "/favorites": {
-      "get": {
-        "tags": ["Favorite"],
-        "summary": "Get user favorites",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": { "description": "Favorites list" }
-        }
-      },
-      "post": {
-        "tags": ["Favorite"],
-        "summary": "Add to favorites",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Favorite" }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Added" }
+  "post": {
+    "tags": ["Favorite"],
+    "summary": "Add attraction to favorites",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "attractionId": {
+              "type": "string"
+            }
+          },
+          "required": ["attractionId"]
         }
       }
-    },
+    ],
+    "responses": {
+      "201": { "description": "Added to favorites" }
+    }
+  }
+},
 
-    "/notifications": {
-      "get": {
-        "tags": ["Notification"],
-        "summary": "Get my notifications",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": { "description": "Notifications list" }
+"/favorites/toggle": {
+  "post": {
+    "tags": ["Favorite"],
+    "summary": "Toggle favorite (add/remove)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "attractionId": {
+              "type": "string"
+            }
+          },
+          "required": ["attractionId"]
         }
       }
-    },
+    ],
+    "responses": {
+      "200": { "description": "Favorite toggled successfully" }
+    }
+  }
+},
+
+"/favorites/{attractionId}": {
+  "delete": {
+    "tags": ["Favorite"],
+    "summary": "Remove attraction from favorites",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "attractionId",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Removed from favorites" }
+    }
+  }
+},
+
+"/favorites/my": {
+  "get": {
+    "tags": ["Favorite"],
+    "summary": "Get logged-in user's favorites",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "List of user favorites" }
+    }
+  }
+},
+
+"/favorites/check/{attractionId}": {
+  "get": {
+    "tags": ["Favorite"],
+    "summary": "Check if attraction is favorited",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "attractionId",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Favorite status returned" }
+    }
+  }
+},
+
+   "/notifications": {
+  "get": {
+    "tags": ["Notification"],
+    "summary": "Get all notifications (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "List of all notifications" }
+    }
+  }
+},
+
+"/notifications/me": {
+  "get": {
+    "tags": ["Notification"],
+    "summary": "Get my notifications",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "User notifications list" }
+    }
+  }
+},
+
+"/notifications/type/{type}": {
+  "get": {
+    "tags": ["Notification"],
+    "summary": "Get notifications by type",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "type",
+        "required": true,
+        "type": "string",
+        "enum": [
+          "account",
+          "listing_approved",
+          "listing_rejected",
+          "review",
+          "system"
+        ]
+      }
+    ],
+    "responses": {
+      "200": { "description": "Filtered notifications list" }
+    }
+  }
+},
+
+"/notifications/{id}/read": {
+  "patch": {
+    "tags": ["Notification"],
+    "summary": "Mark notification as read",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Notification marked as read" }
+    }
+  }
+},
+
+"/notifications/read-all": {
+  "patch": {
+    "tags": ["Notification"],
+    "summary": "Mark all notifications as read",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "All notifications marked as read" }
+    }
+  }
+},
+
+"/notifications/{id}": {
+  "delete": {
+    "tags": ["Notification"],
+    "summary": "Delete notification",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Notification deleted successfully" }
+    }
+  }
+},
 
     "/chat": {
       "get": {
@@ -484,8 +885,282 @@
         "responses": {
           "201": { "description": "Event created" }
         }
-      }
+      },
+      "/upcoming": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get upcoming events",
+    "responses": {
+      "200": { "description": "List of upcoming events" }
     }
+  }
+},
+
+"/past": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get past events",
+    "responses": {
+      "200": { "description": "List of past events" }
+    }
+  }
+},
+
+"/range": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get events by date range",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "startDate",
+        "required": true,
+        "type": "string",
+        "format": "date"
+      },
+      {
+        "in": "query",
+        "name": "endDate",
+        "required": true,
+        "type": "string",
+        "format": "date"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Events in date range" }
+    }
+  }
+},
+
+"/location/{location}": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get events by location",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "location",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Events by location" }
+    }
+  }
+},
+
+"/{id}": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get single event by ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Event details" },
+      "404": { "description": "Event not found" }
+    }
+  },
+
+  "put": {
+    "tags": ["Event"],
+    "summary": "Update event (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "body",
+        "schema": { "$ref": "#/definitions/Event" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Event updated" }
+    }
+  },
+
+  "delete": {
+    "tags": ["Event"],
+    "summary": "Delete event (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Event deleted" }
+    }
+  }
+},
+
+"/{id}/availability": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Check event availability",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Availability status returned" }
+    }
+  }
+}
+    },
+    "/foods": {
+  "get": {
+    "tags": ["Food"],
+    "summary": "Get all foods",
+    "responses": {
+      "200": { "description": "List of all foods" }
+    }
+  },
+  "post": {
+    "tags": ["Food"],
+    "summary": "Create a food item",
+    "security": [{ "Bearer": [] }],
+    "consumes": ["multipart/form-data"],
+    "parameters": [
+      {
+        "in": "formData",
+        "name": "name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "in": "formData",
+        "name": "description",
+        "type": "string",
+        "required": true
+      },
+      {
+        "in": "formData",
+        "name": "category",
+        "type": "string",
+        "enum": ["Traditional", "Street Food", "Snack", "Drink"]
+      },
+      {
+        "in": "formData",
+        "name": "featured",
+        "type": "boolean"
+      },
+      {
+        "in": "formData",
+        "name": "image",
+        "type": "file"
+      }
+    ],
+    "responses": {
+      "201": { "description": "Food created" }
+    }
+  }
+},
+
+"/foods/featured": {
+  "get": {
+    "tags": ["Food"],
+    "summary": "Get featured foods",
+    "responses": {
+      "200": { "description": "Featured foods list" }
+    }
+  }
+},
+
+"/foods/category/{category}": {
+  "get": {
+    "tags": ["Food"],
+    "summary": "Get foods by category",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "category",
+        "required": true,
+        "type": "string",
+        "enum": ["Traditional", "Street Food", "Snack", "Drink"]
+      }
+    ],
+    "responses": {
+      "200": { "description": "Foods by category" }
+    }
+  }
+},
+
+"/foods/{id}": {
+  "get": {
+    "tags": ["Food"],
+    "summary": "Get food by ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Food details" },
+      "404": { "description": "Food not found" }
+    }
+  },
+
+  "put": {
+    "tags": ["Food"],
+    "summary": "Update food",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "body",
+        "schema": { "$ref": "#/definitions/Food" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Food updated" }
+    }
+  },
+
+  "delete": {
+    "tags": ["Food"],
+    "summary": "Delete food",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Food deleted" }
+    }
+  }
+}
 
   },
 
@@ -550,7 +1225,28 @@
       "properties": {
         "content": { "type": "string" }
       }
+    },
+    "Food": {
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["Traditional", "Street Food", "Snack", "Drink"]
+    },
+    "image": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean"
     }
+  }
+}
 
   }
 }
