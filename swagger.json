@@ -347,39 +347,27 @@
     },
 
     "/attractions": {
-      "get": {
-        "tags": ["Attraction"],
-        "summary": "Get all attractions",
-        "responses": {
-          "200": { "description": "List of attractions" }
-        }
-      },
-      "post": {
-        "tags": ["Attraction"],
-        "summary": "Create attraction",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Attraction" }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Created" }
-        }
-      },
-      "/approved": {
   "get": {
     "tags": ["Attraction"],
-    "summary": "Get approved attractions",
+    "summary": "Get all attractions (auth required)",
+    "security": [{ "Bearer": [] }],
     "responses": {
-      "200": { "description": "List of approved attractions" }
+      "200": { "description": "List of attractions" }
     }
   }
 },
 
-"/search": {
+"/attractions/approved": {
+  "get": {
+    "tags": ["Attraction"],
+    "summary": "Get approved attractions (public)",
+    "responses": {
+      "200": { "description": "Approved attractions list" }
+    }
+  }
+},
+
+"/attractions/search": {
   "get": {
     "tags": ["Attraction"],
     "summary": "Search attractions",
@@ -397,20 +385,20 @@
   }
 },
 
-"/top": {
+"/attractions/top": {
   "get": {
     "tags": ["Attraction"],
     "summary": "Get top rated attractions",
     "responses": {
-      "200": { "description": "Top rated attractions list" }
+      "200": { "description": "Top rated attractions" }
     }
   }
 },
 
-"/{id}": {
+"/attractions/{id}": {
   "get": {
     "tags": ["Attraction"],
-    "summary": "Get single attraction by ID",
+    "summary": "Get single attraction",
     "parameters": [
       {
         "in": "path",
@@ -425,35 +413,51 @@
     }
   }
 },
-
-"/update/{id}": {
-  "put": {
+"/attractions/create": {
+  "post": {
     "tags": ["Attraction"],
-    "summary": "Update attraction (Owner only)",
+    "summary": "Create attraction (Staff/Admin)",
     "security": [{ "Bearer": [] }],
     "consumes": ["multipart/form-data"],
     "parameters": [
-      {
-        "in": "path",
-        "name": "id",
-        "required": true,
-        "type": "string"
-      },
-      {
-        "in": "formData",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "in": "formData",
-        "name": "description",
-        "type": "string"
-      },
+      { "in": "formData", "name": "name", "type": "string", "required": true },
+      { "in": "formData", "name": "description", "type": "string" },
+      { "in": "formData", "name": "location", "type": "string", "required": true },
+      { "in": "formData", "name": "district", "type": "string" },
+      { "in": "formData", "name": "province", "type": "string" },
+      { "in": "formData", "name": "type", "type": "string", "required": true },
+      { "in": "formData", "name": "phone", "type": "string" },
+      { "in": "formData", "name": "email", "type": "string" },
+      { "in": "formData", "name": "openingHours", "type": "string" },
+
       {
         "in": "formData",
-        "name": "location",
-        "type": "string"
-      },
+        "name": "images",
+        "type": "file",
+        "collectionFormat": "multi"
+      }
+    ],
+    "responses": {
+      "201": { "description": "Attraction created" }
+    }
+  }
+},
+"/attractions/update/{id}": {
+  "put": {
+    "tags": ["Attraction"],
+    "summary": "Update attraction (Owner/Admin)",
+    "security": [{ "Bearer": [] }],
+    "consumes": ["multipart/form-data"],
+    "parameters": [
+      { "in": "path", "name": "id", "required": true, "type": "string" },
+
+      { "in": "formData", "name": "name", "type": "string" },
+      { "in": "formData", "name": "description", "type": "string" },
+      { "in": "formData", "name": "location", "type": "string" },
+      { "in": "formData", "name": "district", "type": "string" },
+      { "in": "formData", "name": "province", "type": "string" },
+      { "in": "formData", "name": "type", "type": "string" },
+
       {
         "in": "formData",
         "name": "images",
@@ -466,67 +470,43 @@
     }
   }
 },
-
-"/image/{id}/{imageIndex}:": {
+"/attractions/image/{id}/{imageIndex}": {
   "delete": {
     "tags": ["Attraction"],
     "summary": "Delete attraction image",
     "security": [{ "Bearer": [] }],
     "parameters": [
-      {
-        "in": "path",
-        "name": "id",
-        "required": true,
-        "type": "string"
-      },
-      {
-        "in": "path",
-        "name": "imageIndex",
-        "required": true,
-        "type": "integer"
-      }
+      { "in": "path", "name": "id", "type": "string", "required": true },
+      { "in": "path", "name": "imageIndex", "type": "integer", "required": true }
     ],
     "responses": {
       "200": { "description": "Image deleted" }
     }
   }
 },
-
-"/delete/{id}": {
+"/attractions/delete/{id}": {
   "delete": {
     "tags": ["Attraction"],
-    "summary": "Delete attraction (Admin or Owner)",
+    "summary": "Delete attraction (Admin/Owner)",
     "security": [{ "Bearer": [] }],
     "parameters": [
-      {
-        "in": "path",
-        "name": "id",
-        "required": true,
-        "type": "string"
-      }
+      { "in": "path", "name": "id", "type": "string", "required": true }
     ],
     "responses": {
       "200": { "description": "Attraction deleted" }
     }
   }
 },
-
-"/status/{id}": {
+"/attractions/status/{id}": {
   "put": {
     "tags": ["Attraction"],
     "summary": "Approve or reject attraction (Admin only)",
     "security": [{ "Bearer": [] }],
     "parameters": [
-      {
-        "in": "path",
-        "name": "id",
-        "required": true,
-        "type": "string"
-      },
+      { "in": "path", "name": "id", "type": "string", "required": true },
       {
         "in": "body",
-        "name": "status",
-        "required": true,
+        "name": "body",
         "schema": {
           "type": "object",
           "properties": {
@@ -542,36 +522,49 @@
       "200": { "description": "Status updated" }
     }
   }
-}
-    },
+},
 
-    "/reviews": {
-      "get": {
-        "tags": ["Review"],
-        "summary": "Get all reviews",
-        "responses": {
-          "200": { "description": "Reviews list" }
-        }
-      },
-      "post": {
-        "tags": ["Review"],
-        "summary": "Create review",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Review" }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Review created" }
-        }
-      },
-      "/attraction/{attractionId}": {
+   "/reviews/all": {
   "get": {
     "tags": ["Review"],
-    "summary": "Get reviews for a specific attraction",
+    "summary": "Get all reviews",
+    "responses": {
+      "200": { "description": "List of all reviews" }
+    }
+  }
+},
+
+"/reviews": {
+  "post": {
+    "tags": ["Review"],
+    "summary": "Create or update review",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "attractionId": { "type": "string" },
+            "rating": { "type": "number", "minimum": 1, "maximum": 5 },
+            "comment": { "type": "string" }
+          },
+          "required": ["attractionId", "rating"]
+        }
+      }
+    ],
+    "responses": {
+      "201": { "description": "Review created or updated" }
+    }
+  }
+},
+
+"/reviews/attraction/{attractionId}": {
+  "get": {
+    "tags": ["Review"],
+    "summary": "Get reviews for an attraction",
     "parameters": [
       {
         "in": "path",
@@ -581,12 +574,12 @@
       }
     ],
     "responses": {
-      "200": { "description": "List of reviews for attraction" }
+      "200": { "description": "Attraction reviews list" }
     }
   }
 },
 
-"/my-reviews": {
+"/reviews/my-reviews": {
   "get": {
     "tags": ["Review"],
     "summary": "Get logged-in user's reviews",
@@ -597,7 +590,7 @@
   }
 },
 
-"/{id}": {
+"/reviews/{id}": {
   "get": {
     "tags": ["Review"],
     "summary": "Get single review by ID",
@@ -611,13 +604,13 @@
     ],
     "responses": {
       "200": { "description": "Review details" },
-      "404": { "description": "Review not found" }
+      "404": { "description": "Not found" }
     }
   },
 
   "delete": {
     "tags": ["Review"],
-    "summary": "Delete review (User only)",
+    "summary": "Delete review",
     "security": [{ "Bearer": [] }],
     "parameters": [
       {
@@ -631,8 +624,7 @@
       "200": { "description": "Review deleted successfully" }
     }
   }
-}
-    },
+},
 
     "/favorites": {
   "post": {
@@ -864,49 +856,52 @@
     },
 
     "/events": {
-      "get": {
-        "tags": ["Event"],
-        "summary": "Get all events",
-        "responses": {
-          "200": { "description": "Events list" }
-        }
-      },
-      "post": {
-        "tags": ["Event"],
-        "summary": "Create event",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Event" }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Event created" }
-        }
-      },
-      "/upcoming": {
+  "get": {
+    "tags": ["Event"],
+    "summary": "Get all events",
+    "responses": {
+      "200": { "description": "List of all events" }
+    }
+  },
+
+  "post": {
+    "tags": ["Event"],
+    "summary": "Create event (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "consumes": ["multipart/form-data"],
+    "parameters": [
+      { "in": "formData", "name": "title", "type": "string", "required": true },
+      { "in": "formData", "name": "description", "type": "string", "required": true },
+      { "in": "formData", "name": "location", "type": "string", "required": true },
+      { "in": "formData", "name": "date", "type": "string", "format": "date-time", "required": true },
+      { "in": "formData", "name": "capacity", "type": "number" },
+      { "in": "formData", "name": "price", "type": "number" },
+      { "in": "formData", "name": "image", "type": "file" }
+    ],
+    "responses": {
+      "201": { "description": "Event created" }
+    }
+  }
+},
+"/events/upcoming": {
   "get": {
     "tags": ["Event"],
     "summary": "Get upcoming events",
     "responses": {
-      "200": { "description": "List of upcoming events" }
+      "200": { "description": "Upcoming events list" }
     }
   }
 },
-
-"/past": {
+"/events/past": {
   "get": {
     "tags": ["Event"],
     "summary": "Get past events",
     "responses": {
-      "200": { "description": "List of past events" }
+      "200": { "description": "Past events list" }
     }
   }
 },
-
-"/range": {
+"/events/range": {
   "get": {
     "tags": ["Event"],
     "summary": "Get events by date range",
@@ -927,12 +922,11 @@
       }
     ],
     "responses": {
-      "200": { "description": "Events in date range" }
+      "200": { "description": "Events in range" }
     }
   }
 },
-
-"/location/{location}": {
+"/events/location/{location}": {
   "get": {
     "tags": ["Event"],
     "summary": "Get events by location",
@@ -949,11 +943,10 @@
     }
   }
 },
-
-"/{id}": {
+"/events/{id}": {
   "get": {
     "tags": ["Event"],
-    "summary": "Get single event by ID",
+    "summary": "Get single event",
     "parameters": [
       {
         "in": "path",
@@ -964,7 +957,7 @@
     ],
     "responses": {
       "200": { "description": "Event details" },
-      "404": { "description": "Event not found" }
+      "404": { "description": "Not found" }
     }
   },
 
@@ -1007,8 +1000,7 @@
     }
   }
 },
-
-"/{id}/availability": {
+"/events/{id}/availability": {
   "get": {
     "tags": ["Event"],
     "summary": "Check event availability",
@@ -1024,8 +1016,7 @@
       "200": { "description": "Availability status returned" }
     }
   }
-}
-    },
+},
     "/foods": {
   "get": {
     "tags": ["Food"],
