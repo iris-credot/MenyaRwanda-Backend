@@ -1,7 +1,6 @@
 // Controllers/foods.js
-
-const asyncWrapper = require('../Middleware/async');
 const Food = require('../Models/foods');
+const asyncWrapper = require('../Middleware/async');
 const NotFound = require('../Error/NotFound');
 const BadRequest = require('../Error/BadRequest');
 const cloudinary = require('cloudinary');
