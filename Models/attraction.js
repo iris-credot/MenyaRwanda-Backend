@@ -14,7 +14,12 @@ const attractionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-
+district: {
+    type: String
+  },
+  province: {
+    type: String
+  },
   type: {
     type: String,
     enum: [
@@ -37,7 +42,43 @@ const attractionSchema = new mongoose.Schema({
     ],
     required: true
   },
+  tags: [
+    {
+      type: String
+    }
+  ],
 
+
+  atmosphere: {
+    type: String,
+    enum: [
+      'peaceful',
+      'romantic',
+      'adventurous',
+      'family',
+      'luxury',
+      'nature',
+      'cultural',
+      'relaxing',
+      'nightlife',
+      'educational'
+    ]
+  },
+
+
+  bestFor: [
+    {
+      type: String
+    }
+  ],
+
+  // Example:
+  // honeymoon
+  // hiking
+  // photography
+  // wildlife
+  // relaxation
+  // family trips
   images: [
     {
       type: String
