@@ -255,96 +255,147 @@
     }
   }
 },
-    "/owners": {
-      "get": {
-        "tags": ["Owner"],
-        "summary": "Get all owners (admin)",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": { "description": "List of owners" }
-        }
-      },
-      "post": {
-        "tags": ["Owner"],
-        "summary": "Create owner",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Owner" }
-          }
-        ],
-        "responses": {
-          "201": { "description": "Owner created" }
-        }
-      }
-    },
+   "/owners": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get all owners (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "List of all owners" }
+    }
+  },
 
-    "/owners/{id}": {
-      "get": {
-        "tags": ["Owner"],
-        "summary": "Get owner by ID",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
-        ],
-        "responses": {
-          "200": { "description": "Owner details" }
-        }
-      },
-      "put": {
-        "tags": ["Owner"],
-        "summary": "Update owner",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" },
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Owner" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Updated" }
-        }
-      },
-      "delete": {
-        "tags": ["Owner"],
-        "summary": "Delete owner",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
-        ],
-        "responses": {
-          "200": { "description": "Deleted" }
-        }
+  "post": {
+    "tags": ["Owner"],
+    "summary": "Create owner (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "required": true,
+        "schema": { "$ref": "#/definitions/Owner" }
       }
-    },
+    ],
+    "responses": {
+      "201": { "description": "Owner created" }
+    }
+  }
+},
+"/owners/me/profile": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get logged-in owner profile",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "Owner profile data" }
+    }
+  }
+},
+"/owners/me/listings": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get my listings",
+    "security": [{ "Bearer": [] }],
+    "responses": {
+      "200": { "description": "Owner listings" }
+    }
+  }
+},
+"/owners/user/{userId}": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get owner by user ID",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "userId",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Owner found" },
+      "404": { "description": "Not found" }
+    }
+  }
+},
+"/owners/{ownerId}/listings": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get listings by owner ID",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "ownerId",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Listings returned" }
+    }
+  }
+},
+"/owners/{id}": {
+  "get": {
+    "tags": ["Owner"],
+    "summary": "Get owner by ID",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Owner details" },
+      "404": { "description": "Not found" }
+    }
+  },
 
-    "/owners/me/profile": {
-      "get": {
-        "tags": ["Owner"],
-        "summary": "Get my owner profile",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": { "description": "Owner profile" }
-        }
+  "put": {
+    "tags": ["Owner"],
+    "summary": "Update owner",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "body",
+        "name": "body",
+        "schema": { "$ref": "#/definitions/Owner" }
       }
-    },
+    ],
+    "responses": {
+      "200": { "description": "Owner updated" }
+    }
+  },
 
-    "/owners/{ownerId}/listings": {
-      "get": {
-        "tags": ["Owner"],
-        "summary": "Get owner listings",
-        "parameters": [
-          { "name": "ownerId", "in": "path", "required": true, "type": "string" }
-        ],
-        "responses": {
-          "200": { "description": "Listings returned" }
-        }
+  "delete": {
+    "tags": ["Owner"],
+    "summary": "Delete owner (Admin only)",
+    "security": [{ "Bearer": [] }],
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "type": "string"
       }
-    },
+    ],
+    "responses": {
+      "200": { "description": "Owner deleted" }
+    }
+  }
+},
 
     "/attractions": {
   "get": {
