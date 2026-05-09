@@ -1,7 +1,6 @@
-const model = require("../config/gemini");
-const retrieveDocs = require("../utils/retrieveDocs"); // 👈 NEW
+const { askAgent } = require("../agent/agentai");
 
-const chatWithGemini = async (req, res) => {
+const chatWithAI = async (req, res) => {
   try {
     const { message } = req.body;
 
@@ -12,48 +11,22 @@ const chatWithGemini = async (req, res) => {
       });
     }
 
-    // 1. Retrieve relevant documents from MongoDB
-    const docs = await retrieveDocs(message);
+    const response = await askAgent(message);
 
-    // 2. Build context from DB results
-    const context = docs
-      .map((doc) => `${doc.title}\n${doc.content}`)
-      .join("\n\n");
-
-    // 3. RAG Prompt (most important part)
-    const prompt = `
-You are a helpful assistant. Use the context below to answer the user.
-
-If the context does not contain the answer, say you don't know.
-
-Context:
-${context || "No relevant data found in database."}
-
-User Question:
-${message}
-`;
-
-    // 4. Send to Gemini
-    const response = await model.invoke(prompt);
-
-    // 5. Return response + debug info
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       userMessage: message,
-      aiResponse: response.content,
-      sources: docs, // optional: show retrieved DB data
+      aiResponse: response,
     });
-  } catch (error) {
-    console.error("RAG Error:", error);
 
-    res.status(500).json({
+  } catch (error) {
+    console.error("AI Error:", error);
+
+    return res.status(500).json({
       success: false,
-      message: "Internal Server Error",
       error: error.message,
     });
   }
 };
 
-module.exports = {
-  chatWithGemini,
-};
+module.exports = { chatWithAI };
