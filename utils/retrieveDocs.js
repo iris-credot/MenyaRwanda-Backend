@@ -4,12 +4,16 @@ const retrieveDocs = async (query) => {
   try {
     if (!query) return [];
 
+    const keywords = query.toLowerCase().split(" ");
+
     const docs = await Document.find({
-      $or: [
-        { title: { $regex: query, $options: "i" } },
-        { content: { $regex: query, $options: "i" } }
-      ]
-    }).limit(5);
+      $or: keywords.map(word => ({
+        $or: [
+          { title: { $regex: word, $options: "i" } },
+          { content: { $regex: word, $options: "i" } }
+        ]
+      }))
+    }).limit(10);
 
     return docs;
   } catch (err) {

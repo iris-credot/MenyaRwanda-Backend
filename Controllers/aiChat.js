@@ -20,23 +20,30 @@ const chatWithGemini = async (req, res) => {
       : "No relevant database information found.";
 
     // 2. BUILD PROMPT
-    const prompt = `
+  const prompt = `
 You are an AI assistant for Menya Rwanda project.
 
-Use the context below to answer.
+You MUST follow these rules:
 
-Context:
+1. If context is provided, ALWAYS use it in your answer.
+2. Never ignore database context.
+3. If context is empty, say you don't have database info.
+
+Context from database:
 ${context}
 
-Question:
+User question:
 ${message}
 
-If context is not relevant, use general knowledge.
+Answer using BOTH:
+- database context (if available)
+- your general knowledge (only to explain better, not replace DB)
 `;
 
     // 3. CALL GEMINI
     const response = await model.invoke(prompt);
-
+console.log("QUERY:", message);
+console.log("FOUND DOCS:", docs);
     return res.status(200).json({
       success: true,
       userMessage: message,
