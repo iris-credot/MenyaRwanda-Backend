@@ -13,11 +13,11 @@ const notificationRoutes = require('./notification');
 const chatRoutes = require('./chat');
 const eventRoutes = require('./event');
 const foodRoutes = require('./foods');
-
+const aiChatRoutes = require('./aiChat');
 
 //  REGISTER ROUTES
 
-
+Router.use('/ai', aiChatRoutes);
 //  USER AUTH & PROFILE
 Router.use('/users', userRoutes);
 
