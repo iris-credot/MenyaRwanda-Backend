@@ -1,6 +1,7 @@
-const { askAgent } = require("../agent/agentai");
+const model = require("../config/gemini");
+const retrieveDocs = require("../utils/retrieveDocs");
 
-const chatWithAI = async (req, res) => {
+const chatWithGemini = async (req, res) => {
   try {
     const { message } = req.body;
 
@@ -11,12 +12,36 @@ const chatWithAI = async (req, res) => {
       });
     }
 
-    const response = await askAgent(message);
+    // 1. GET CONTEXT FROM DB
+    const docs = await retrieveDocs(message);
+
+    const context = docs.length
+      ? docs.map(d => d.content).join("\n")
+      : "No relevant database information found.";
+
+    // 2. BUILD PROMPT
+    const prompt = `
+You are an AI assistant for Menya Rwanda project.
+
+Use the context below to answer.
+
+Context:
+${context}
+
+Question:
+${message}
+
+If context is not relevant, use general knowledge.
+`;
+
+    // 3. CALL GEMINI
+    const response = await model.invoke(prompt);
 
     return res.status(200).json({
       success: true,
       userMessage: message,
-      aiResponse: response,
+      aiResponse: response.content,
+      sources: docs,
     });
 
   } catch (error) {
@@ -29,4 +54,4 @@ const chatWithAI = async (req, res) => {
   }
 };
 
-module.exports = { chatWithAI };
+module.exports = { chatWithGemini };
