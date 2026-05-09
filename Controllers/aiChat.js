@@ -20,24 +20,21 @@ const chatWithGemini = async (req, res) => {
       : "No relevant database information found.";
 
     // 2. BUILD PROMPT
-  const prompt = `
-You are an AI assistant for Menya Rwanda project.
+ const prompt = `
+You are Menya Rwanda AI assistant.
 
-You MUST follow these rules:
+Always check database context first.
 
-1. If context is provided, ALWAYS use it in your answer.
-2. Never ignore database context.
-3. If context is empty, say you don't have database info.
-
-Context from database:
+DATABASE CONTENT:
 ${context}
 
-User question:
+QUESTION:
 ${message}
 
-Answer using BOTH:
-- database context (if available)
-- your general knowledge (only to explain better, not replace DB)
+RULES:
+- If DB content exists, you MUST use it
+- If no DB content, say "No relevant database info found"
+- Always explain whether DB was used or not
 `;
 
     // 3. CALL GEMINI
