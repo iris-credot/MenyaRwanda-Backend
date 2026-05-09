@@ -4,14 +4,19 @@ const retrieveDocs = async (query) => {
   try {
     if (!query) return [];
 
-    const cleanQuery = query.toLowerCase();
+    const keywords = query
+      .toLowerCase()
+      .split(" ")
+      .filter(word => word.length > 2); // remove small words like "is", "what"
 
     const docs = await Document.find({
-      $or: [
-        { title: { $regex: cleanQuery, $options: "i" } },
-        { content: { $regex: cleanQuery, $options: "i" } }
-      ]
-    }).limit(10); // increase limit
+      $or: keywords.map(word => ({
+        $or: [
+          { title: { $regex: word, $options: "i" } },
+          { content: { $regex: word, $options: "i" } }
+        ]
+      }))
+    }).limit(5);
 
     return docs;
   } catch (error) {
