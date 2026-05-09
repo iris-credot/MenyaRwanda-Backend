@@ -1,4 +1,4 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+const { ChatGoogleGenerativeAI } = require("@langchain/google-genai");
 
 const model = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -6,4 +6,4 @@ const model = new ChatGoogleGenerativeAI({
   temperature: 0.7,
 });
 
-export default model;
+module.exports = model;

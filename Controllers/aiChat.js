@@ -1,6 +1,6 @@
-import model from "../config/gemini";
+const model = require("../config/gemini");
 
-export const chatWithGemini = async (req, res) => {
+const chatWithGemini = async (req, res) => {
   try {
     const { message } = req.body;
 
@@ -27,4 +27,8 @@ export const chatWithGemini = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+module.exports = {
+  chatWithGemini,
 };
