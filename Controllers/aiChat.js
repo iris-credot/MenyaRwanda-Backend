@@ -15,30 +15,32 @@ const chatWithGemini = async (req, res) => {
     // 1. GET CONTEXT FROM DB
     const docs = await retrieveDocs(message);
 
-    const context = docs.length
-      ? docs.map(d => d.content).join("\n")
-      : "No relevant database information found.";
+   const context = docs.length
+  ? docs.map(d => d.content.substring(0, 500)).join("\n")
+  : "No database information.";
 
     // 2. BUILD PROMPT
  const prompt = `
 You are Menya Rwanda AI assistant.
 
-Always check database context first.
+Use the database context below to answer the user question.
 
-DATABASE CONTENT:
+DATABASE:
 ${context}
 
 QUESTION:
 ${message}
 
-RULES:
-- If DB content exists, you MUST use it
-- If no DB content, say "No relevant database info found"
-- Always explain whether DB was used or not
+Answer briefly and clearly.
 `;
 
     // 3. CALL GEMINI
-    const response = await model.invoke(prompt);
+  const response = await Promise.race([
+  model.invoke(prompt),
+  new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Gemini timeout")), 15000)
+  )
+]);
 console.log("QUERY:", message);
 console.log("FOUND DOCS:", docs);
     return res.status(200).json({
@@ -49,13 +51,13 @@ console.log("FOUND DOCS:", docs);
     });
 
   } catch (error) {
-    console.error("AI Error:", error);
+  console.error("AI Error:", error);
 
-    return res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
+  return res.status(500).json({
+    success: false,
+    error: error.message,
+  });
+}
 };
 
 module.exports = { chatWithGemini };
