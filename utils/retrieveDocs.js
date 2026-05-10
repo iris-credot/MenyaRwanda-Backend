@@ -141,14 +141,14 @@ const retrieveAllDocs = async (query) => {
       users,
       favorites,
     ] = await Promise.all([
-      Document.find(docQ).limit(3).lean(),
+      Document.find(docQ).limit(2).lean(),
 
       intents.includes("event")
-        ? Event.find(eventQ).limit(6).lean()
-        : Event.find(eventQ).limit(2).lean(),
+        ? Event.find(eventQ).limit(3).lean()
+        : Event.find(eventQ).limit(1).lean(),
 
       intents.includes("attraction")
-        ? Attraction.find(attractionQ).limit(6).lean()
+        ? Attraction.find(attractionQ).limit(4).lean()
         : Attraction.find(attractionQ).limit(3).lean(),
 
       intents.includes("food")
@@ -158,13 +158,13 @@ const retrieveAllDocs = async (query) => {
       Review.find(buildRegexQuery(["comment"], keywords)).limit(3).lean(),
 
       intents.includes("owner")
-        ? Owner.find(ownerQ).limit(5).lean()
-        : Owner.find(ownerQ).limit(2).lean(),
+        ? Owner.find(ownerQ).limit(3).lean()
+        : Owner.find(ownerQ).limit(1).lean(),
 
       intents.includes("user")
         ? User.find(userQ)
             .select("username names firstName lastName bio address role")
-            .limit(3)
+            .limit(2)
             .lean()
         : [],
 
