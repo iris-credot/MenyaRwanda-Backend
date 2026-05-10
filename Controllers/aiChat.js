@@ -26,21 +26,22 @@ const chatWithGemini = async (req, res) => {
         : "No database information found.";
 
     // 🧠 FINAL PROMPT (VERY IMPORTANT)
-    const prompt = `
+   const prompt = `
 You are Menya Rwanda AI assistant.
 
-You MUST use the database context below if available.
+Use the database context below if relevant.
 
 DATABASE CONTEXT:
 ${context}
 
-QUESTION:
+USER QUESTION:
 ${message}
 
 RULES:
-- If database has info, use it
-- If not, say "No relevant data in database"
-- Always mention when DB was used
+- If database contains relevant information, use it
+- If database does not contain answer, use your general knowledge
+- Never say only "No database information"
+- Answer naturally and helpfully
 `;
 
     const response = await model.invoke(prompt);
