@@ -1,6 +1,6 @@
-const Chat = require("../Models/chat");
 const model = require("../config/gemini");
 const retrieveAllDocs = require("../utils/retrieveDocs");
+const Chat = require("../Models/chat");
 const chatWithGemini = async (req, res) => {
   try {
     console.log("🚀 AI route hit");
@@ -20,16 +20,7 @@ const chatWithGemini = async (req, res) => {
     console.log("🆔 req.user._id:", req.user?._id);
 
     const userId = req.user?._id || req.body.userId;
-    console.log("👤 userId:", userId);
-
-if (!userId) {
-  return res.status(400).json({
-    success: false,
-    message: "Missing userId"
-  });
-}
-
-   
+    console.log("🧾 Final userId used:", userId);
 
     // 📚 RAG retrieval
     console.log("🔎 Retrieving docs...");
