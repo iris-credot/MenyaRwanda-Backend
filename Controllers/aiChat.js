@@ -1,6 +1,6 @@
+const Chat = require("../Models/chat");
 const model = require("../config/gemini");
 const retrieveAllDocs = require("../utils/retrieveDocs");
-const Chat = require("../Models/chat");
 const chatWithGemini = async (req, res) => {
   try {
     console.log("🚀 AI route hit");
