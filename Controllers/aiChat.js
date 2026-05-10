@@ -20,7 +20,16 @@ const chatWithGemini = async (req, res) => {
     console.log("🆔 req.user._id:", req.user?._id);
 
     const userId = req.user?._id || req.body.userId;
-    console.log("🧾 Final userId used:", userId);
+    console.log("👤 userId:", userId);
+
+if (!userId) {
+  return res.status(400).json({
+    success: false,
+    message: "Missing userId"
+  });
+}
+
+   
 
     // 📚 RAG retrieval
     console.log("🔎 Retrieving docs...");
@@ -83,10 +92,12 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
 
     console.log("🤖 Pushing AI message...");
     chat.messages.push({
-      role: "assistant",
+      role: "ai",
       text: response.content,
     });
-
+console.log("💾 ABOUT TO SAVE CHAT");
+console.log("👤 userId:", userId);
+console.log("💬 messages:", chat.messages);
     console.log("💾 Saving chat to DB...");
     await chat.save();
 
