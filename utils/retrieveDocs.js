@@ -3,68 +3,70 @@ const Event = require("../Models/events");
 const Attraction = require("../Models/attraction");
 const Food = require("../Models/foods");
 const Review = require("../Models/review");
-const Favorite = require("../Models/favorite");
 const Notification = require("../Models/notification");
 const Owner = require("../Models/owners");
-const User = require("../Models/user");
+const model = require("../config/gemini");
 
-// Words that carry no search meaning
 const STOP_WORDS = new Set([
-  "tell", "me", "about", "what", "are", "the", "is", "a", "an",
-  "and", "or", "for", "in", "of", "to", "how", "can", "you", "i",
-  "give", "show", "list", "some", "any", "all", "with", "from",
-  "that", "this", "there", "do", "does", "have", "has", "get",
-  "find", "know", "want", "need", "please", "hi", "hello"
+  "tell","me","about","what","are","the","is","a","an","and","or","for",
+  "in","of","to","how","can","you","i","give","show","list","some","any",
+  "all","with","from","that","this","there","do","does","have","has","get",
+  "find","know","want","need","please","hi","hello","visit","should","which",
+  "places","love","being","near","like","really","very","also","would"
 ]);
 
-// Intent → collection priority map
-const INTENT_MAP = [
-  {
-    keywords: ["event", "events", "festival", "concert", "workshop", "summit", "conference"],
-    type: "event",
-  },
-  {
-    keywords: ["attraction", "attractions", "visit", "place", "places", "park", "gorilla", "lake", "mountain", "museum", "site"],
-    type: "attraction",
-  },
-  {
-    keywords: ["food", "foods", "eat", "eating", "restaurant", "cuisine", "dish", "meal", "drink"],
-    type: "food",
-  },
-  {
-    keywords: ["review", "reviews", "rating", "feedback", "opinion", "comment"],
-    type: "review",
-  },
-  {
-    keywords: ["owner", "business", "operator", "partner"],
-    type: "owner",
-  },
-  {
-    keywords: ["notification", "notifications", "alert", "update", "news", "announce"],
-    type: "notification",
-  },
-];
-
 /**
- * Detect intent from query → returns array of matched types
+ * Step 1: Use Gemini to extract smart search keywords from user message
  */
-const detectIntent = (lowerQuery) => {
-  const matched = [];
-  for (const intent of INTENT_MAP) {
-    if (intent.keywords.some((kw) => lowerQuery.includes(kw))) {
-      matched.push(intent.type);
+const extractSearchKeywords = async (query) => {
+  try {
+    const prompt = `
+You are a search keyword extractor for a Rwanda tourism database.
+
+Given a user's message, extract the most relevant search keywords that would help find matching tourism attractions, events, foods, or activities in Rwanda.
+
+Rules:
+- Return ONLY a JSON array of strings, no explanation
+- Include synonyms and related terms
+- For "water" → include: lake, river, waterfall, swimming, boat, kayak, fishing
+- For "hiking" → include: hiking, trekking, trail, climb, volcano, mountain, walk
+- For "wildlife" → include: wildlife, safari, animals, gorilla, game drive, park
+- For "culture" → include: culture, traditional, dance, village, history, museum
+- For "food" → include: food, restaurant, cuisine, eat, local, dish
+- Keep to 6-10 keywords maximum
+- Return only the JSON array
+
+User message: "${query}"
+
+Return format: ["keyword1", "keyword2", "keyword3"]
+`;
+
+    const response = await model.invoke(prompt);
+    const text = response.content.trim();
+
+    // Parse JSON array from response
+    const match = text.match(/\[.*?\]/s);
+    if (match) {
+      const keywords = JSON.parse(match[0]);
+      console.log("🧠 AI-extracted keywords:", keywords);
+      return keywords;
     }
+  } catch (err) {
+    console.error("⚠️ Keyword extraction failed, falling back:", err.message);
   }
-  return matched; // empty = general query
+
+  // Fallback: basic keyword extraction
+  return query
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((w) => w.length > 3 && !STOP_WORDS.has(w));
 };
 
 /**
- * Build a FLAT $or query across all keywords × all fields
- * Fix: single $or array, not nested $or of $or
+ * Step 2: Build flat $or query across keywords × fields
  */
 const buildRegexQuery = (fields, keywords) => {
-  if (!keywords.length) return {}; // match all if no keywords
-
+  if (!keywords.length) return {};
   return {
     $or: keywords.flatMap((word) =>
       fields.map((field) => ({
@@ -75,7 +77,52 @@ const buildRegexQuery = (fields, keywords) => {
 };
 
 /**
- * GLOBAL MULTI-MODEL RAG RETRIEVER
+ * Step 3: Intent detection for collection prioritization
+ */
+const detectIntent = (lowerQuery) => {
+  const intents = [];
+
+  const intentMap = [
+    {
+      type: "attraction",
+      signals: [
+        "visit","place","attraction","park","lake","mountain","volcano",
+        "waterfall","river","hike","hiking","trek","trekking","swim",
+        "boat","kayak","gorilla","wildlife","safari","nature","outdoor",
+        "water","beach","forest","scenery","landscape","view"
+      ],
+    },
+    {
+      type: "event",
+      signals: [
+        "event","festival","concert","workshop","summit","conference",
+        "show","performance","celebration","fair","expo"
+      ],
+    },
+    {
+      type: "food",
+      signals: [
+        "food","eat","restaurant","cuisine","dish","meal","drink",
+        "taste","try","local food","hungry","dining"
+      ],
+    },
+    {
+      type: "review",
+      signals: ["review","rating","feedback","opinion","recommend","experience"],
+    },
+  ];
+
+  for (const intent of intentMap) {
+    if (intent.signals.some((sig) => lowerQuery.includes(sig))) {
+      intents.push(intent.type);
+    }
+  }
+
+  return intents.length ? intents : ["attraction"]; // default to attractions for tourism queries
+};
+
+/**
+ * MAIN RETRIEVER
  */
 const retrieveAllDocs = async (query) => {
   try {
@@ -83,69 +130,76 @@ const retrieveAllDocs = async (query) => {
 
     const lowerQuery = query.toLowerCase().trim();
 
-    // Extract meaningful keywords only
-    const keywords = lowerQuery
-      .split(/\s+/)
-      .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
+    // Step 1: Get smart keywords via Gemini
+    const keywords = await extractSearchKeywords(query);
 
-    // Detect what collections to prioritize
+    // Step 2: Detect intent
     const intents = detectIntent(lowerQuery);
-    const isBroadQuery = keywords.length === 0; // e.g. "tell me about events"
 
     console.log("🔍 Query:", query);
     console.log("🧩 Keywords:", keywords);
-    console.log("🎯 Intents:", intents.length ? intents : ["general"]);
-    console.log("📢 Broad query:", isBroadQuery);
+    console.log("🎯 Intents:", intents);
 
-    // For intent-based broad queries (e.g. "tell me about events"),
-    // fetch all from that collection; otherwise use keyword regex
-    const makeQuery = (type, fields) => {
-      const isIntended = intents.includes(type);
-      if (isIntended && isBroadQuery) return {}; // fetch all in collection
-      if (isIntended && keywords.length) return buildRegexQuery(fields, keywords);
-      if (!intents.length) return buildRegexQuery(fields, keywords); // general query
-      return null; // skip collection not matching intent (use null to skip)
-    };
+    const attractionQ = buildRegexQuery(
+      ["name", "description", "location", "district", "province", "category", "tags"],
+      keywords
+    );
 
-    const eventQ     = makeQuery("event",        ["title", "description", "location"]);
-    const attractionQ= makeQuery("attraction",   ["name", "description", "location", "district", "province"]);
-    const foodQ      = makeQuery("food",         ["name", "description", "category"]);
-    const reviewQ    = makeQuery("review",       ["comment"]);
-    const ownerQ     = makeQuery("owner",        ["businessName"]);
-    const notifQ     = makeQuery("notification", ["title", "message"]);
-    const docQ       = buildRegexQuery(["title", "content", "category"], keywords);
+    const eventQ = buildRegexQuery(
+      ["title", "description", "location", "category", "tags"],
+      keywords
+    );
 
-    // Run all queries in parallel; skip collections returning null
-    const [
-      docs,
-      events,
-      attractions,
-      foods,
-      reviews,
-      notifications,
-      owners,
-    ] = await Promise.all([
-      docQ       ? Document.find(docQ).limit(4).lean()      : [],
-      eventQ     ? Event.find(eventQ).limit(8).lean()       : [],
-      attractionQ? Attraction.find(attractionQ).limit(5).lean(): [],
-      foodQ      ? Food.find(foodQ).limit(5).lean()         : [],
-      reviewQ    ? Review.find(reviewQ).limit(4).lean()     : [],
-      notifQ     ? Notification.find(notifQ).limit(3).lean(): [],
-      ownerQ     ? Owner.find(ownerQ).limit(3).lean()       : [],
+    const foodQ = buildRegexQuery(
+      ["name", "description", "category", "tags"],
+      keywords
+    );
+
+    const reviewQ = buildRegexQuery(
+      ["comment"],
+      keywords
+    );
+
+    const docQ = buildRegexQuery(
+      ["title", "content", "category"],
+      keywords
+    );
+
+    // Run queries — prioritize based on intent
+    const isAttractionQuery = intents.includes("attraction");
+    const isEventQuery = intents.includes("event");
+    const isFoodQuery = intents.includes("food");
+
+    const [docs, events, attractions, foods, reviews] = await Promise.all([
+      Document.find(docQ).limit(3).lean(),
+      isEventQuery
+        ? Event.find(eventQ).limit(6).lean()
+        : Event.find(eventQ).limit(2).lean(),
+      isAttractionQuery
+        ? Attraction.find(attractionQ).limit(8).lean()  // fetch more for attractions
+        : Attraction.find(attractionQ).limit(3).lean(),
+      isFoodQuery
+        ? Food.find(foodQ).limit(6).lean()
+        : Food.find(foodQ).limit(2).lean(),
+      Review.find(reviewQ).limit(3).lean(),
     ]);
 
     console.log(
       `📦 Results → docs:${docs.length} events:${events.length} ` +
-      `attractions:${attractions.length} foods:${foods.length} ` +
-      `reviews:${reviews.length} notifs:${notifications.length} owners:${owners.length}`
+      `attractions:${attractions.length} foods:${foods.length} reviews:${reviews.length}`
     );
 
-    // Format results for Gemini context (guard every field)
+    // Step 3: Format results
     const formatted = [];
 
-    docs.forEach((d) => {
-      if (d.title || d.content)
-        formatted.push(`[DOCUMENT]\nTitle: ${d.title || "N/A"}\n${d.content || ""}`);
+    attractions.forEach((a) => {
+      if (a.name || a.description)
+        formatted.push(
+          `[ATTRACTION]\nName: ${a.name || "N/A"}\n` +
+          `Description: ${a.description || "N/A"}\n` +
+          `Location: ${a.location || a.district || "N/A"}\n` +
+          `Category: ${a.category || "N/A"}`
+        );
     });
 
     events.forEach((e) => {
@@ -158,15 +212,6 @@ const retrieveAllDocs = async (query) => {
         );
     });
 
-    attractions.forEach((a) => {
-      if (a.name || a.description)
-        formatted.push(
-          `[ATTRACTION]\nName: ${a.name || "N/A"}\n` +
-          `Description: ${a.description || "N/A"}\n` +
-          `Location: ${a.location || a.district || "N/A"}`
-        );
-    });
-
     foods.forEach((f) => {
       if (f.name || f.description)
         formatted.push(
@@ -176,19 +221,14 @@ const retrieveAllDocs = async (query) => {
         );
     });
 
+    docs.forEach((d) => {
+      if (d.title || d.content)
+        formatted.push(`[DOCUMENT]\nTitle: ${d.title || "N/A"}\n${d.content || ""}`);
+    });
+
     reviews.forEach((r) => {
       if (r.comment)
         formatted.push(`[REVIEW]\n${r.comment}`);
-    });
-
-    notifications.forEach((n) => {
-      if (n.title || n.message)
-        formatted.push(`[NOTIFICATION]\n${n.title || "N/A"}: ${n.message || "N/A"}`);
-    });
-
-    owners.forEach((o) => {
-      if (o.businessName)
-        formatted.push(`[BUSINESS]\nName: ${o.businessName}`);
     });
 
     return formatted;
