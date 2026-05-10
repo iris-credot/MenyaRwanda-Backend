@@ -3,15 +3,17 @@ const retrieveAllDocs = require("../utils/retrieveDocs");
 
 const chatWithGemini = async (req, res) => {
   try {
+    console.log("🚀 AI route hit");
     const { message } = req.body;
 
     if (!message?.trim()) {
+       console.log("❌ No message");
       return res.status(400).json({
         success: false,
         message: "Message is required",
       });
     }
-
+   console.log("📨 User message:", message);
     // Step 1: Retrieve from DB
     const contextArray = await retrieveAllDocs(message);
     const hasContext = contextArray.length > 0;
@@ -35,15 +37,15 @@ Reply helpfully using the data above. Only use records relevant to the user's qu
 USER: ${message}
 
 Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follow-up question.`;
-
+ console.log("🧠 Sending to Gemini...");
     // Step 3: Call Gemini with 45s timeout
     const response = await Promise.race([
       model.invoke(prompt),
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Gemini timeout")), 45000)
+        setTimeout(() => reject(new Error("Gemini timeout")), 15000)
       ),
     ]);
-
+  console.log("✅ Gemini raw response:", response);
     return res.status(200).json({
       success: true,
       userMessage: message,
@@ -54,7 +56,7 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
 
   } catch (error) {
     console.error("❌ AI Error:", error.message);
-
+console.error("❌ Full error:", JSON.stringify(error, null, 2)); 
     // Graceful fallback — answer from Gemini general knowledge only
     try {
       const fallback = await model.invoke(
