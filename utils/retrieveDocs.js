@@ -1,11 +1,11 @@
 const Document = require("../Models/document");
-const Event = require("../Models/event");
+const Event = require("../Models/events");
 const Attraction = require("../Models/attraction");
-const Food = require("../Models/food");
+const Food = require("../Models/foods");
 const Review = require("../Models/review");
 const Favorite = require("../Models/favorite");
 const Notification = require("../Models/notification");
-const Owner = require("../Models/owner");
+const Owner = require("../Models/owners");
 const User = require("../Models/user");
 
 // Words that carry no search meaning
