@@ -20,13 +20,15 @@ const chatWithGemini = async (req, res) => {
 
     console.log("📨 Query:", message);
     console.log("📚 Context items:", contextArray.length);
-
+const safeContext = contextArray
+  .slice(0, 4)
+  .join("\n\n---\n\n");
     // Step 2: Build short focused prompt
     const prompt = hasContext
       ? `You are "Menya Rwanda Assistant", a Rwanda tourism guide.
 
 RELEVANT DATA FROM DATABASE:
-${contextArray.join("\n\n---\n\n")}
+${safeContext}
 
 USER: ${message}
 
@@ -42,7 +44,7 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
     const response = await Promise.race([
       model.invoke(prompt),
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Gemini timeout")), 15000)
+        setTimeout(() => reject(new Error("Gemini timeout")), 30000)
       ),
     ]);
   console.log("✅ Gemini raw response:", response);
