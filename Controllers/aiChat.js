@@ -24,7 +24,7 @@ const chatWithGemini = async (req, res) => {
     // Step 2: Two separate prompts — one grounded, one general
     const prompt = hasContext
       ? `
-You are "Menya Rwanda Assistant", an expert guide for Rwanda's tourism platform.
+You are "Menya-Rwanda Assistant", an expert guide for Rwanda's tourism platform.
 You have access to real-time data from our platform database.
 
 DATABASE RECORDS:
