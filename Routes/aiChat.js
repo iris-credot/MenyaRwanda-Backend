@@ -1,10 +1,12 @@
 const express = require("express");
+const auth = require('../Middleware/authentication');
 const { chatWithGemini } = require("../Controllers/aiChat");
-const {getChatHistory} = require("../Controllers/chat");
+
 
 const router = express.Router();
 
-router.post("/chat", chatWithGemini);
-router.get("/history/:userId", getChatHistory);
+router.post("/chat",auth.AuthJWT, chatWithGemini);
+
 
 module.exports = router;
+
