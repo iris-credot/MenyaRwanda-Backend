@@ -1,6 +1,6 @@
 const model = require("../config/gemini");
 const retrieveAllDocs = require("../utils/retrieveDocs");
-
+const Chat = require("../Models/chat");
 const chatWithGemini = async (req, res) => {
   try {
     console.log("🚀 AI route hit");
@@ -48,6 +48,30 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
       ),
     ]);
   console.log("✅ Gemini raw response:", response);
+  const Chat = require("../models/Chat"); // make sure it's imported at top
+
+let chat = await Chat.findOne({ userId: req.user?.id });
+
+if (!chat) {
+  chat = new Chat({
+    userId: req.user?.id,
+    messages: [],
+  });
+}
+
+chat.messages.push({
+  role: "user",
+  text: message,
+});
+
+chat.messages.push({
+  role: "ai",
+  text: response.content,
+});
+
+await chat.save();
+
+console.log("💾 Chat saved successfully");
     return res.status(200).json({
       success: true,
       userMessage: message,
