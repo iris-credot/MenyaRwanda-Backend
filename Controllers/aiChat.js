@@ -1,8 +1,10 @@
 const model = require("../config/gemini");
-const retrieveDocs = require("../utils/retrieveDocs");
+const retrieveAllDocs = require("../utils/retrieveDocs");
 
 const chatWithGemini = async (req, res) => {
   try {
+    console.log("AI ROUTE HIT");
+
     const { message } = req.body;
 
     if (!message) {
@@ -12,52 +14,52 @@ const chatWithGemini = async (req, res) => {
       });
     }
 
-    // 1. GET CONTEXT FROM DB
-    const docs = await retrieveDocs(message);
+    // 🔥 GET DATA FROM ALL MODELS
+    const contextArray = await retrieveAllDocs(message);
 
-   const context = docs.length
-  ? docs.map(d => d.content.substring(0, 500)).join("\n")
-  : "No database information.";
+    console.log("QUERY:", message);
+    console.log("FOUND CONTEXT:", contextArray.length);
 
-    // 2. BUILD PROMPT
- const prompt = `
+    const context =
+      contextArray.length > 0
+        ? contextArray.join("\n\n")
+        : "No database information found.";
+
+    // 🧠 FINAL PROMPT (VERY IMPORTANT)
+    const prompt = `
 You are Menya Rwanda AI assistant.
 
-Use the database context below to answer the user question.
+You MUST use the database context below if available.
 
-DATABASE:
+DATABASE CONTEXT:
 ${context}
 
 QUESTION:
 ${message}
 
-Answer briefly and clearly.
+RULES:
+- If database has info, use it
+- If not, say "No relevant data in database"
+- Always mention when DB was used
 `;
 
-    // 3. CALL GEMINI
-  const response = await Promise.race([
-  model.invoke(prompt),
-  new Promise((_, reject) =>
-    setTimeout(() => reject(new Error("Gemini timeout")), 15000)
-  )
-]);
-console.log("QUERY:", message);
-console.log("FOUND DOCS:", docs);
+    const response = await model.invoke(prompt);
+
     return res.status(200).json({
       success: true,
       userMessage: message,
       aiResponse: response.content,
-      sources: docs,
+      sources: contextArray,
     });
 
   } catch (error) {
-  console.error("AI Error:", error);
+    console.error("AI ERROR:", error);
 
-  return res.status(500).json({
-    success: false,
-    error: error.message,
-  });
-}
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
 };
 
 module.exports = { chatWithGemini };
