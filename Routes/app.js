@@ -14,10 +14,11 @@ const chatRoutes = require('./chat');
 const eventRoutes = require('./event');
 const foodRoutes = require('./foods');
 const aiChatRoutes = require('./aiChat');
-
+const debugRoutes = require('./debug');
 //  REGISTER ROUTES
 
 Router.use('/ai', aiChatRoutes);
+Router.use('/debug', debugRoutes);
 //  USER AUTH & PROFILE
 Router.use('/users', userRoutes);
 
