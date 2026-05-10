@@ -15,6 +15,15 @@ const chatWithGemini = async (req, res) => {
     }
    console.log("📨 User message:", message);
     // Step 1: Retrieve from DB
+     // 🔐 USER DEBUG
+    console.log("👤 req.user:", req.user);
+    console.log("🆔 req.user._id:", req.user?._id);
+
+    const userId = req.user?._id || req.body.userId;
+    console.log("🧾 Final userId used:", userId);
+
+    // 📚 RAG retrieval
+    console.log("🔎 Retrieving docs...");
     const contextArray = await retrieveAllDocs(message);
     const hasContext = contextArray.length > 0;
 
@@ -48,30 +57,44 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
       ),
     ]);
   console.log("✅ Gemini raw response:", response);
-  const Chat = require("../models/Chat"); // make sure it's imported at top
+     console.log("✅ Gemini response received");
+    console.log("🧾 Response content:", response?.content);
 
-let chat = await Chat.findOne({ userId: req.user?.id });
+    // 💾 DB SAVE DEBUG
+    console.log("💾 Checking chat in DB for user:", userId);
 
-if (!chat) {
-  chat = new Chat({
-    userId: req.user?.id,
-    messages: [],
-  });
-}
+    let chat = await Chat.findOne({ userId });
 
-chat.messages.push({
-  role: "user",
-  text: message,
-});
+    console.log("📦 Existing chat found:", !!chat);
 
-chat.messages.push({
-  role: "ai",
-  text: response.content,
-});
+    if (!chat) {
+      console.log("🆕 Creating new chat document");
+      chat = new Chat({
+        userId,
+        messages: [],
+      });
+    }
 
-await chat.save();
+    console.log("💬 Pushing user message...");
+    chat.messages.push({
+      role: "user",
+      text: message,
+    });
 
-console.log("💾 Chat saved successfully");
+    console.log("🤖 Pushing AI message...");
+    chat.messages.push({
+      role: "assistant",
+      text: response.content,
+    });
+
+    console.log("💾 Saving chat to DB...");
+    await chat.save();
+
+    console.log("✅ Chat saved successfully!");
+    console.log("📊 Total messages now:", chat.messages.length);
+
+    console.log("================ AI REQUEST END ================\n");
+
     return res.status(200).json({
       success: true,
       userMessage: message,
