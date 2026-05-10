@@ -22,6 +22,7 @@
   "homepage": "https://github.com/iris-credot/MenyaRwanda-Backend#readme",
   "dependencies": {
     "@langchain/google-genai": "^2.1.30",
+    "@langchain/groq": "^1.2.0",
     "@sendgrid/mail": "^8.1.6",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
