@@ -1,69 +1,62 @@
-const Document = require("../Models/document");
-const Event = require("../Models/events");
 const Attraction = require("../Models/attraction");
+const Event = require("../Models/events");
 const Food = require("../Models/foods");
+const Document = require("../Models/document");
 const Review = require("../Models/review");
-const Notification = require("../Models/notification");
-const Owner = require("../Models/owners");
-const model = require("../config/gemini");
+
+// ── Synonym expansion map ─────────────────────────────────────────────────
+// Add more as your content grows
+const SYNONYMS = {
+  water:    ["lake", "river", "waterfall", "swimming", "boat", "kayak", "fishing", "kivu", "aqua"],
+  hiking:   ["hiking", "trekking", "trek", "trail", "climb", "mountain", "volcano", "walk", "summit"],
+  wildlife: ["wildlife", "safari", "animal", "gorilla", "game", "park", "bird", "rhino", "lion"],
+  culture:  ["culture", "cultural", "traditional", "dance", "village", "history", "museum", "heritage"],
+  food:     ["food", "restaurant", "cuisine", "dish", "meal", "local", "taste", "dining"],
+  nature:   ["nature", "forest", "scenery", "landscape", "green", "outdoor", "scenic"],
+  city:     ["kigali", "city", "urban", "nightlife", "market", "shopping"],
+  relax:    ["relax", "peaceful", "quiet", "resort", "spa", "retreat", "scenic"],
+};
 
 const STOP_WORDS = new Set([
   "tell","me","about","what","are","the","is","a","an","and","or","for",
   "in","of","to","how","can","you","i","give","show","list","some","any",
   "all","with","from","that","this","there","do","does","have","has","get",
   "find","know","want","need","please","hi","hello","visit","should","which",
-  "places","love","being","near","like","really","very","also","would"
+  "places","love","being","near","like","really","very","also","would","go",
+  "best","great","good","nice","want","looking","interested","suggest","recommend"
 ]);
 
 /**
- * Step 1: Use Gemini to extract smart search keywords from user message
+ * Expand keywords using synonym map — no AI call needed
  */
-const extractSearchKeywords = async (query) => {
-  try {
-    const prompt = `
-You are a search keyword extractor for a Rwanda tourism database.
+const expandKeywords = (query) => {
+  const lowerQuery = query.toLowerCase();
 
-Given a user's message, extract the most relevant search keywords that would help find matching tourism attractions, events, foods, or activities in Rwanda.
+  // Start with raw meaningful words from the query
+  const rawWords = lowerQuery
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !STOP_WORDS.has(w));
 
-Rules:
-- Return ONLY a JSON array of strings, no explanation
-- Include synonyms and related terms
-- For "water" → include: lake, river, waterfall, swimming, boat, kayak, fishing
-- For "hiking" → include: hiking, trekking, trail, climb, volcano, mountain, walk
-- For "wildlife" → include: wildlife, safari, animals, gorilla, game drive, park
-- For "culture" → include: culture, traditional, dance, village, history, museum
-- For "food" → include: food, restaurant, cuisine, eat, local, dish
-- Keep to 6-10 keywords maximum
-- Return only the JSON array
+  const expanded = new Set(rawWords);
 
-User message: "${query}"
+  // Add synonyms for any matched concept
+  for (const [concept, synonymList] of Object.entries(SYNONYMS)) {
+    const conceptMatched =
+      lowerQuery.includes(concept) ||
+      synonymList.some((s) => lowerQuery.includes(s));
 
-Return format: ["keyword1", "keyword2", "keyword3"]
-`;
-
-    const response = await model.invoke(prompt);
-    const text = response.content.trim();
-
-    // Parse JSON array from response
-    const match = text.match(/\[.*?\]/s);
-    if (match) {
-      const keywords = JSON.parse(match[0]);
-      console.log("🧠 AI-extracted keywords:", keywords);
-      return keywords;
+    if (conceptMatched) {
+      synonymList.forEach((s) => expanded.add(s));
     }
-  } catch (err) {
-    console.error("⚠️ Keyword extraction failed, falling back:", err.message);
   }
 
-  // Fallback: basic keyword extraction
-  return query
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((w) => w.length > 3 && !STOP_WORDS.has(w));
+  const keywords = [...expanded];
+  console.log("🧩 Expanded keywords:", keywords);
+  return keywords;
 };
 
 /**
- * Step 2: Build flat $or query across keywords × fields
+ * Flat $or query — keywords × fields
  */
 const buildRegexQuery = (fields, keywords) => {
   if (!keywords.length) return {};
@@ -77,119 +70,72 @@ const buildRegexQuery = (fields, keywords) => {
 };
 
 /**
- * Step 3: Intent detection for collection prioritization
+ * Detect which collections to prioritize
  */
 const detectIntent = (lowerQuery) => {
   const intents = [];
 
-  const intentMap = [
-    {
-      type: "attraction",
-      signals: [
-        "visit","place","attraction","park","lake","mountain","volcano",
-        "waterfall","river","hike","hiking","trek","trekking","swim",
-        "boat","kayak","gorilla","wildlife","safari","nature","outdoor",
-        "water","beach","forest","scenery","landscape","view"
-      ],
-    },
-    {
-      type: "event",
-      signals: [
-        "event","festival","concert","workshop","summit","conference",
-        "show","performance","celebration","fair","expo"
-      ],
-    },
-    {
-      type: "food",
-      signals: [
-        "food","eat","restaurant","cuisine","dish","meal","drink",
-        "taste","try","local food","hungry","dining"
-      ],
-    },
-    {
-      type: "review",
-      signals: ["review","rating","feedback","opinion","recommend","experience"],
-    },
-  ];
+  if (/event|festival|concert|workshop|summit|conference|show|fair/.test(lowerQuery))
+    intents.push("event");
 
-  for (const intent of intentMap) {
-    if (intent.signals.some((sig) => lowerQuery.includes(sig))) {
-      intents.push(intent.type);
-    }
-  }
+  if (/food|eat|restaurant|cuisine|dish|meal|drink|taste|hungry|dining/.test(lowerQuery))
+    intents.push("food");
 
-  return intents.length ? intents : ["attraction"]; // default to attractions for tourism queries
+  if (/attraction|visit|place|park|lake|mountain|volcano|waterfall|hike|trek|swim|boat|kayak|gorilla|wildlife|safari|nature|outdoor|water|forest|scenery|landscape|view|trail|climb/.test(lowerQuery))
+    intents.push("attraction");
+
+  return intents.length ? intents : ["attraction"]; // default for tourism
 };
 
 /**
- * MAIN RETRIEVER
+ * MAIN RETRIEVER — single DB round trip, no AI pre-call
  */
 const retrieveAllDocs = async (query) => {
   try {
     if (!query) return [];
 
     const lowerQuery = query.toLowerCase().trim();
-
-    // Step 1: Get smart keywords via Gemini
-    const keywords = await extractSearchKeywords(query);
-
-    // Step 2: Detect intent
-    const intents = detectIntent(lowerQuery);
+    const keywords   = expandKeywords(query);
+    const intents    = detectIntent(lowerQuery);
 
     console.log("🔍 Query:", query);
-    console.log("🧩 Keywords:", keywords);
     console.log("🎯 Intents:", intents);
 
     const attractionQ = buildRegexQuery(
       ["name", "description", "location", "district", "province", "category", "tags"],
       keywords
     );
-
     const eventQ = buildRegexQuery(
       ["title", "description", "location", "category", "tags"],
       keywords
     );
-
     const foodQ = buildRegexQuery(
       ["name", "description", "category", "tags"],
       keywords
     );
-
-    const reviewQ = buildRegexQuery(
-      ["comment"],
-      keywords
-    );
-
     const docQ = buildRegexQuery(
       ["title", "content", "category"],
       keywords
     );
 
-    // Run queries — prioritize based on intent
-    const isAttractionQuery = intents.includes("attraction");
-    const isEventQuery = intents.includes("event");
-    const isFoodQuery = intents.includes("food");
-
-    const [docs, events, attractions, foods, reviews] = await Promise.all([
+    const [docs, events, attractions, foods] = await Promise.all([
       Document.find(docQ).limit(3).lean(),
-      isEventQuery
+      intents.includes("event")
         ? Event.find(eventQ).limit(6).lean()
         : Event.find(eventQ).limit(2).lean(),
-      isAttractionQuery
-        ? Attraction.find(attractionQ).limit(8).lean()  // fetch more for attractions
+      intents.includes("attraction")
+        ? Attraction.find(attractionQ).limit(8).lean()
         : Attraction.find(attractionQ).limit(3).lean(),
-      isFoodQuery
+      intents.includes("food")
         ? Food.find(foodQ).limit(6).lean()
         : Food.find(foodQ).limit(2).lean(),
-      Review.find(reviewQ).limit(3).lean(),
     ]);
 
     console.log(
       `📦 Results → docs:${docs.length} events:${events.length} ` +
-      `attractions:${attractions.length} foods:${foods.length} reviews:${reviews.length}`
+      `attractions:${attractions.length} foods:${foods.length}`
     );
 
-    // Step 3: Format results
     const formatted = [];
 
     attractions.forEach((a) => {
@@ -223,12 +169,9 @@ const retrieveAllDocs = async (query) => {
 
     docs.forEach((d) => {
       if (d.title || d.content)
-        formatted.push(`[DOCUMENT]\nTitle: ${d.title || "N/A"}\n${d.content || ""}`);
-    });
-
-    reviews.forEach((r) => {
-      if (r.comment)
-        formatted.push(`[REVIEW]\n${r.comment}`);
+        formatted.push(
+          `[DOCUMENT]\nTitle: ${d.title || "N/A"}\n${d.content || ""}`
+        );
     });
 
     return formatted;
