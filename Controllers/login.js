@@ -40,8 +40,7 @@ const login_post = asyncWrapper(async (req, res, next) => {
     path: '/',
      secure: true, // MUST be true for cross-domain (HTTPS)
   sameSite: 'none', // CRITICAL: allows cross-site cookies
-  domain: '.onrender.com', // For Render backend
-    maxAge: 24 * 60 * 60 * 1000
+  maxAge: 24 * 60 * 60 * 1000
   });
 
   // 5. Send response
