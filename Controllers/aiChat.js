@@ -13,22 +13,25 @@ const chatWithGemini = async (req, res) => {
         message: "Message is required",
       });
     }
-   console.log("📨 User message:", message);
+  // ✅ Get userId from authenticated user (set by auth middleware)
+    const userId = req.userId || req.user?._id;
+    
+    if (!userId) {
+      console.error("❌ No userId found - user not authenticated");
+      return res.status(401).json({
+        success: false,
+        message: "User authentication required",
+      });
+    }
+
+    console.log("📨 User message:", message);
+    console.log("👤 Authenticated User ID:", userId.toString());
+
     // Step 1: Retrieve from DB
-     // 🔐 USER DEBUG
-    console.log("👤 req.user:", req.user);
-    console.log("🆔 req.user._id:", req.user?._id);
-
-    const userId = req.user?._id || req.body.userId;
-    console.log("🧾 Final userId used:", userId);
-
-    // 📚 RAG retrieval
     console.log("🔎 Retrieving docs...");
     const contextArray = await retrieveAllDocs(message);
     const hasContext = contextArray.length > 0;
 
-    console.log("📨 Query:", message);
-    console.log("📚 Context items:", contextArray.length);
 const safeContext = contextArray
   .slice(0, 4)
   .join("\n\n---\n\n").slice(0, 3000);
@@ -76,15 +79,18 @@ Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follo
     }
 
     console.log("💬 Pushing user message...");
-    chat.messages.push({
+   chat.messages.push({
       role: "user",
       text: message,
+      createdAt: new Date(),
     });
+
 
     console.log("🤖 Pushing AI message...");
     chat.messages.push({
       role: "ai",
       text: response.content,
+      createdAt: new Date(),
     });
 console.log("💾 ABOUT TO SAVE CHAT");
 console.log("👤 userId:", userId);
@@ -107,12 +113,42 @@ console.log("💬 messages:", chat.messages);
 
   } catch (error) {
     console.error("❌ AI Error:", error.message);
-console.error("❌ Full error:", JSON.stringify(error, null, 2)); 
-    // Graceful fallback — answer from Gemini general knowledge only
+    
+    // Try to save error conversation if user is authenticated
+    const userId = req.userId || req.user?._id;
+    
+    // Graceful fallback
     try {
       const fallback = await model.invoke(
         `You are Menya Rwanda Assistant, a Rwanda tourism expert. Answer this helpfully: ${req.body.message}`
       );
+      
+      // Save fallback response to chat history
+      if (userId) {
+        try {
+          let chat = await Chat.findOne({ userId });
+          if (!chat) {
+            chat = new Chat({ userId, messages: [] });
+          }
+          chat.messages.push(
+            { 
+              role: "user", 
+              text: req.body.message, 
+              createdAt: new Date() 
+            },
+            { 
+              role: "ai", 
+              text: fallback.content, 
+              createdAt: new Date() 
+            }
+          );
+          await chat.save();
+          console.log("✅ Fallback chat saved");
+        } catch (saveError) {
+          console.error("❌ Failed to save fallback chat:", saveError.message);
+        }
+      }
+      
       return res.status(200).json({
         success: true,
         userMessage: req.body.message,
