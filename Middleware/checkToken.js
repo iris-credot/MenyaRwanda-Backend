@@ -1,37 +1,52 @@
-// Middleware/verifyToken.js
+// Middleware/verifyToken.js (Create this file)
 const jwt = require('jsonwebtoken');
 const User = require('../Models/user');
 
 const verifyToken = async (req, res, next) => {
   try {
-    // Get token from cookie (since your login sets it in cookie)
-    const token = req.cookies.jwt;
+    let token = null;
+    
+    // First check for token in cookies (your current method)
+    if (req.cookies && req.cookies.jwt) {
+      token = req.cookies.jwt;
+      console.log("✅ Token found in cookie");
+    }
+    
+    // If not in cookie, check Authorization header
+    if (!token && req.headers.authorization) {
+      const authHeader = req.headers.authorization;
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1];
+        console.log("✅ Token found in Authorization header");
+      }
+    }
     
     if (!token) {
+      console.log("❌ No token found in cookie or header");
       return res.status(401).json({
         success: false,
         message: 'Authentication required. Please login.'
       });
     }
 
-    // Verify token using your secret key
     const secret = process.env.SECRET_KEY;
     const decoded = jwt.verify(token, secret);
+    console.log("✅ Token verified for user:", decoded.userId);
     
-    // Get user from database
     const user = await User.findById(decoded.userId).select('-password');
     
     if (!user) {
+      console.log("❌ User not found for ID:", decoded.userId);
       return res.status(401).json({
         success: false,
         message: 'User not found'
       });
     }
 
-    // Attach user to request
     req.user = user;
     next();
   } catch (error) {
+    console.error("❌ Auth error:", error.message);
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({
         success: false,
@@ -45,10 +60,9 @@ const verifyToken = async (req, res, next) => {
       });
     }
     
-    console.error('Auth error:', error);
-    return res.status(500).json({
+    return res.status(401).json({
       success: false,
-      message: 'Authentication error'
+      message: 'Authentication failed'
     });
   }
 };
