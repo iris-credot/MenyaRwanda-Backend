@@ -38,8 +38,9 @@ const login_post = asyncWrapper(async (req, res, next) => {
   res.cookie('jwt', token, {
     httpOnly: true,
     path: '/',
-    secure: false, // true in production
-    sameSite: 'Strict',
+     secure: true, // MUST be true for cross-domain (HTTPS)
+  sameSite: 'none', // CRITICAL: allows cross-site cookies
+  domain: '.onrender.com', // For Render backend
     maxAge: 24 * 60 * 60 * 1000
   });
 
