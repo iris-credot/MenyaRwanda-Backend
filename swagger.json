@@ -1843,6 +1843,498 @@
           }
         }
       }
+    },
+     "/foods": {
+      "get": {
+        "summary": "Get all food items",
+        "description": "Returns a list of all food items. Requires JWT authentication.",
+        "operationId": "getAllFoods",
+        "tags": ["Foods"],
+        "security": [{ "AuthJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Food"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new food item (Admin only)",
+        "description": "Creates a food item with an optional image upload. Requires both JWT (admin) authentication.",
+        "operationId": "createFood",
+        "tags": ["Foods Admin"],
+        "security": [{ "BothJWT": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string", "description": "Attraction ObjectId" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "category": {
+                    "type": "string",
+                    "enum": ["Traditional", "Street Food", "Snack", "Drink"],
+                    "default": "Traditional"
+                  },
+                  "priceRange": { "type": "string" },
+                  "featured": { "type": "boolean", "default": false },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Food image file"
+                  }
+                },
+                "required": ["attraction", "name", "description"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Food created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Food"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or missing fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foods/featured": {
+      "get": {
+        "summary": "Get featured food items",
+        "description": "Returns foods where `featured` is true. Requires JWT authentication.",
+        "operationId": "getFeaturedFoods",
+        "tags": ["Foods"],
+        "security": [{ "AuthJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Food"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foods/category/{category}": {
+      "get": {
+        "summary": "Get foods by category",
+        "description": "Returns foods belonging to a specific category. Requires JWT authentication.",
+        "operationId": "getFoodsByCategory",
+        "tags": ["Foods"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["Traditional", "Street Food", "Snack", "Drink"]
+            },
+            "description": "Food category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Food"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foods/attractions/{attractionId}": {
+      "get": {
+        "summary": "Get foods by attraction",
+        "description": "Returns all food items linked to a specific attraction. Requires JWT authentication.",
+        "operationId": "getFoodsByAttraction",
+        "tags": ["Foods"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Food"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foods/{id}": {
+      "get": {
+        "summary": "Get a single food item by ID",
+        "operationId": "getFoodById",
+        "tags": ["Foods"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Food item ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Food found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Food"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Food not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a food item (Admin only)",
+        "operationId": "updateFood",
+        "tags": ["Foods Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Food item ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "Fields to update (all optional)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "category": {
+                    "type": "string",
+                    "enum": ["Traditional", "Street Food", "Snack", "Drink"]
+                  },
+                  "image": { "type": "string" },
+                  "priceRange": { "type": "string" },
+                  "featured": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Food updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Food"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Food not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a food item (Admin only)",
+        "operationId": "deleteFood",
+        "tags": ["Foods Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Food item ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Food deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Food deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Food not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
 },
@@ -1912,6 +2404,7 @@
     "Food": {
   "type": "object",
   "properties": {
+    "attraction": { "type": "string" },
     "name": {
       "type": "string"
     },
