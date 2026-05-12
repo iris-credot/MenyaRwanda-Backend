@@ -1,5 +1,5 @@
+const Accommodation = require('../Models/accomodations');
 const asyncWrapper = require('../Middleware/async');
-const Accommodation = require('../Models/accommodation');
 const Attraction = require('../Models/attraction');
 const Owner = require('../Models/owners');
 

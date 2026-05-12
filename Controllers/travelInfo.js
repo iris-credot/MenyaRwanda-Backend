@@ -1,6 +1,5 @@
-// Controllers/travelInfo.js
-const asyncWrapper = require('../Middleware/async');
 const TravelInfo = require('../Models/travelInfo');
+const asyncWrapper = require('../Middleware/async');
 const Attraction = require('../Models/attraction');
 const Owner = require('../Models/owners');
 const NotFound = require('../Error/NotFound');

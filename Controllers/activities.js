@@ -1,5 +1,5 @@
-const asyncWrapper = require('../Middleware/async');
 const Activity = require('../Models/activities');
+const asyncWrapper = require('../Middleware/async');
 const Attraction = require('../Models/attraction');
 const Owner = require('../Models/owners');
 const NotFound = require('../Error/NotFound');
