@@ -2335,6 +2335,2034 @@
           }
         }
       }
+    },
+    "/accommodations": {
+      "get": {
+        "summary": "Get all accommodations",
+        "description": "Returns a list of all accommodation options. Requires JWT authentication.",
+        "operationId": "getAllAccommodations",
+        "tags": ["Accommodations"],
+        "security": [{ "AuthJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Accommodation"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accommodations/{id}": {
+      "get": {
+        "summary": "Get a single accommodation by ID",
+        "operationId": "getAccommodationById",
+        "tags": ["Accommodations"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Accommodation ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accommodation found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accommodation"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Accommodation not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accommodations/attraction/{attractionId}": {
+      "get": {
+        "summary": "Get accommodations by attraction",
+        "description": "Returns all accommodation options linked to a specific attraction. Requires JWT authentication.",
+        "operationId": "getByAttraction",
+        "tags": ["Accommodations"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Accommodation"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accommodations/create": {
+      "post": {
+        "summary": "Create a new accommodation (Admin only)",
+        "description": "Creates an accommodation with multiple image uploads. Requires admin JWT (BothJWT).",
+        "operationId": "createAccommodation",
+        "tags": ["Accommodations Admin"],
+        "security": [{ "BothJWT": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string", "description": "Attraction ObjectId" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "type": {
+                    "type": "string",
+                    "enum": ["hotel", "lodge", "camp", "resort", "guesthouse"]
+                  },
+                  "amenities": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Comma-separated or array of amenities"
+                  },
+                  "priceRange": { "type": "string" },
+                  "contact[phone]": { "type": "string" },
+                  "contact[email]": { "type": "string" },
+                  "contact[website]": { "type": "string" },
+                  "location": { "type": "string" },
+                  "rating": { "type": "number", "minimum": 0, "maximum": 5, "default": 0 },
+                  "images": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "Multiple image files"
+                  }
+                },
+                "required": ["attraction", "name", "type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Accommodation created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accommodation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or missing fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accommodations/update/{id}": {
+      "put": {
+        "summary": "Update an accommodation (Admin only)",
+        "operationId": "updateAccommodation",
+        "tags": ["Accommodations Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Accommodation ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "Fields to update (all optional). Send images to add new ones, or send empty array to keep existing.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string" },
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "type": {
+                    "type": "string",
+                    "enum": ["hotel", "lodge", "camp", "resort", "guesthouse"]
+                  },
+                  "amenities": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "priceRange": { "type": "string" },
+                  "contact[phone]": { "type": "string" },
+                  "contact[email]": { "type": "string" },
+                  "contact[website]": { "type": "string" },
+                  "location": { "type": "string" },
+                  "rating": { "type": "number", "minimum": 0, "maximum": 5 },
+                  "images": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "New images to add (existing images are not removed unless deleted separately)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accommodation updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accommodation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Accommodation not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accommodations/delete/{id}": {
+      "delete": {
+        "summary": "Delete an accommodation (Admin only)",
+        "operationId": "deleteAccommodation",
+        "tags": ["Accommodations Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Accommodation ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accommodation deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Accommodation deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Accommodation not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     "/activities/activities": {
+      "get": {
+        "summary": "Get all activities",
+        "description": "Returns a list of all activities. Requires JWT authentication.",
+        "operationId": "getAllActivities",
+        "tags": ["Activities"],
+        "security": [{ "AuthJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Activity"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new activity (Admin only)",
+        "description": "Creates an activity with optional image upload. Requires admin JWT (BothJWT).",
+        "operationId": "createActivity",
+        "tags": ["Activities Admin"],
+        "security": [{ "BothJWT": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string", "description": "Attraction ObjectId" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "duration": { "type": "string", "example": "3-4 hours" },
+                  "price": { "type": "string", "example": "$50 per person" },
+                  "availability": { "type": "string", "example": "Daily, 6am - 6pm" },
+                  "category": {
+                    "type": "string",
+                    "enum": ["safari", "boat_trip", "hiking", "cultural", "night_drive", "walking_safari", "fishing", "bird_watching", "photography", "other"]
+                  },
+                  "includes": { "type": "array", "items": { "type": "string" } },
+                  "schedule": { "type": "string" },
+                  "minPeople": { "type": "number", "minimum": 1, "default": 1 },
+                  "maxPeople": { "type": "number", "minimum": 1 },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Activity image file"
+                  }
+                },
+                "required": ["attraction", "title", "category"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Activity created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/activities/{id}": {
+      "get": {
+        "summary": "Get a single activity by ID",
+        "operationId": "getActivityById",
+        "tags": ["Activities"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Activity ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an activity (Admin only)",
+        "operationId": "updateActivity",
+        "tags": ["Activities Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Activity ObjectId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attraction": { "type": "string" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "duration": { "type": "string" },
+                  "price": { "type": "string" },
+                  "availability": { "type": "string" },
+                  "category": {
+                    "type": "string",
+                    "enum": ["safari", "boat_trip", "hiking", "cultural", "night_drive", "walking_safari", "fishing", "bird_watching", "photography", "other"]
+                  },
+                  "includes": { "type": "array", "items": { "type": "string" } },
+                  "schedule": { "type": "string" },
+                  "minPeople": { "type": "number", "minimum": 1 },
+                  "maxPeople": { "type": "number", "minimum": 1 },
+                  "image": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an activity (Admin only)",
+        "operationId": "deleteActivity",
+        "tags": ["Activities Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Activity ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Activity deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/attractions/{attractionId}/activities": {
+      "get": {
+        "summary": "Get activities by attraction",
+        "description": "Returns all activities linked to a specific attraction. Requires JWT authentication.",
+        "operationId": "getActivitiesByAttraction",
+        "tags": ["Activities"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Activity"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activities/activities/category/{category}": {
+      "get": {
+        "summary": "Get activities by category",
+        "description": "Returns activities filtered by category. Requires JWT authentication.",
+        "operationId": "getActivitiesByCategory",
+        "tags": ["Activities"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["safari", "boat_trip", "hiking", "cultural", "night_drive", "walking_safari", "fishing", "bird_watching", "photography", "other"]
+            },
+            "description": "Activity category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Activity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attraction-content/{attractionId}/content": {
+      "get": {
+        "summary": "Get attraction content by attraction ID",
+        "description": "Returns detailed content (overview, location, tips, etc.) for a specific attraction. Requires JWT authentication.",
+        "operationId": "getContentByAttractionId",
+        "tags": ["Attraction Content"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attraction content found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttractionContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found for this attraction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create attraction content (Admin only)",
+        "description": "Creates new content for a specific attraction. Requires admin JWT (BothJWT).",
+        "operationId": "createAttractionContent",
+        "tags": ["Attraction Content Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "Attraction content fields (all strings/arrays as per schema)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "overview": { "type": "string" },
+                  "bestTimeToVisit": { "type": "string" },
+                  "weather": { "type": "string" },
+                  "location": {
+                    "type": "object",
+                    "properties": {
+                      "address": { "type": "string" },
+                      "city": { "type": "string" },
+                      "country": { "type": "string" },
+                      "coordinates": {
+                        "type": "object",
+                        "properties": {
+                          "lat": { "type": "number" },
+                          "lng": { "type": "number" }
+                        }
+                      },
+                      "distanceFromMainCity": { "type": "string" },
+                      "driveTime": { "type": "string" }
+                    }
+                  },
+                  "gettingThere": { "type": "string" },
+                  "openingHours": { "type": "string" },
+                  "entryFee": { "type": "string" },
+                  "visitorTips": { "type": "array", "items": { "type": "string" } },
+                  "rules": { "type": "array", "items": { "type": "string" } },
+                  "highlights": { "type": "array", "items": { "type": "string" } },
+                  "importantInfo": { "type": "array", "items": { "type": "string" } },
+                  "statistics": {
+                    "type": "object",
+                    "properties": {
+                      "totalArea": { "type": "string" },
+                      "waterCoverage": { "type": "string" },
+                      "annualVisitors": { "type": "number" }
+                    }
+                  },
+                  "contactInfo": {
+                    "type": "object",
+                    "properties": {
+                      "phone": { "type": "string" },
+                      "email": { "type": "string" },
+                      "website": { "type": "string" },
+                      "socialMedia": {
+                        "type": "object",
+                        "properties": {
+                          "facebook": { "type": "string" },
+                          "instagram": { "type": "string" }
+                        }
+                      }
+                    }
+                  },
+                  "coordinates": {
+                    "type": "object",
+                    "properties": {
+                      "latitude": { "type": "number" },
+                      "longitude": { "type": "number" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Content created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttractionContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Content already exists for this attraction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update attraction content (Admin only)",
+        "description": "Partially updates existing content for a specific attraction. Requires admin JWT (BothJWT).",
+        "operationId": "updateAttractionContent",
+        "tags": ["Attraction Content Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "Fields to update (all optional, same schema as POST)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Any fields from AttractionContent schema can be updated"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Content updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttractionContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete attraction content (Admin only)",
+        "description": "Deletes all content for a specific attraction. Requires admin JWT (BothJWT).",
+        "operationId": "deleteAttractionContent",
+        "tags": ["Attraction Content Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Content deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Attraction content deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attraction-content/admin/contents": {
+      "get": {
+        "summary": "Get all attraction contents (Admin only)",
+        "description": "Returns a list of all attraction content documents across all attractions. Requires admin JWT (adminJWT).",
+        "operationId": "getAllAttractionContents",
+        "tags": ["Attraction Content Admin"],
+        "security": [{ "adminJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "List of all attraction contents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttractionContent"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     "/travel-info/{attractionId}/travel-info": {
+      "get": {
+        "summary": "Get travel info by attraction ID",
+        "description": "Returns detailed travel information (nearest city, transport, tips, etc.) for a specific attraction. Requires JWT authentication.",
+        "operationId": "getTravelInfoByAttraction",
+        "tags": ["Travel Info"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Travel information found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Travel info not found for this attraction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create or update travel info (Admin only)",
+        "description": "Upsert (create or replace) travel information for a specific attraction. Requires admin JWT (BothJWT).",
+        "operationId": "upsertTravelInfo",
+        "tags": ["Travel Info Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "TravelInfo fields (all except attraction are optional for POST, but nearestCity is required if creating new)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nearestCity": { "type": "string" },
+                  "distanceFromKigali": { "type": "string", "example": "110 km (2 hours drive)" },
+                  "transportOptions": { "type": "array", "items": { "type": "string" } },
+                  "emergencyContacts": { "type": "array", "items": { "type": "string" } },
+                  "accessibility": { "type": "string" },
+                  "recommendedStayDuration": { "type": "string", "example": "2-3 days" },
+                  "tips": { "type": "array", "items": { "type": "string" } },
+                  "rules": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["nearestCity"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Travel info upserted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input (e.g., missing nearestCity)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete travel info (Admin only)",
+        "description": "Deletes the travel information document for a specific attraction. Requires admin JWT (BothJWT).",
+        "operationId": "deleteTravelInfo",
+        "tags": ["Travel Info Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Travel info deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Travel info deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Travel info not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/travel-info/travel-info/{id}": {
+      "get": {
+        "summary": "Get travel info by document ID",
+        "description": "Retrieves travel information using its own MongoDB ObjectId (not attraction ID). Requires JWT authentication.",
+        "operationId": "getTravelInfoById",
+        "tags": ["Travel Info"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "TravelInfo document ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Travel info found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Travel info not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/travel-info/admin/travel-info": {
+      "get": {
+        "summary": "Get all travel info (Admin only)",
+        "description": "Returns an array of all travel information documents across all attractions. Requires admin JWT (adminJWT).",
+        "operationId": "getAllTravelInfo",
+        "tags": ["Travel Info Admin"],
+        "security": [{ "adminJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "List of all travel info entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TravelInfo"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+      "/gallery/{attractionId}/gallery": {
+      "get": {
+        "summary": "Get gallery items by attraction ID",
+        "description": "Returns all images/videos for a specific attraction, sorted by order. Requires JWT authentication.",
+        "operationId": "getGalleryByAttraction",
+        "tags": ["Gallery"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of gallery items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Gallery"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add gallery item to an attraction (Admin only)",
+        "description": "Uploads an image or video (single file) as a gallery item. Requires admin JWT (BothJWT).",
+        "operationId": "addGalleryItem",
+        "tags": ["Gallery Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mediaType": {
+                    "type": "string",
+                    "enum": ["image", "video"],
+                    "description": "Type of media"
+                  },
+                  "caption": {
+                    "type": "string",
+                    "description": "Optional caption (max 500 chars)"
+                  },
+                  "order": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Display order"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image or video file"
+                  }
+                },
+                "required": ["mediaType", "image"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gallery item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gallery"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gallery/{attractionId}/gallery/reorder": {
+      "post": {
+        "summary": "Reorder gallery items (Admin only)",
+        "description": "Accepts a list of gallery item IDs in desired order and updates their 'order' field. Requires admin JWT (BothJWT).",
+        "operationId": "reorderGallery",
+        "tags": ["Gallery Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "attractionId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Attraction ObjectId"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of gallery item IDs in new order",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderedIds": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Ordered list of gallery item ObjectIds"
+                  }
+                },
+                "required": ["orderedIds"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reorder successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Gallery reordered" },
+                    "updatedItems": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Gallery" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gallery/gallery/{id}": {
+      "get": {
+        "summary": "Get a single gallery item by ID",
+        "operationId": "getGalleryItemById",
+        "tags": ["Gallery"],
+        "security": [{ "AuthJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Gallery item ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gallery item found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gallery"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a gallery item (Admin only)",
+        "description": "Updates caption, order, or other fields. Requires admin JWT (BothJWT).",
+        "operationId": "updateGalleryItem",
+        "tags": ["Gallery Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Gallery item ObjectId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mediaType": { "type": "string", "enum": ["image", "video"] },
+                  "caption": { "type": "string" },
+                  "order": { "type": "number" },
+                  "thumbnail": { "type": "string" },
+                  "url": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gallery item updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gallery"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a gallery item (Admin only)",
+        "operationId": "deleteGalleryItem",
+        "tags": ["Gallery Admin"],
+        "security": [{ "BothJWT": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Gallery item ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Gallery item deleted" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gallery/admin/gallery": {
+      "get": {
+        "summary": "Get all gallery items across all attractions (Admin only)",
+        "description": "Returns every gallery item in the system. Requires admin JWT (adminJWT).",
+        "operationId": "getAllGalleryItems",
+        "tags": ["Gallery Admin"],
+        "security": [{ "adminJWT": [] }],
+        "responses": {
+          "200": {
+            "description": "List of all gallery items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Gallery"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
 },
@@ -2422,7 +4450,249 @@
       "type": "boolean"
     }
   }
-}
-
+},
+  "Accommodation": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Auto-generated MongoDB ObjectId"
+          },
+          "attraction": {
+            "type": "string",
+            "description": "Reference to the Attraction document"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["hotel", "lodge", "camp", "resort", "guesthouse"]
+          },
+          "images": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Array of image URLs"
+          },
+          "amenities": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "priceRange": {
+            "type": "string"
+          },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "phone": { "type": "string" },
+              "email": { "type": "string" },
+              "website": { "type": "string" }
+            }
+          },
+          "location": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5,
+            "default": 0
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "_id": "60d21b4667d0d8992e610c85",
+          "attraction": "60d21b4667d0d8992e610c86",
+          "name": "Mountain View Resort",
+          "description": "Luxury resort with panoramic views",
+          "type": "resort",
+          "images": ["uploads/Accommodations/img1.jpg", "uploads/Accommodations/img2.jpg"],
+          "amenities": ["Free WiFi", "Pool", "Spa"],
+          "priceRange": "$200 - $500",
+          "contact": {
+            "phone": "+123456789",
+            "email": "info@mountainview.com",
+            "website": "https://mountainview.com"
+          },
+          "location": "Near National Park",
+          "rating": 4.5,
+          "createdAt": "2025-01-01T12:00:00Z",
+          "updatedAt": "2025-01-01T12:00:00Z"
+        }
+      },
+       "Activity": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Auto-generated MongoDB ObjectId"
+          },
+          "attraction": {
+            "type": "string",
+            "description": "Reference to the Attraction document"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "description": "Image URL"
+          },
+          "duration": {
+            "type": "string",
+            "example": "3-4 hours"
+          },
+          "price": {
+            "type": "string",
+            "example": "$50 per person"
+          },
+          "availability": {
+            "type": "string",
+            "example": "Daily, 6am - 6pm"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["safari", "boat_trip", "hiking", "cultural", "night_drive", "walking_safari", "fishing", "bird_watching", "photography", "other"]
+          },
+          "includes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "schedule": {
+            "type": "string"
+          },
+          "minPeople": {
+            "type": "number",
+            "minimum": 1,
+            "default": 1
+          },
+          "maxPeople": {
+            "type": "number",
+            "minimum": 1
+          },
+          "formattedPrice": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Virtual field for formatted price"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+}  ,
+ "TravelInfo": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Auto-generated MongoDB ObjectId for this travel info document"
+          },
+          "attraction": {
+            "type": "string",
+            "description": "Reference to the Attraction document (one-to-one)"
+          },
+          "nearestCity": {
+            "type": "string"
+          },
+          "distanceFromKigali": {
+            "type": "string",
+            "example": "110 km (2 hours drive)"
+          },
+          "transportOptions": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "emergencyContacts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "accessibility": {
+            "type": "string",
+            "description": "Wheelchair access, special needs, etc."
+          },
+          "recommendedStayDuration": {
+            "type": "string",
+            "example": "2-3 days"
+          },
+          "tips": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "rules": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }},
+        "Gallery": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Auto-generated MongoDB ObjectId"
+          },
+          "attraction": {
+            "type": "string",
+            "description": "Reference to the Attraction document"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": ["image", "video"]
+          },
+          "url": {
+            "type": "string",
+            "description": "URL of the image or video"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Thumbnail URL (optional, mainly for videos)"
+          },
+          "caption": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "order": {
+            "type": "number",
+            "default": 0,
+            "description": "Display order (ascending)"
+          },
+          "publicId": {
+            "type": "string",
+            "description": "Cloudinary public ID for easy deletion"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }}
   }
 }
