@@ -877,34 +877,151 @@
   }
 },
 
-    "/chat": {
-      "get": {
-        "tags": ["Chat"],
-        "summary": "Get my chat",
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": { "description": "Chat data" }
-        }
-      }
-    },
-
-    "/chat/send": {
+     "/ai/chat": {
       "post": {
+        "summary": "Send a message to Gemini AI",
+        "description": "Authenticated user sends a message, receives AI response.",
+        "operationId": "chatWithGemini",
         "tags": ["Chat"],
-        "summary": "Send message",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": { "$ref": "#/definitions/Message" }
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
           }
-        ],
+        },
         "responses": {
-          "200": { "description": "Message sent" }
+          "200": {
+            "description": "Successful AI response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing message or invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid or missing token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error (e.g., AI service failure)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
+    "/ai/chat/history": {
+      "get": {
+        "summary": "Get all chat history for the authenticated user",
+        "description": "Returns an array of chat documents (each containing conversation messages) belonging to the user.",
+        "operationId": "getChatHistory",
+        "tags": ["Chat"],
+        "responses": {
+          "200": {
+            "description": "List of user's chat sessions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Chat"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete all chat history for the authenticated user",
+        "description": "Removes every chat document associated with the user (full conversation history).",
+        "operationId": "deleteChatHistory",
+        "tags": ["Chat"],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted all chat history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "All chat history deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
 
     "/events": {
   "get": {
@@ -1204,7 +1321,7 @@
   }
 }
 
-  },
+  }}},
 
   "definitions": {
 
