@@ -1,0 +1,224 @@
+[
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Five Volcanoes Boutique Hotel",
+    "description": "Luxury hotel near Volcanoes National Park offering gorilla trekking access.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["WiFi", "Restaurant", "Spa", "Airport Shuttle"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://www.volcanoesnationalpark.com/"
+    },
+    "location": "Musanze, near Volcanoes National Park",
+    "rating": 4.7
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Akagera Game Lodge",
+    "description": "Safari lodge located inside Akagera National Park.",
+    "type": "lodge",
+    "images": [],
+    "amenities": ["Safari Tours", "Pool", "Restaurant", "WiFi"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://visitakagera.org/"
+    },
+    "location": "Akagera National Park, Eastern Rwanda",
+    "rating": 4.6
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Nyungwe Top View Hill Hotel",
+    "description": "Scenic hotel overlooking Nyungwe Forest.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Mountain View", "Restaurant", "Guided Tours"],
+    "priceRange": "$$",
+    "contact": {
+      "website": "https://visitnyungwe.org/"
+    },
+    "location": "Near Nyungwe Forest National Park",
+    "rating": 4.4
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Lake Kivu Serena Hotel",
+    "description": "Luxury lakeside hotel offering beach views and relaxation.",
+    "type": "resort",
+    "images": [],
+    "amenities": ["Beach Access", "Pool", "Spa", "Restaurant"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://visitrwanda.com/destinations/lake-kivu/"
+    },
+    "location": "Gisenyi, Lake Kivu",
+    "rating": 4.8
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Rusumo Border Lodge",
+    "description": "Simple lodge near Rusumo Falls for travelers.",
+    "type": "guesthouse",
+    "images": [],
+    "amenities": ["Parking", "Local Food", "WiFi"],
+    "priceRange": "$",
+    "contact": {
+      "website": "https://www.volcanoesparkrwanda.org/information/visit-rusumo-falls-in-rwanda/"
+    },
+    "location": "Kirehe District",
+    "rating": 3.9
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Gishwati Lodge",
+    "description": "Eco-lodge near Gishwati-Mukura National Park.",
+    "type": "lodge",
+    "images": [],
+    "amenities": ["Nature Tours", "Bird Watching", "Eco-friendly"],
+    "priceRange": "$$",
+    "contact": {
+      "website": "https://visitrwanda.com/destinations/gishwati-mukura-national-park-2/"
+    },
+    "location": "Western Province",
+    "rating": 4.3
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Kigali Marriott Hotel",
+    "description": "Luxury 5-star hotel in Kigali city center.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Pool", "Gym", "Restaurant", "Conference Rooms"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://www.marriott.com/en-us/hotels/kglmc-kigali-marriott-hotel/overview/"
+    },
+    "location": "Kigali CBD",
+    "rating": 4.7
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Radisson Blu Hotel Kigali",
+    "description": "Modern hotel connected to Kigali Convention Centre.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Conference Center", "Pool", "Spa"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://www.radissonhotels.com/en-us/hotels/radisson-blu-convention-kigali"
+    },
+    "location": "Kimihurura, Kigali",
+    "rating": 4.6
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Heaven Boutique Hotel",
+    "description": "Popular boutique hotel with fine dining in Kigali.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Restaurant", "Bar", "City View"],
+    "priceRange": "$$",
+    "contact": {
+      "website": "https://heavenrwanda.com/dine/heaven-restaurant/"
+    },
+    "location": "Kigali City",
+    "rating": 4.5
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Poivre Noir Boutique Hotel",
+    "description": "Upscale boutique hotel with French-inspired dining.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Restaurant", "Bar", "Luxury Rooms"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://www.poivrenoirbistro.com/"
+    },
+    "location": "Kigali",
+    "rating": 4.4
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Kigali Convention Centre Business Suites",
+    "description": "Business-oriented accommodation near conference center.",
+    "type": "hotel",
+    "images": [],
+    "amenities": ["Conference Access", "WiFi", "Business Center"],
+    "priceRange": "$$$",
+    "contact": {
+      "website": "https://visitrwanda.com/meet-in-rwanda/kigali-convention-centre/"
+    },
+    "location": "Kimihurura, Kigali",
+    "rating": 4.5
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Kivu Lodge",
+    "description": "Relaxed lakeside lodge on Lake Kivu.",
+    "type": "lodge",
+    "images": [],
+    "amenities": ["Lake View", "Boat Trips", "Restaurant"],
+    "priceRange": "$$",
+    "contact": {
+      "website": "https://visitrwanda.com/destinations/lake-kivu/"
+    },
+    "location": "Lake Kivu",
+    "rating": 4.3
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "One&Only Gorilla’s Nest Resort",
+    "description": "Ultra-luxury resort near Volcanoes National Park.",
+    "type": "resort",
+    "images": [],
+    "amenities": ["Spa", "Luxury Villas", "Gorilla Trekking Access"],
+    "priceRange": "$$$$",
+    "contact": {
+      "website": "https://www.nyandunguecopark.rw/"
+    },
+    "location": "Musanze",
+    "rating": 4.9
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Congo Nile Trail Campsite",
+    "description": "Camping site along scenic Congo Nile Trail.",
+    "type": "camp",
+    "images": [],
+    "amenities": ["Camping", "Hiking Access", "Nature Views"],
+    "priceRange": "$",
+    "contact": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g12620107-d3241211"
+    },
+    "location": "Rubavu",
+    "rating": 4.2
+  },
+
+  {
+    "attraction": "000000000000000000000000",
+    "name": "Inema Arts Guesthouse",
+    "description": "Creative stay near Kigali arts center.",
+    "type": "guesthouse",
+    "images": [],
+    "amenities": ["Art Gallery Access", "WiFi", "City View"],
+    "priceRange": "$$",
+    "contact": {},
+    "location": "Kacyiru, Kigali",
+    "rating": 4.4
+  }
+]

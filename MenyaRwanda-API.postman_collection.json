@@ -1,0 +1,2238 @@
+{
+  "info": {
+    "name": "MenyaRwanda API",
+    "description": "Complete API collection for MenyaRwanda - Tourism & Discovery Platform for Rwanda",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "firstName",
+                  "value": "John",
+                  "type": "text"
+                },
+                {
+                  "key": "lastName",
+                  "value": "Doe",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "john.doe@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Password123!",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "+250788123456",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/users/signup",
+              "host": ["{{base_url}}"],
+              "path": ["users", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": ["{{base_url}}"],
+              "path": ["users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/logout",
+              "host": ["{{base_url}}"],
+              "path": ["users", "logout"]
+            }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/forgot",
+              "host": ["{{base_url}}"],
+              "path": ["users", "forgot"]
+            }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/verify-otp",
+              "host": ["{{base_url}}"],
+              "path": ["users", "verify-otp"]
+            }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewPassword123!\",\n  \"confirmPassword\": \"NewPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/reset-password/:token",
+              "host": ["{{base_url}}"],
+              "path": ["users", "reset-password", ":token"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users by Role (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/users",
+              "host": ["{{base_url}}"],
+              "path": ["users", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "firstName",
+                  "value": "John",
+                  "type": "text"
+                },
+                {
+                  "key": "lastName",
+                  "value": "Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "+250788654321",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/users/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"Password123!\",\n  \"newPassword\": \"NewPassword456!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/password/update",
+              "host": ["{{base_url}}"],
+              "path": ["users", "password", "update"]
+            }
+          }
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["users", ":userId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Owners",
+      "item": [
+        {
+          "name": "Get All Owners (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners",
+              "host": ["{{base_url}}"],
+              "path": ["owners"]
+            }
+          }
+        },
+        {
+          "name": "Get My Owner Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners/me/profile",
+              "host": ["{{base_url}}"],
+              "path": ["owners", "me", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get My Listings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners/me/listings",
+              "host": ["{{base_url}}"],
+              "path": ["owners", "me", "listings"]
+            }
+          }
+        },
+        {
+          "name": "Get Owner by User ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners/user/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["owners", "user", ":userId"]
+            }
+          }
+        },
+        {
+          "name": "Get Owner Listings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/owners/:ownerId/listings",
+              "host": ["{{base_url}}"],
+              "path": ["owners", ":ownerId", "listings"]
+            }
+          }
+        },
+        {
+          "name": "Get Owner by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners/:ownerId",
+              "host": ["{{base_url}}"],
+              "path": ["owners", ":ownerId"]
+            }
+          }
+        },
+        {
+          "name": "Create Owner (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"user_id_here\",\n  \"businessName\": \"My Business\",\n  \"businessDescription\": \"Description\",\n  \"verificationStatus\": \"verified\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/owners",
+              "host": ["{{base_url}}"],
+              "path": ["owners"]
+            }
+          }
+        },
+        {
+          "name": "Update Owner",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessName\": \"Updated Business\",\n  \"businessDescription\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/owners/:ownerId",
+              "host": ["{{base_url}}"],
+              "path": ["owners", ":ownerId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Owner",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/owners/:ownerId",
+              "host": ["{{base_url}}"],
+              "path": ["owners", ":ownerId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attractions",
+      "item": [
+        {
+          "name": "Get Approved Attractions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/attractions/approved",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "approved"]
+            }
+          }
+        },
+        {
+          "name": "Search Attractions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/attractions/search?query=mountain",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "search"],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "mountain"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Top Rated Attractions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/attractions/top",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "top"]
+            }
+          }
+        },
+        {
+          "name": "Get Attraction by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/attractions/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Get All Attractions (Auth)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attractions",
+              "host": ["{{base_url}}"],
+              "path": ["attractions"]
+            }
+          }
+        },
+        {
+          "name": "Create Attraction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Mount Kilimanjaro",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Beautiful mountain in Rwanda",
+                  "type": "text"
+                },
+                {
+                  "key": "location",
+                  "value": "Northern Province",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Nature",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/attractions/create",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "create"]
+            }
+          }
+        },
+        {
+          "name": "Update Attraction",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Mount",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated description",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/attractions/update/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "update", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Attraction Image",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attractions/image/:attractionId/:imageIndex",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "image", ":attractionId", ":imageIndex"]
+            }
+          }
+        },
+        {
+          "name": "Delete Attraction",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attractions/delete/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "delete", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Update Attraction Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/attractions/status/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["attractions", "status", ":attractionId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/all",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "all"]
+            }
+          }
+        },
+        {
+          "name": "Create or Update Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attractionId\": \"attraction_id\",\n  \"rating\": 5,\n  \"comment\": \"Amazing place!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews",
+              "host": ["{{base_url}}"],
+              "path": ["reviews"]
+            }
+          }
+        },
+        {
+          "name": "Get Attraction Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/attraction/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "attraction", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Get My Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reviews/my-reviews",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "my-reviews"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Review",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/:reviewId",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", ":reviewId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reviews/:reviewId",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", ":reviewId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Favorites",
+      "item": [
+        {
+          "name": "Add to Favorites",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attractionId\": \"attraction_id\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites",
+              "host": ["{{base_url}}"],
+              "path": ["favorites"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attractionId\": \"attraction_id\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites/toggle",
+              "host": ["{{base_url}}"],
+              "path": ["favorites", "toggle"]
+            }
+          }
+        },
+        {
+          "name": "Remove from Favorites",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/favorites/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["favorites", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Get My Favorites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/favorites/my",
+              "host": ["{{base_url}}"],
+              "path": ["favorites", "my"]
+            }
+          }
+        },
+        {
+          "name": "Check if Favorited",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/favorites/check/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["favorites", "check", ":attractionId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get All Notifications (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["notifications"]
+            }
+          }
+        },
+        {
+          "name": "Get My Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/me",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "me"]
+            }
+          }
+        },
+        {
+          "name": "Get Notifications by Type",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/type/:type",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "type", ":type"]
+            }
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/:notificationId/read",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", ":notificationId", "read"]
+            }
+          }
+        },
+        {
+          "name": "Mark All as Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/read-all",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", "read-all"]
+            }
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/notifications/:notificationId",
+              "host": ["{{base_url}}"],
+              "path": ["notifications", ":notificationId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Get Chat History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/chat/history/:userId",
+              "host": ["{{base_url}}"],
+              "path": ["chat", "history", ":userId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events",
+              "host": ["{{base_url}}"],
+              "path": ["events"]
+            }
+          }
+        },
+        {
+          "name": "Get Upcoming Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/upcoming",
+              "host": ["{{base_url}}"],
+              "path": ["events", "upcoming"]
+            }
+          }
+        },
+        {
+          "name": "Get Past Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/past",
+              "host": ["{{base_url}}"],
+              "path": ["events", "past"]
+            }
+          }
+        },
+        {
+          "name": "Get Events by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/range?startDate=2024-01-01&endDate=2024-12-31",
+              "host": ["{{base_url}}"],
+              "path": ["events", "range"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-12-31"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Events by Location",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/location/:location",
+              "host": ["{{base_url}}"],
+              "path": ["events", "location", ":location"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Event",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/:eventId",
+              "host": ["{{base_url}}"],
+              "path": ["events", ":eventId"]
+            }
+          }
+        },
+        {
+          "name": "Check Event Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/events/:eventId/availability",
+              "host": ["{{base_url}}"],
+              "path": ["events", ":eventId", "availability"]
+            }
+          }
+        },
+        {
+          "name": "Create Event (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Rwanda Music Festival",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Annual music festival",
+                  "type": "text"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2024-06-01",
+                  "type": "text"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2024-06-03",
+                  "type": "text"
+                },
+                {
+                  "key": "location",
+                  "value": "Kigali",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/events",
+              "host": ["{{base_url}}"],
+              "path": ["events"]
+            }
+          }
+        },
+        {
+          "name": "Update Event (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Festival\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/events/:eventId",
+              "host": ["{{base_url}}"],
+              "path": ["events", ":eventId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Event (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events/:eventId",
+              "host": ["{{base_url}}"],
+              "path": ["events", ":eventId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Foods",
+      "item": [
+        {
+          "name": "Get All Foods",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods",
+              "host": ["{{base_url}}"],
+              "path": ["foods"]
+            }
+          }
+        },
+        {
+          "name": "Get Featured Foods",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods/featured",
+              "host": ["{{base_url}}"],
+              "path": ["foods", "featured"]
+            }
+          }
+        },
+        {
+          "name": "Get Foods by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods/category/:category",
+              "host": ["{{base_url}}"],
+              "path": ["foods", "category", ":category"]
+            }
+          }
+        },
+        {
+          "name": "Get Foods by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods/attractions/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["foods", "attractions", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Get Food by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods/:foodId",
+              "host": ["{{base_url}}"],
+              "path": ["foods", ":foodId"]
+            }
+          }
+        },
+        {
+          "name": "Create Food",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Ugali",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Traditional corn meal",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Traditional",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "5000",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/foods",
+              "host": ["{{base_url}}"],
+              "path": ["foods"]
+            }
+          }
+        },
+        {
+          "name": "Update Food",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Ugali\",\n  \"price\": \"6000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/foods/:foodId",
+              "host": ["{{base_url}}"],
+              "path": ["foods", ":foodId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Food",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/foods/:foodId",
+              "host": ["{{base_url}}"],
+              "path": ["foods", ":foodId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accommodations",
+      "item": [
+        {
+          "name": "Get All Accommodations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accommodations",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations"]
+            }
+          }
+        },
+        {
+          "name": "Get Accommodation by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accommodations/:accommodationId",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations", ":accommodationId"]
+            }
+          }
+        },
+        {
+          "name": "Get Accommodations by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accommodations/attraction/:attractionId",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations", "attraction", ":attractionId"]
+            }
+          }
+        },
+        {
+          "name": "Create Accommodation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Mountain View Hotel",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Luxury hotel with mountain views",
+                  "type": "text"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "150000",
+                  "type": "text"
+                },
+                {
+                  "key": "attractionId",
+                  "value": "attraction_id",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/accommodations/create",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations", "create"]
+            }
+          }
+        },
+        {
+          "name": "Update Accommodation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Hotel",
+                  "type": "text"
+                },
+                {
+                  "key": "pricePerNight",
+                  "value": "200000",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/accommodations/update/:accommodationId",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations", "update", ":accommodationId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Accommodation",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/accommodations/delete/:accommodationId",
+              "host": ["{{base_url}}"],
+              "path": ["accommodations", "delete", ":accommodationId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Activities",
+      "item": [
+        {
+          "name": "Get All Activities",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/activities/activities",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities"]
+            }
+          }
+        },
+        {
+          "name": "Get Activities by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/activities/attractions/:attractionId/activities",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "attractions", ":attractionId", "activities"]
+            }
+          }
+        },
+        {
+          "name": "Get Activities by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/activities/activities/category/:category",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities", "category", ":category"]
+            }
+          }
+        },
+        {
+          "name": "Get Activity by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/activities/activities/:activityId",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities", ":activityId"]
+            }
+          }
+        },
+        {
+          "name": "Create Activity",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Hiking",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Mountain hiking adventure",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Adventure",
+                  "type": "text"
+                },
+                {
+                  "key": "attractionId",
+                  "value": "attraction_id",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/activities/activities",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities"]
+            }
+          }
+        },
+        {
+          "name": "Update Activity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Activity",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/activities/activities/:activityId",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities", ":activityId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Activity",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/activities/activities/:activityId",
+              "host": ["{{base_url}}"],
+              "path": ["activities", "activities", ":activityId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "item": [
+        {
+          "name": "Get Gallery by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/gallery/:attractionId/gallery",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", ":attractionId", "gallery"]
+            }
+          }
+        },
+        {
+          "name": "Get Gallery Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/gallery/gallery/:galleryId",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", "gallery", ":galleryId"]
+            }
+          }
+        },
+        {
+          "name": "Add Gallery Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "form-data",
+              "formdata": [
+                {
+                  "key": "caption",
+                  "value": "Beautiful sunset",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/gallery/:attractionId/gallery",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", ":attractionId", "gallery"]
+            }
+          }
+        },
+        {
+          "name": "Update Gallery Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"caption\": \"Updated caption\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/gallery/gallery/:galleryId",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", "gallery", ":galleryId"]
+            }
+          }
+        },
+        {
+          "name": "Delete Gallery Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/gallery/gallery/:galleryId",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", "gallery", ":galleryId"]
+            }
+          }
+        },
+        {
+          "name": "Reorder Gallery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"galleryIds\": [\"id1\", \"id2\", \"id3\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/gallery/:attractionId/gallery/reorder",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", ":attractionId", "gallery", "reorder"]
+            }
+          }
+        },
+        {
+          "name": "Get All Gallery Items (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/gallery/admin/gallery",
+              "host": ["{{base_url}}"],
+              "path": ["gallery", "admin", "gallery"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attraction Content",
+      "item": [
+        {
+          "name": "Get Content by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attraction-content/:attractionId/content",
+              "host": ["{{base_url}}"],
+              "path": ["attraction-content", ":attractionId", "content"]
+            }
+          }
+        },
+        {
+          "name": "Create Attraction Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"About this place\",\n  \"description\": \"Detailed information\",\n  \"content\": \"Full content here\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/attraction-content/:attractionId/content",
+              "host": ["{{base_url}}"],
+              "path": ["attraction-content", ":attractionId", "content"]
+            }
+          }
+        },
+        {
+          "name": "Update Attraction Content",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Title\",\n  \"content\": \"Updated content\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/attraction-content/:attractionId/content",
+              "host": ["{{base_url}}"],
+              "path": ["attraction-content", ":attractionId", "content"]
+            }
+          }
+        },
+        {
+          "name": "Delete Attraction Content",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attraction-content/:attractionId/content",
+              "host": ["{{base_url}}"],
+              "path": ["attraction-content", ":attractionId", "content"]
+            }
+          }
+        },
+        {
+          "name": "Get All Attraction Contents (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/attraction-content/admin/contents",
+              "host": ["{{base_url}}"],
+              "path": ["attraction-content", "admin", "contents"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Travel Info",
+      "item": [
+        {
+          "name": "Get Travel Info by Attraction",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/travel-info/:attractionId/travel-info",
+              "host": ["{{base_url}}"],
+              "path": ["travel-info", ":attractionId", "travel-info"]
+            }
+          }
+        },
+        {
+          "name": "Get Travel Info by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/travel-info/travel-info/:travelInfoId",
+              "host": ["{{base_url}}"],
+              "path": ["travel-info", "travel-info", ":travelInfoId"]
+            }
+          }
+        },
+        {
+          "name": "Upsert Travel Info",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bestTimeToVisit\": \"June to September\",\n  \"howToGetThere\": \"By car or guided tour\",\n  \"travelTips\": \"Bring comfortable shoes\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/travel-info/:attractionId/travel-info",
+              "host": ["{{base_url}}"],
+              "path": ["travel-info", ":attractionId", "travel-info"]
+            }
+          }
+        },
+        {
+          "name": "Delete Travel Info",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/travel-info/:attractionId/travel-info",
+              "host": ["{{base_url}}"],
+              "path": ["travel-info", ":attractionId", "travel-info"]
+            }
+          }
+        },
+        {
+          "name": "Get All Travel Info (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/travel-info/admin/travel-info",
+              "host": ["{{base_url}}"],
+              "path": ["travel-info", "admin", "travel-info"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Chat",
+      "item": [
+        {
+          "name": "Chat with Gemini AI",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"What are the best attractions in Rwanda?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/chat",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "chat"]
+            }
+          }
+        },
+        {
+          "name": "Get AI Chat History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai/chat/history",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "chat", "history"]
+            }
+          }
+        },
+        {
+          "name": "Delete AI Chat History",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ai/chat/history",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "chat", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://menyarwanda-backend.onrender.com/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_user_token_here",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "your_admin_token_here",
+      "type": "string"
+    }
+  ]
+}

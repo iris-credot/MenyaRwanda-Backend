@@ -1,0 +1,997 @@
+[
+  {
+    "name": "Volcanoes National Park",
+    "slug": "volcanoes-national-park",
+    "shortDescription": "Rwanda’s famous gorilla trekking destination located in the Virunga Mountains.",
+    "fullDescription": "Volcanoes National Park is Rwanda’s most iconic tourism destination known for mountain gorilla trekking, volcano hiking, golden monkey tracking, and rich biodiversity. Located in the northwestern part of Rwanda, the park forms part of the Virunga Conservation Area shared with Uganda and the Democratic Republic of Congo.",
+    
+    "location": {
+      "address": "Kinigi",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.4833,
+        "lng": 29.5333
+      },
+      "distanceFromMainCity": "116 km from Kigali",
+      "driveTime": "2.5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://www.volcanoesnationalpark.com/"
+    },
+
+    "type": "national_park",
+
+    "tags": [
+      "gorilla trekking",
+      "volcano hiking",
+      "wildlife",
+      "nature",
+      "eco tourism"
+    ],
+
+    "atmosphere": "adventurous",
+
+    "bestFor": [
+      "wildlife",
+      "photography",
+      "hiking",
+      "honeymoon",
+      "nature lovers"
+    ],
+
+    "openingHours": "7:00 AM - 6:00 PM",
+
+    "rating": 5
+  },
+
+  {
+    "name": "Akagera National Park",
+    "slug": "akagera-national-park",
+    "shortDescription": "Rwanda’s only savannah national park famous for the Big Five.",
+    "fullDescription": "Akagera National Park is a beautiful savannah park located in Eastern Rwanda. The park is home to the Big Five animals, scenic lakes, wetlands, and boat safari experiences.",
+
+    "location": {
+      "address": "Kayonza District",
+      "city": "Eastern Province",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.8656,
+        "lng": 30.7000
+      },
+      "distanceFromMainCity": "110 km from Kigali",
+      "driveTime": "2.5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://visitakagera.org/"
+    },
+
+    "type": "national_park",
+
+    "tags": [
+      "big five",
+      "safari",
+      "wildlife",
+      "boat safari",
+      "nature"
+    ],
+
+    "atmosphere": "adventurous",
+
+    "bestFor": [
+      "wildlife",
+      "family trips",
+      "photography",
+      "nature lovers"
+    ],
+
+    "openingHours": "6:00 AM - 6:00 PM",
+
+    "rating": 5
+  },
+
+  {
+    "name": "Nyungwe Forest National Park",
+    "slug": "nyungwe-forest-national-park",
+    "shortDescription": "Ancient rainforest known for chimpanzees and canopy walks.",
+    "fullDescription": "Nyungwe Forest National Park is one of Africa’s oldest rainforests and one of Rwanda’s most biodiverse ecosystems. It is famous for chimpanzee trekking, canopy walks, waterfalls, and hiking trails.",
+
+    "location": {
+      "address": "Nyamasheke District",
+      "city": "Western Province",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.4833,
+        "lng": 29.2000
+      },
+      "distanceFromMainCity": "225 km from Kigali",
+      "driveTime": "5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://visitnyungwe.org/"
+    },
+
+    "type": "forest",
+
+    "tags": [
+      "rainforest",
+      "chimpanzees",
+      "canopy walk",
+      "bird watching",
+      "nature"
+    ],
+
+    "atmosphere": "peaceful",
+
+    "bestFor": [
+      "hiking",
+      "wildlife",
+      "nature lovers",
+      "photography"
+    ],
+
+    "openingHours": "6:00 AM - 5:00 PM",
+
+    "rating": 5,
+
+    "details": {
+      "secondaryType": "national_park"
+    }
+  },
+
+  {
+    "name": "Mount Karisimbi",
+    "slug": "mount-karisimbi",
+    "shortDescription": "The highest volcano in Rwanda and part of the Virunga Mountains.",
+    "fullDescription": "Mount Karisimbi is Rwanda’s highest mountain standing at 4,507 meters. It is a popular hiking destination for adventurous travelers and offers breathtaking volcanic scenery.",
+
+    "location": {
+      "address": "Virunga Mountains",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.5078,
+        "lng": 29.4500
+      },
+      "distanceFromMainCity": "120 km from Kigali",
+      "driveTime": "3 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://en.wikipedia.org/wiki/Mount_Karisimbi"
+    },
+
+    "type": "mountain",
+
+    "tags": [
+      "volcano",
+      "hiking",
+      "adventure",
+      "nature"
+    ],
+
+    "atmosphere": "adventurous",
+
+    "bestFor": [
+      "hiking",
+      "camping",
+      "photography"
+    ],
+
+    "rating": 5
+  },
+
+  {
+    "name": "Mount Bisoke",
+    "slug": "mount-bisoke",
+    "shortDescription": "A volcanic mountain famous for its crater lake hike.",
+    "fullDescription": "Mount Bisoke is a dormant volcano located in the Virunga Mountains. It is famous for its beautiful crater lake and one-day hiking adventure.",
+
+    "location": {
+      "address": "Virunga Mountains",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.4600,
+        "lng": 29.4900
+      },
+      "distanceFromMainCity": "115 km from Kigali",
+      "driveTime": "2.5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://en.wikipedia.org/wiki/Mount_Bisoke"
+    },
+
+    "type": "mountain",
+
+    "tags": [
+      "volcano",
+      "crater lake",
+      "hiking",
+      "nature"
+    ],
+
+    "atmosphere": "adventurous",
+
+    "bestFor": [
+      "hiking",
+      "nature lovers",
+      "photography"
+    ],
+
+    "rating": 5
+  },
+
+  {
+    "name": "Lake Kivu",
+    "slug": "lake-kivu",
+    "shortDescription": "One of Africa’s Great Lakes known for beaches and relaxation.",
+    "fullDescription": "Lake Kivu is one of Rwanda’s top relaxation destinations featuring beaches, resorts, boat cruises, and stunning sunset views.",
+
+    "location": {
+      "address": "Rubavu",
+      "city": "Western Province",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.7000,
+        "lng": 29.2500
+      },
+      "distanceFromMainCity": "154 km from Kigali",
+      "driveTime": "3.5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://visitrwanda.com/destinations/lake-kivu/"
+    },
+
+    "type": "lake",
+
+    "tags": [
+      "beach",
+      "boat rides",
+      "relaxation",
+      "sunset",
+      "nature"
+    ],
+
+    "atmosphere": "relaxing",
+
+    "bestFor": [
+      "honeymoon",
+      "family trips",
+      "relaxation",
+      "boat rides"
+    ],
+
+    "rating": 5
+  },
+
+  {
+    "name": "Lake Muhazi",
+    "slug": "lake-muhazi",
+    "shortDescription": "A peaceful lakeside destination near Kigali.",
+    "fullDescription": "Lake Muhazi is a scenic freshwater lake east of Kigali known for peaceful retreats, lakeside resorts, and water activities.",
+
+    "location": {
+      "address": "Eastern Province",
+      "city": "Rwamagana",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.8167,
+        "lng": 30.4333
+      },
+      "distanceFromMainCity": "50 km from Kigali",
+      "driveTime": "1 hour"
+    },
+
+    "contactInfo": {
+      "website": "https://visitrwanda.com/festive-offers-2025/lake-muhazi-akagera-national-park/"
+    },
+
+    "type": "lake",
+
+    "tags": [
+      "lake",
+      "peaceful",
+      "boat rides",
+      "nature"
+    ],
+
+    "atmosphere": "peaceful",
+
+    "bestFor": [
+      "relaxation",
+      "family trips",
+      "photography"
+    ],
+
+    "rating": 4.7
+  },
+
+  {
+    "name": "Rusumo Falls",
+    "slug": "rusumo-falls",
+    "shortDescription": "Historic waterfall located on the Rwanda-Tanzania border.",
+    "fullDescription": "Rusumo Falls is a beautiful waterfall on the Kagera River located at the Rwanda-Tanzania border. It is known for its scenic beauty and historical importance.",
+
+    "location": {
+      "address": "Kirehe District",
+      "city": "Eastern Province",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.3700,
+        "lng": 30.7900
+      },
+      "distanceFromMainCity": "160 km from Kigali",
+      "driveTime": "3.5 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://www.volcanoesparkrwanda.org/information/visit-rusumo-falls-in-rwanda/"
+    },
+
+    "type": "waterfall",
+
+    "tags": [
+      "waterfall",
+      "nature",
+      "photography",
+      "historical"
+    ],
+
+    "atmosphere": "peaceful",
+
+    "bestFor": [
+      "photography",
+      "nature lovers",
+      "relaxation"
+    ],
+
+    "rating": 4.5
+  },
+
+  {
+    "name": "Ndaba Waterfall",
+    "slug": "ndaba-waterfall",
+    "shortDescription": "A famous waterfall surrounded by local legends and natural beauty.",
+    "fullDescription": "Ndaba Waterfall is located in Karongi District and is known for its historical legends and beautiful surrounding landscapes.",
+
+    "location": {
+      "address": "Karongi District",
+      "city": "Western Province",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.0600,
+        "lng": 29.3500
+      },
+      "distanceFromMainCity": "140 km from Kigali",
+      "driveTime": "3 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://www.kigalitoday.com/amakuru/mu-rwanda/article/menya-amateka-y-urutare-rwa-ndaba"
+    },
+
+    "type": "waterfall",
+
+    "tags": [
+      "waterfall",
+      "nature",
+      "culture",
+      "photography"
+    ],
+
+    "atmosphere": "peaceful",
+
+    "bestFor": [
+      "nature lovers",
+      "photography",
+      "relaxation"
+    ],
+
+    "rating": 4.6
+  },
+
+  {
+    "name": "Gishwati-Mukura National Park",
+    "slug": "gishwati-mukura-national-park",
+    "shortDescription": "A protected rainforest park rich in biodiversity and primates.",
+    "fullDescription": "Gishwati-Mukura National Park is Rwanda’s newest national park known for rainforest conservation, chimpanzees, birds, and eco-tourism.",
+
+    "location": {
+      "address": "Western Province",
+      "city": "Rutsiro",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.8300,
+        "lng": 29.3500
+      },
+      "distanceFromMainCity": "160 km from Kigali",
+      "driveTime": "4 hours"
+    },
+
+    "contactInfo": {
+      "website": "https://visitrwanda.com/destinations/gishwati-mukura-national-park-2/"
+    },
+
+    "type": "forest",
+
+    "tags": [
+      "rainforest",
+      "chimpanzees",
+      "eco tourism",
+      "nature"
+    ],
+
+    "atmosphere": "peaceful",
+
+    "bestFor": [
+      "nature lovers",
+      "bird watching",
+      "hiking"
+    ],
+
+    "rating": 4.8,
+
+    "details": {
+      "secondaryType": "national_park"
+    }
+  },
+
+  {
+    "name": "Kandt House Museum",
+    "slug": "kandt-house-museum",
+    "shortDescription": "Historic museum showcasing Rwanda’s natural and colonial history.",
+    "fullDescription": "Kandt House Museum is one of Kigali’s oldest museums dedicated to Rwanda’s natural history and colonial past. It was once the residence of German explorer Richard Kandt.",
+
+    "location": {
+      "address": "KN 90 St",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9441,
+        "lng": 30.0619
+      },
+      "distanceFromMainCity": "Kigali City Center",
+      "driveTime": "10 minutes"
+    },
+
+    "contactInfo": {},
+
+    "type": "museum",
+
+    "tags": [
+      "museum",
+      "history",
+      "education",
+      "culture"
+    ],
+
+    "atmosphere": "educational",
+
+    "bestFor": [
+      "education",
+      "family trips",
+      "culture"
+    ],
+
+    "openingHours": "9:00 AM - 5:00 PM",
+
+    "rating": 4.5
+  },
+  
+  {
+    "name": "Rwanda Art Museum",
+    "slug": "rwanda-art-museum",
+    "shortDescription": "A modern museum showcasing Rwanda’s contemporary art and aviation history.",
+    "fullDescription": "Rwanda Art Museum is located at the former presidential palace in Kigali. The museum exhibits contemporary Rwandan artwork, cultural exhibitions, and historical aviation pieces including the presidential aircraft.",
+    "location": {
+      "address": "Kanombe",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9686,
+        "lng": 30.1395
+      },
+      "distanceFromMainCity": "10 km from Kigali City Center",
+      "driveTime": "20 minutes"
+    },
+    "contactInfo": {
+      "website": "https://visitrwanda.com/interests/rwanda-art-museum/"
+    },
+    "type": "museum",
+    "tags": ["art", "history", "museum", "culture"],
+    "atmosphere": "educational",
+    "bestFor": ["art lovers", "students", "photography"],
+    "images": [],
+    "openingHours": "8:00 AM - 6:00 PM",
+    "rating": 4.6,
+    "status": "approved"
+  },
+  {
+    "name": "King's Palace Museum",
+    "slug": "kings-palace-museum",
+    "shortDescription": "Traditional royal residence preserving Rwanda’s monarchy history.",
+    "fullDescription": "The King's Palace Museum in Nyanza showcases Rwanda’s royal heritage with traditional huts, royal cows, and cultural exhibits explaining the kingdom era.",
+    "location": {
+      "address": "Nyanza",
+      "city": "Nyanza",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.3519,
+        "lng": 29.7505
+      },
+      "distanceFromMainCity": "88 km from Kigali",
+      "driveTime": "2 hours"
+    },
+    "contactInfo": {
+      "website": "https://visitrwanda.com/interests/kings-palace/"
+    },
+    "type": "museum",
+    "tags": ["culture", "history", "royalty"],
+    "atmosphere": "cultural",
+    "bestFor": ["history lovers", "students", "culture tours"],
+    "images": [],
+    "openingHours": "8:00 AM - 6:00 PM",
+    "rating": 4.7,
+    "status": "approved"
+  },
+  {
+    "name": "Ib'Iwacu Cultural Village",
+    "slug": "ibyiwacu-cultural-village",
+    "shortDescription": "A cultural village offering traditional Rwandan experiences and performances.",
+    "fullDescription": "Ib'Iwacu Cultural Village provides immersive cultural activities including traditional dances, drumming, storytelling, local cuisine, and community experiences near Volcanoes National Park.",
+    "location": {
+      "address": "Kinigi",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.4833,
+        "lng": 29.6333
+      },
+      "distanceFromMainCity": "110 km from Kigali",
+      "driveTime": "2.5 hours"
+    },
+    "contactInfo": {
+      "website": "https://www.google.com/search?q=ibyiwacu+cultural+village"
+    },
+    "type": "cultural_site",
+    "tags": ["culture", "dance", "community", "tradition"],
+    "atmosphere": "cultural",
+    "bestFor": ["families", "tourists", "cultural experiences"],
+    "images": [],
+    "openingHours": "9:00 AM - 6:00 PM",
+    "rating": 4.8,
+    "status": "approved"
+  },
+  {
+    "name": "Nyanza Royal Palace Museum",
+    "slug": "nyanza-royal-palace-museum",
+    "shortDescription": "Historic royal palace representing Rwanda’s monarchy.",
+    "fullDescription": "The Nyanza Royal Palace Museum preserves the traditional architecture and royal history of Rwanda’s kings and queens.",
+    "location": {
+      "address": "Nyanza",
+      "city": "Nyanza",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.351,
+        "lng": 29.751
+      },
+      "distanceFromMainCity": "88 km from Kigali",
+      "driveTime": "2 hours"
+    },
+    "contactInfo": {
+      "website": "https://www.peekrwanda.com/nyanza-royal-palace-museum"
+    },
+    "type": "historical_site",
+    "tags": ["history", "royal", "culture"],
+    "atmosphere": "educational",
+    "bestFor": ["history lovers", "students"],
+    "images": [],
+    "openingHours": "8:00 AM - 5:00 PM",
+    "rating": 4.5,
+    "status": "approved"
+  },
+  {
+    "name": "Campaign Against Genocide Museum",
+    "slug": "campaign-against-genocide-museum",
+    "shortDescription": "Museum preserving the history of Rwanda’s liberation struggle.",
+    "fullDescription": "The Campaign Against Genocide Museum documents Rwanda’s liberation journey and the efforts to stop the 1994 Genocide against the Tutsi.",
+    "location": {
+      "address": "Parliament Building",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9441,
+        "lng": 30.0928
+      },
+      "distanceFromMainCity": "5 km",
+      "driveTime": "15 minutes"
+    },
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g293829-d13327392-Reviews-Campaign_Against_Genocide_Museum-Kigali_Kigali_Province.html"
+    },
+    "type": "museum",
+    "tags": ["history", "genocide", "education"],
+    "atmosphere": "educational",
+    "bestFor": ["students", "researchers"],
+    "images": [],
+    "openingHours": "8:00 AM - 5:00 PM",
+    "rating": 4.8,
+    "status": "approved"
+  },
+  {
+    "name": "Kigali Genocide Memorial",
+    "slug": "kigali-genocide-memorial",
+    "shortDescription": "Memorial honoring victims of the 1994 Genocide against the Tutsi.",
+    "fullDescription": "The Kigali Genocide Memorial provides education, remembrance, and historical archives about the 1994 Genocide against the Tutsi.",
+    "location": {
+      "address": "Gisozi",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9179,
+        "lng": 30.0619
+      },
+      "distanceFromMainCity": "4 km",
+      "driveTime": "10 minutes"
+    },
+    "contactInfo": {
+      "website": "https://kgm.rw/"
+    },
+    "type": "memorial",
+    "tags": ["history", "memorial", "education"],
+    "atmosphere": "educational",
+    "bestFor": ["students", "tourists"],
+    "images": [],
+    "openingHours": "8:00 AM - 5:00 PM",
+    "rating": 4.9,
+    "status": "approved"
+  },
+  {
+    "name": "Murambi Genocide Memorial",
+    "slug": "murambi-genocide-memorial",
+    "shortDescription": "One of Rwanda’s major genocide memorial sites.",
+    "fullDescription": "Murambi Memorial preserves evidence and stories from the 1994 Genocide against the Tutsi while educating future generations.",
+    "location": {
+      "address": "Nyamagabe",
+      "city": "Huye",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -2.5569,
+        "lng": 29.6011
+      },
+      "distanceFromMainCity": "150 km from Kigali",
+      "driveTime": "3.5 hours"
+    },
+    "contactInfo": {
+      "website": "https://genocidearchiverwanda.org.rw/Murambi_Memorial"
+    },
+    "type": "memorial",
+    "tags": ["history", "education", "memorial"],
+    "atmosphere": "educational",
+    "bestFor": ["researchers", "students"],
+    "images": [],
+    "openingHours": "8:00 AM - 5:00 PM",
+    "rating": 4.8,
+    "status": "approved"
+  },
+  {
+    "name": "Kigali Marriott Hotel",
+    "slug": "kigali-marriott-hotel",
+    "shortDescription": "Luxury hotel located in the heart of Kigali.",
+    "fullDescription": "Kigali Marriott Hotel offers premium accommodation, restaurants, conference facilities, and luxury experiences for travelers and business visitors.",
+    "location": {
+      "address": "KN 3 Avenue",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9499,
+        "lng": 30.0588
+      },
+      "distanceFromMainCity": "City Center",
+      "driveTime": "5 minutes"
+    },
+    "contactInfo": {
+      "website": "https://www.marriott.com/en-us/hotels/kglmc-kigali-marriott-hotel/overview/"
+    },
+    "type": "hotel",
+    "tags": ["luxury", "hotel", "conference"],
+    "atmosphere": "luxury",
+    "bestFor": ["business trips", "honeymoon"],
+    "images": [],
+    "openingHours": "24 Hours",
+    "rating": 4.8,
+    "status": "approved"
+  },
+  {
+    "name": "Radisson Blu Hotel Kigali",
+    "slug": "radisson-blu-kigali",
+    "shortDescription": "Modern luxury hotel near Kigali Convention Centre.",
+    "fullDescription": "Radisson Blu Hotel Kigali offers elegant accommodation, conference spaces, restaurants, and leisure facilities.",
+    "location": {
+      "address": "KG 2 Roundabout",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9546,
+        "lng": 30.0925
+      },
+      "distanceFromMainCity": "5 km",
+      "driveTime": "10 minutes"
+    },
+    "contactInfo": {
+      "website": "https://www.radissonhotels.com/en-us/hotels/radisson-blu-convention-kigali"
+    },
+    "type": "hotel",
+    "tags": ["luxury", "conference", "hotel"],
+    "atmosphere": "luxury",
+    "bestFor": ["business", "events"],
+    "images": [],
+    "openingHours": "24 Hours",
+    "rating": 4.7,
+    "status": "approved"
+  },
+  {
+    "name": "Heaven Restaurant",
+    "slug": "heaven-restaurant",
+    "shortDescription": "Popular restaurant serving local and international cuisine.",
+    "fullDescription": "Heaven Restaurant is known for combining fine dining with Rwandan hospitality and community empowerment.",
+    "location": {
+      "address": "KN 29 Street",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.949,
+        "lng": 30.068
+      },
+      "distanceFromMainCity": "2 km",
+      "driveTime": "5 minutes"
+    },
+    "contactInfo": {
+      "website": "https://heavenrwanda.com/dine/heaven-restaurant/"
+    },
+    "type": "restaurant",
+    "tags": ["food", "restaurant", "local cuisine"],
+    "atmosphere": "romantic",
+    "bestFor": ["couples", "tourists"],
+    "images": [],
+    "openingHours": "7:00 AM - 10:00 PM",
+    "rating": 4.7,
+    "status": "approved"
+  },
+  {
+    "name": "Poivre Noir Bistro",
+    "slug": "poivre-noir-bistro",
+    "shortDescription": "Fine dining restaurant with international cuisine.",
+    "fullDescription": "Poivre Noir Bistro offers elegant dining experiences with a blend of European and African culinary styles.",
+    "location": {
+      "address": "Kacyiru",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": {
+        "lat": -1.9445,
+        "lng": 30.0901
+      },
+      "distanceFromMainCity": "4 km",
+      "driveTime": "10 minutes"
+    },
+    "contactInfo": {
+      "website": "https://www.poivrenoirbistro.com/"
+    },
+    "type": "restaurant",
+    "tags": ["restaurant", "luxury", "food"],
+    "atmosphere": "luxury",
+    "bestFor": ["fine dining", "business meetings"],
+    "images": [],
+    "openingHours": "11:00 AM - 11:00 PM",
+    "rating": 4.6,
+    "status": "approved"
+  },
+  
+  {
+    "name": "Kigali Convention Centre",
+    "slug": "kigali-convention-centre",
+    "shortDescription": "Iconic landmark for conferences and major events in Kigali.",
+    "fullDescription": "The Kigali Convention Centre is a modern architectural landmark used for international conferences, exhibitions, and events.",
+    "location": {
+      "address": "Kimihurura",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9536, "lng": 30.0893 },
+      "distanceFromMainCity": "Central Kigali",
+      "driveTime": "10–15 minutes"
+    },
+    "contactInfo": {
+      "website": "https://visitrwanda.com/meet-in-rwanda/kigali-convention-centre/"
+    },
+    "type": "city_attraction",
+    "tags": ["events", "conference", "architecture"],
+    "atmosphere": "luxury",
+    "bestFor": ["business", "events", "photography"],
+    "images": [],
+    "openingHours": "Event-based",
+    "rating": 4.6,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "usage": "conferences and exhibitions"
+    }
+  },
+
+  {
+    "name": "Kimironko Market",
+    "slug": "kimironko-market",
+    "shortDescription": "Largest local market in Kigali with fresh produce and crafts.",
+    "fullDescription": "Kimironko Market is a vibrant marketplace offering fresh food, clothing, and local crafts.",
+    "location": {
+      "address": "Kimironko",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9386, "lng": 30.1234 },
+      "distanceFromMainCity": "East Kigali",
+      "driveTime": "15–20 minutes"
+    },
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g293829-d6857363"
+    },
+    "type": "city_attraction",
+    "tags": ["market", "culture", "shopping"],
+    "atmosphere": "cultural",
+    "bestFor": ["shopping", "culture", "local experience"],
+    "images": [],
+    "openingHours": "6:00 AM - 6:00 PM",
+    "rating": 4.3,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "experience": "local shopping hub"
+    }
+  },
+
+  {
+    "name": "Rebero Viewpoint",
+    "slug": "rebero-viewpoint",
+    "shortDescription": "Scenic viewpoint overlooking Kigali city.",
+    "fullDescription": "Rebero Viewpoint offers panoramic views of Kigali city, especially beautiful at sunset.",
+    "location": {
+      "address": "Rebero Hill",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9965, "lng": 30.0452 },
+      "distanceFromMainCity": "10 km from city center",
+      "driveTime": "20 minutes"
+    },
+    "contactInfo": {
+      "website": "https://airial.travel/attractions/rwanda/kigali/rebero-viewpoint-kigali-DZgQqlx0"
+    },
+    "type": "viewpoint",
+    "tags": ["view", "sunset", "photography"],
+    "atmosphere": "peaceful",
+    "bestFor": ["photography", "relaxation"],
+    "images": [],
+    "openingHours": "Open",
+    "rating": 4.5,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "bestTime": "sunset"
+    }
+  },
+
+  {
+    "name": "Congo Nile Trail Viewpoints",
+    "slug": "congo-nile-trail-viewpoints",
+    "shortDescription": "Scenic trail with breathtaking Lake Kivu views.",
+    "fullDescription": "The Congo Nile Trail offers one of Rwanda’s most scenic hiking and cycling routes along Lake Kivu.",
+    "location": {
+      "address": "Rubavu District",
+      "city": "Rubavu",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.7041, "lng": 29.2564 },
+      "distanceFromMainCity": "150 km from Kigali",
+      "driveTime": "3–4 hours"
+    },
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g12620107-d3241211"
+    },
+    "type": "viewpoint",
+    "tags": ["lake", "cycling", "hiking"],
+    "atmosphere": "adventurous",
+    "bestFor": ["hiking", "cycling", "photography"],
+    "images": [],
+    "openingHours": "Open",
+    "rating": 4.7,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "trailLength": "227 km"
+    }
+  },
+
+  {
+    "name": "One&Only Gorilla’s Nest",
+    "slug": "one-and-only-gorillas-nest",
+    "shortDescription": "Luxury eco-resort near Volcanoes National Park.",
+    "fullDescription": "A high-end luxury resort offering exclusive access to gorilla trekking experiences.",
+    "location": {
+      "address": "Kinigi",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.4862, "lng": 29.6060 },
+      "distanceFromMainCity": "110 km from Kigali",
+      "driveTime": "2.5–3 hours"
+    },
+    "contactInfo": {
+      "website": "https://www.nyandunguecopark.rw/"
+    },
+    "type": "resort",
+    "tags": ["luxury", "gorilla trekking", "nature"],
+    "atmosphere": "luxury",
+    "bestFor": ["honeymoon", "luxury travel", "wildlife"],
+    "images": [],
+    "openingHours": "24/7",
+    "rating": 4.8,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "ecoLuxury": true
+    }
+  },
+
+  {
+    "name": "Kigali Eco Park",
+    "slug": "kigali-eco-park",
+    "shortDescription": "Urban green park promoting eco-tourism in Kigali.",
+    "fullDescription": "Kigali Eco Park is a green urban space designed for relaxation and environmental awareness.",
+    "location": {
+      "address": "Kigali City",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9500, "lng": 30.0600 }
+    },
+    "contactInfo": {},
+    "type": "park",
+    "tags": ["nature", "eco", "relaxation"],
+    "atmosphere": "peaceful",
+    "bestFor": ["relaxation", "walking"],
+    "images": [],
+    "openingHours": "6:00 AM - 6:00 PM",
+    "rating": 4.2,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {}
+  },
+
+  {
+    "name": "Inema Arts Center",
+    "slug": "inema-arts-center",
+    "shortDescription": "Contemporary art gallery promoting Rwandan artists.",
+    "fullDescription": "Inema Arts Center is a creative hub showcasing modern Rwandan art and hosting workshops.",
+    "location": {
+      "address": "Kacyiru",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9440, "lng": 30.0890 }
+    },
+    "contactInfo": {},
+    "type": "cultural_site",
+    "tags": ["art", "culture", "creative"],
+    "atmosphere": "cultural",
+    "bestFor": ["art", "culture", "education"],
+    "images": [],
+    "openingHours": "10:00 AM - 6:00 PM",
+    "rating": 4.5,
+    "owner": "000000000000000000000000",
+    "status": "approved",
+    "details": {
+      "artType": "contemporary"
+    }
+  }
+
+
+]
