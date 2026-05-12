@@ -73,7 +73,7 @@ createUser: asyncWrapper(async (req, res, next) => {
     try {
       const images = `IMAGE_${Date.now()}`;
       const ImageCloudinary = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'Menya-Rwanda',
+        folder: 'MenyaRwanda/Users',
         public_id: images
       });
       imageUrl = ImageCloudinary.secure_url;

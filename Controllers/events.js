@@ -136,7 +136,7 @@ const eventController = {
     try {
       // Upload image to Cloudinary
       const imageCloudinary = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: 'Events-MenyaRwanda',
+        folder: 'MenyaRwanda/Events',
         public_id: imageName
       });
 

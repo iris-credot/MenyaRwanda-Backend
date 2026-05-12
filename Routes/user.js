@@ -6,7 +6,7 @@ const userController = require('../Controllers/user');
 const loginController = require('../Controllers/login');
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/Users/' });
 
 // AUTH
 router.post('/signup', upload.single('image'), userController.createUser);

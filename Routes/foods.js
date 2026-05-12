@@ -7,24 +7,20 @@ const foodController = require('../Controllers/foods');
 const auth = require('../Middleware/authentication');
 const multer = require('multer');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/Foods/' });
 
 
-// ==============================
-// PUBLIC ROUTES
-// ==============================
 
-// Get all foods
-router.get('/', foodController.getAllFoods);
+router.get('/', auth.AuthJWT, foodController.getAllFoods);
 
 // Get featured foods
-router.get('/featured', foodController.getFeaturedFoods);
+router.get('/featured', auth.AuthJWT, foodController.getFeaturedFoods);
 
 // Get foods by category
-router.get('/category/:category', foodController.getFoodsByCategory);
-
+router.get('/category/:category', auth.AuthJWT, foodController.getFoodsByCategory);
+router.get('/attractions/:attractionId', auth.AuthJWT, foodController.getFoodsByAttraction);
 // Get single food
-router.get('/:id', foodController.getFoodById);
+router.get('/:id', auth.AuthJWT, foodController.getFoodById);
 
 
 // ==============================
@@ -34,7 +30,7 @@ router.get('/:id', foodController.getFoodById);
 // Create food
 router.post(
   '/',
-  auth.adminJWT,
+  auth.BothJWT,
   upload.single('image'),
   foodController.createFood
 );
@@ -42,14 +38,14 @@ router.post(
 // Update food
 router.put(
   '/:id',
-  auth.adminJWT,
+  auth.BothJWT,
   foodController.updateFood
 );
 
 // Delete food
 router.delete(
   '/:id',
-  auth.adminJWT,
+  auth.BothJWT,
   foodController.deleteFood
 );
 

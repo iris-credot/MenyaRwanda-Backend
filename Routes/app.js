@@ -15,37 +15,28 @@ const eventRoutes = require('./event');
 const foodRoutes = require('./foods');
 const aiChatRoutes = require('./aiChat');
 const debugRoutes = require('./debug');
+const attractionContentRoutes = require('./attractionContent');
+const accommodationRoutes = require('./accomodations');
+const activityRoutes = require('./activities');
+const travelInfoRoutes = require('./travelInfo');
+const galleryRoutes = require('./gallery');
 //  REGISTER ROUTES
 
 Router.use('/ai', aiChatRoutes);
 Router.use('/debug', debugRoutes);
-//  USER AUTH & PROFILE
+Router.use('/attraction-content', attractionContentRoutes);
+Router.use('/travel-info', travelInfoRoutes);
+Router.use('/accommodations', accommodationRoutes);
+Router.use('/activities', activityRoutes);
 Router.use('/users', userRoutes);
-
-//  OWNERS (STAFF)
 Router.use('/owners', ownerRoutes);
-
-//  ATTRACTIONS
 Router.use('/attractions', attractionRoutes);
-
-//  REVIEWS
+Router.use('/gallery', galleryRoutes);
 Router.use('/reviews', reviewRoutes);
-
-// FAVORITES
 Router.use('/favorites', favoriteRoutes);
-
-//  NOTIFICATIONS
 Router.use('/notifications', notificationRoutes);
-
-//  CHAT (AI / assistant)
 Router.use('/chat', chatRoutes);
-
-//  EVENTS
 Router.use('/events', eventRoutes);
-
-// FOODS
-console.log('foodRoutes:', foodRoutes);
-console.log('type:', typeof foodRoutes);
 Router.use('/foods', foodRoutes);
 
 

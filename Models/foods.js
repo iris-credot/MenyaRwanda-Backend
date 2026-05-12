@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const foodSchema = new mongoose.Schema(
   {
+    attraction: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Attraction",
+    required: true
+  },
     name: {
       type: String,
       required: true,
@@ -22,7 +27,9 @@ const foodSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-
+    priceRange: {
+      type: String,
+    },
     featured: {
       type: Boolean,
       default: false,
