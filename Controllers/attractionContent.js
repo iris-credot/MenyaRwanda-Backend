@@ -1,5 +1,6 @@
-const asyncWrapper = require('../Middleware/async');
 const AttractionContent = require('../Models/AttractionContent');
+const asyncWrapper = require('../Middleware/async');
+
 const Attraction = require('../Models/attraction');
 const Owner = require('../Models/owners');
 
