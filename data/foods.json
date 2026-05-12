@@ -1,0 +1,263 @@
+[
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Isombe",
+    "description": "Traditional Rwandan dish made from cassava leaves cooked with peanut paste.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Ugali (Sima)",
+    "description": "Staple maize flour dish served with vegetables or meat.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Brochettes",
+    "description": "Grilled meat skewers popular across Rwanda.",
+    "category": "Street Food",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Akabenz",
+    "description": "Fried pork dish served with plantains or fries.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Ibihaza",
+    "description": "Pumpkin cooked with beans and maize.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Matoke",
+    "description": "Steamed green bananas served with stew.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Grilled Tilapia (Lake Kivu)",
+    "description": "Fresh fish grilled with spices from Lake Kivu.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Ibishyimbo (Beans Stew)",
+    "description": "Slow-cooked beans in tomato and onion sauce.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Mandazi",
+    "description": "Sweet fried dough snack popular in East Africa.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Sambaza Fish",
+    "description": "Small fried fish from Lake Kivu.",
+    "category": "Street Food",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ef",
+    "name": "Rwanda Coffee",
+    "description": "High-quality Arabica coffee from Rwandan highlands.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Urwagwa (Banana Beer)",
+    "description": "Traditional fermented banana beverage.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Fresh Sugarcane Juice",
+    "description": "Locally pressed sugarcane drink.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Grilled Goat Skewers",
+    "description": "Popular street meat grilled over charcoal.",
+    "category": "Street Food",
+    "image": "",
+    "priceRange": "$$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Plantain Chips",
+    "description": "Crispy fried banana chips.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Nyama Choma",
+    "description": "Roasted meat served with vegetables.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Sweet Potatoes",
+    "description": "Boiled or roasted sweet potatoes.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Chapati",
+    "description": "Flatbread commonly eaten with stew or tea.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Local Honey",
+    "description": "Organic honey from Rwandan forests.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ef",
+    "name": "Milk Tea (Chai)",
+    "description": "Traditional Rwandan spiced tea.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ee",
+    "name": "Avocado Salad",
+    "description": "Fresh avocado mixed with vegetables.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Grilled Chicken Rwanda Style",
+    "description": "Spiced grilled chicken served locally.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Fried Cassava",
+    "description": "Crispy cassava sticks served as snack.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ee",
+    "name": "Vegetable Stew",
+    "description": "Mixed vegetables cooked in sauce.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ee",
+    "name": "Fresh Mango Juice",
+    "description": "Natural juice made from fresh mangoes.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "name": "Grilled Fish Skewers",
+    "description": "Lake fish grilled on sticks.",
+    "category": "Street Food",
+    "image": "",
+    "priceRange": "$$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "name": "Peanut Sauce Dish",
+    "description": "Rich peanut sauce served with rice or cassava.",
+    "category": "Traditional",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ee",
+    "name": "Local Fruit Platter",
+    "description": "Fresh seasonal fruits from Rwanda.",
+    "category": "Snack",
+    "image": "",
+    "priceRange": "$",
+    "featured": true
+  },
+  {
+    "attraction": "6a0381aa478395cb803462ef",
+    "name": "Spiced Ginger Tea",
+    "description": "Hot ginger drink used for relaxation.",
+    "category": "Drink",
+    "image": "",
+    "priceRange": "$",
+    "featured": false
+  }
+]

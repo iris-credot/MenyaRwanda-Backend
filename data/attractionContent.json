@@ -1,0 +1,697 @@
+[
+  {
+    "attraction": "6a0381aa478395cb803462d3",
+    "overview": "Famous for mountain gorilla trekking and part of the Virunga volcanic range.",
+    "bestTimeToVisit": "June–September, December–February",
+    "weather": "Cool, wet, mountainous",
+    "location": {
+      "address": "Musanze District",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.4833, "lng": 29.5667 },
+      "distanceFromMainCity": "110 km from Kigali",
+      "driveTime": "2.5–3 hours"
+    },
+    "gettingThere": "Road transport from Kigali via Musanze",
+    "openingHours": "7:00 AM - 5:00 PM",
+    "entryFee": "Gorilla trekking permit required",
+    "visitorTips": ["Book permits early", "Wear hiking boots", "Hire a guide"],
+    "rules": ["No littering", "Maintain distance from gorillas"],
+    "highlights": ["Mountain gorillas", "Volcano hiking", "Dian Fossey site"],
+    "importantInfo": ["Limited gorilla permits per day"],
+    "statistics": { "totalArea": "160 km²", "annualVisitors": 50000 },
+    "contactInfo": { "website": "https://www.volcanoesnationalpark.com/" },
+    "coordinates": { "latitude": -1.4833, "longitude": 29.5667 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d4",
+    "overview": "Rwanda’s only savannah park, home to the Big Five and rich wildlife.",
+    "bestTimeToVisit": "June–September",
+    "weather": "Hot savannah climate",
+    "location": {
+      "address": "Eastern Province",
+      "city": "Kayonza",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9500, "lng": 30.7000 },
+      "distanceFromMainCity": "110 km from Kigali",
+      "driveTime": "2.5–3 hours"
+    },
+    "gettingThere": "Road access from Kigali",
+    "openingHours": "6:00 AM - 6:00 PM",
+    "entryFee": "Park entry fees apply",
+    "visitorTips": ["Go for morning game drives", "Bring binoculars"],
+    "rules": ["Stay in vehicle during safaris"],
+    "highlights": ["Lions", "Elephants", "Boat safaris"],
+    "importantInfo": ["Big Five conservation park"],
+    "statistics": { "totalArea": "1122 km²", "annualVisitors": 40000 },
+    "contactInfo": { "website": "https://visitakagera.org/" },
+    "coordinates": { "latitude": -1.9500, "longitude": 30.7000 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d5",
+    "overview": "One of Africa’s oldest rainforests with chimpanzees and canopy walks.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Cool and rainy",
+    "location": {
+      "address": "Western Province",
+      "city": "Rusizi",
+      "country": "Rwanda",
+      "coordinates": { "lat": -2.4833, "lng": 29.2167 },
+      "distanceFromMainCity": "225 km from Kigali",
+      "driveTime": "5–6 hours"
+    },
+    "gettingThere": "Road trip from Kigali",
+    "openingHours": "6:00 AM - 6:00 PM",
+    "entryFee": "Permit required",
+    "visitorTips": ["Wear waterproof gear"],
+    "rules": ["Do not feed wildlife"],
+    "highlights": ["Chimpanzees", "Canopy walk", "Biodiversity"],
+    "importantInfo": ["One of Africa’s oldest forests"],
+    "statistics": { "totalArea": "1019 km²", "annualVisitors": 30000 },
+    "contactInfo": { "website": "https://visitnyungwe.org/" },
+    "coordinates": { "latitude": -2.4833, "longitude": 29.2167 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d6",
+    "overview": "Highest volcano in Rwanda, part of the Virunga range.",
+    "bestTimeToVisit": "Dry season",
+    "weather": "Cold and misty",
+    "location": {
+      "address": "Volcanoes range",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.5067, "lng": 29.4450 },
+      "distanceFromMainCity": "120 km from Kigali",
+      "driveTime": "3 hours"
+    },
+    "gettingThere": "Hiking tours from Musanze",
+    "openingHours": "Hiking permit required",
+    "entryFee": "Permit required",
+    "visitorTips": ["Prepare for cold weather"],
+    "rules": ["Follow ranger instructions"],
+    "highlights": ["Volcano hiking", "Views of Virunga"],
+    "importantInfo": ["Strenuous hike (2 days)"],
+    "statistics": {},
+    "contactInfo": {},
+    "coordinates": { "latitude": -1.5067, "longitude": 29.4450 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d7",
+    "overview": "Volcanic mountain famous for its crater lake.",
+    "bestTimeToVisit": "Dry season",
+    "weather": "Cold and rainy",
+    "location": {
+      "address": "Virunga Mountains",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.4420, "lng": 29.4900 }
+    },
+    "gettingThere": "Hiking from Kinigi",
+    "openingHours": "Day hikes only",
+    "entryFee": "Permit required",
+    "visitorTips": ["Start early morning"],
+    "rules": ["Stay with guide"],
+    "highlights": ["Crater lake", "Mountain hike"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {},
+    "coordinates": { "latitude": -1.4420, "longitude": 29.4900 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d8",
+    "overview": "One of Africa’s Great Lakes shared between Rwanda and DRC.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild tropical",
+    "location": {
+      "address": "Western Rwanda",
+      "city": "Rubavu",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9833, "lng": 29.2333 }
+    },
+    "gettingThere": "Road from Kigali",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": ["Boat rides available"],
+    "rules": ["Respect water safety"],
+    "highlights": ["Scenic lake views", "Beaches"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": { "website": "https://visitrwanda.com/destinations/lake-kivu/" },
+    "coordinates": { "latitude": -1.9833, "longitude": 29.2333 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462d9",
+    "overview": "Peaceful lake near Kigali ideal for relaxation and fishing.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Warm",
+    "location": {
+      "address": "Eastern Province",
+      "city": "Rwamagana",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.8500, "lng": 30.3333 }
+    },
+    "gettingThere": "1 hour from Kigali",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Fishing", "Boat rides"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {},
+    "coordinates": { "latitude": -1.8500, "longitude": 30.3333 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462da",
+    "overview": "Scenic waterfall on Rwanda–Tanzania border.",
+    "bestTimeToVisit": "Rainy season",
+    "weather": "Warm tropical",
+    "location": {
+      "address": "Kirehe District",
+      "city": "Kirehe",
+      "country": "Rwanda",
+      "coordinates": { "lat": -2.3833, "lng": 30.7833 }
+    },
+    "gettingThere": "Road trip from Kigali",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Waterfall views"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": { "website": "https://www.volcanoesparkrwanda.org/information/visit-rusumo-falls-in-rwanda/" },
+    "coordinates": { "latitude": -2.3833, "longitude": 30.7833 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462db",
+    "overview": "Legendary waterfall in Karongi district.",
+    "bestTimeToVisit": "Rainy season",
+    "weather": "Cool and humid",
+    "location": {
+      "address": "Karongi",
+      "city": "Karongi",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Road access from Karongi",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Local legend site"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": { "website": "https://www.kigalitoday.com/amakuru/mu-rwanda/article/menya-amateka-y-urutare-rwa-ndaba" },
+    "coordinates": {}
+  },
+  
+  {
+    "attraction": "6a0381aa478395cb803462dc",
+    "overview": "A protected rainforest ecosystem known for primates and biodiversity conservation.",
+    "bestTimeToVisit": "June–September",
+    "weather": "Cool and rainy",
+    "location": {
+      "address": "Western Province",
+      "city": "Rubavu",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.8140, "lng": 29.3750 }
+    },
+    "gettingThere": "Road from Kigali via Rubavu",
+    "openingHours": "6:00 AM - 6:00 PM",
+    "entryFee": "Park permit required",
+    "visitorTips": ["Wear hiking boots"],
+    "rules": ["Follow ranger instructions"],
+    "highlights": ["Chimpanzees", "Nature trails"],
+    "importantInfo": ["UNESCO biosphere reserve"],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://visitrwanda.com/destinations/gishwati-mukura-national-park-2/"
+    },
+    "coordinates": { "latitude": -1.8140, "longitude": 29.3750 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462dd",
+    "overview": "Historical museum showcasing Rwanda’s colonial and natural history.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Kigali City",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9495, "lng": 30.0588 }
+    },
+    "gettingThere": "Located in Kigali city center",
+    "openingHours": "9:00 AM - 5:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": ["Guided tours recommended"],
+    "rules": [],
+    "highlights": ["Colonial history", "Natural history exhibits"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.google.com/search?q=kandt+house+museum"
+    },
+    "coordinates": { "latitude": -1.9495, "longitude": 30.0588 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462de",
+    "overview": "Contemporary art museum showcasing Rwandan creativity.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Kanombe",
+      "city": "Kigali",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.9600, "lng": 30.1200 }
+    },
+    "gettingThere": "Near Kigali International Airport",
+    "openingHours": "10:00 AM - 6:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Modern art", "Cultural exhibitions"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://visitrwanda.com/interests/rwanda-art-museum/"
+    },
+    "coordinates": { "latitude": -1.9600, "longitude": 30.1200 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462df",
+    "overview": "Reconstructed traditional royal palace showcasing Rwandan monarchy history.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Nyanza District",
+      "city": "Nyanza",
+      "country": "Rwanda",
+      "coordinates": { "lat": -2.3490, "lng": 29.7400 }
+    },
+    "gettingThere": "Road from Kigali (2–3 hours)",
+    "openingHours": "8:00 AM - 5:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Traditional royal house", "Inyambo cattle"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://visitrwanda.com/interests/kings-palace/"
+    },
+    "coordinates": { "latitude": -2.3490, "longitude": 29.7400 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e0",
+    "overview": "Cultural village offering traditional Rwandan experiences.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Musanze",
+      "city": "Musanze",
+      "country": "Rwanda",
+      "coordinates": { "lat": -1.4720, "lng": 29.6350 }
+    },
+    "gettingThere": "Near Volcanoes National Park",
+    "openingHours": "9:00 AM - 5:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Traditional dances", "Cultural storytelling"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.google.com/search?q=ibyiwacu+cultural+village"
+    },
+    "coordinates": { "latitude": -1.4720, "longitude": 29.6350 }
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e1",
+    "overview": "Historic royal residence of Rwanda’s monarchy.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Nyanza",
+      "city": "Nyanza",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Road from Kigali",
+    "openingHours": "8:00 AM - 5:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Royal heritage", "Cultural history"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.peekrwanda.com/nyanza-royal-palace-museum"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e2",
+    "overview": "Museum documenting Rwanda’s liberation history.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Kigali",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Central Kigali",
+    "openingHours": "9:00 AM - 5:00 PM",
+    "entryFee": "Paid entry",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Liberation history"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g293829-d13327392"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e3",
+    "overview": "Memorial site honoring victims of the 1994 genocide.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Gisozi",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "15 minutes from city center",
+    "openingHours": "8:00 AM - 5:00 PM",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Genocide history education"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://kgm.rw/"
+    },
+    "coordinates": {}
+  },
+
+  { 
+    "attraction": "6a0381aa478395cb803462e4",
+    "overview": "One of Rwanda’s most powerful genocide memorial sites.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Mild",
+    "location": {
+      "address": "Nyamagabe",
+      "city": "Nyamagabe",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Southern Rwanda road access",
+    "openingHours": "8:00 AM - 5:00 PM",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Historical preservation"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://genocidearchiverwanda.org.rw/Murambi_Memorial"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e5",
+    "overview": "Luxury hotel in Kigali city center.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "N/A",
+    "location": {
+      "address": "Kigali CBD",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Central Kigali",
+    "openingHours": "24/7",
+    "entryFee": "Room booking required",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Luxury stay", "City views"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.marriott.com/en-us/hotels/kglmc-kigali-marriott-hotel/"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e6",
+    "overview": "High-end hotel connected to Kigali Convention Centre.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "N/A",
+    "location": {
+      "address": "Kimihurura",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Kigali city center",
+    "openingHours": "24/7",
+    "entryFee": "Room booking required",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Convention access", "Luxury rooms"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.radissonhotels.com/en-us/hotels/radisson-blu-convention-kigali"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e7",
+    "overview": "Popular fine dining restaurant in Kigali.",
+    "bestTimeToVisit": "Evening",
+    "weather": "N/A",
+    "location": {
+      "address": "Kigali",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "City center",
+    "openingHours": "11:00 AM - 10:00 PM",
+    "entryFee": "Pay per meal",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Local cuisine", "Rooftop dining"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://heavenrwanda.com/dine/heaven-restaurant/"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e8",
+    "overview": "Upscale French-inspired restaurant in Kigali.",
+    "bestTimeToVisit": "Evening",
+    "weather": "N/A",
+    "location": {
+      "address": "Kigali",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "City center",
+    "openingHours": "12:00 PM - 10:00 PM",
+    "entryFee": "Pay per meal",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Fine dining"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.poivrenoirbistro.com/"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462e9",
+    "overview": "Iconic landmark for conferences and events.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "N/A",
+    "location": {
+      "address": "Kimihurura",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "City center",
+    "openingHours": "Event-based",
+    "entryFee": "Event-dependent",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Iconic dome architecture"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://visitrwanda.com/meet-in-rwanda/kigali-convention-centre/"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462ea",
+    "overview": "Largest local market in Kigali.",
+    "bestTimeToVisit": "Morning",
+    "weather": "N/A",
+    "location": {
+      "address": "Kimironko",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "East Kigali",
+    "openingHours": "6:00 AM - 6:00 PM",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Local culture", "Fresh produce"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g293829-d6857363"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462eb",
+    "overview": "Scenic viewpoint overlooking Kigali city.",
+    "bestTimeToVisit": "Sunset",
+    "weather": "Clear skies preferred",
+    "location": {
+      "address": "Rebero Hill",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Short drive from city",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["City skyline view"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://airial.travel/attractions/rwanda/kigali/rebero-viewpoint-kigali-DZgQqlx0"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462ec",
+    "overview": "Scenic trail along Lake Kivu offering breathtaking views.",
+    "bestTimeToVisit": "Dry season",
+    "weather": "Mild",
+    "location": {
+      "address": "Rubavu",
+      "city": "Rubavu",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Western Rwanda",
+    "openingHours": "Open",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Lake views", "Cycling trails"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.tripadvisor.com/Attraction_Review-g12620107-d3241211"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462ed",
+    "overview": "Luxury resort near Volcanoes National Park.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "Cool",
+    "location": {
+      "address": "Kinigi",
+      "city": "Musanze",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Near Volcanoes National Park",
+    "openingHours": "24/7",
+    "entryFee": "Booking required",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Luxury eco-resort"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {
+      "website": "https://www.nyandunguecopark.rw/"
+    },
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462ee",
+    "overview": "Urban eco-park promoting green tourism in Kigali.",
+    "bestTimeToVisit": "Morning or evening",
+    "weather": "Mild",
+    "location": {
+      "address": "Kigali",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "City access",
+    "openingHours": "6:00 AM - 6:00 PM",
+    "entryFee": "Free",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Nature walks"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {},
+    "coordinates": {}
+  },
+
+  {
+    "attraction": "6a0381aa478395cb803462f0",
+    "overview": "Contemporary art center promoting Rwandan artists.",
+    "bestTimeToVisit": "Year-round",
+    "weather": "N/A",
+    "location": {
+      "address": "Kacyiru",
+      "city": "Kigali",
+      "country": "Rwanda"
+    },
+    "gettingThere": "Kigali city",
+    "openingHours": "10:00 AM - 6:00 PM",
+    "entryFee": "Free entry / donations",
+    "visitorTips": [],
+    "rules": [],
+    "highlights": ["Art exhibitions", "Workshops"],
+    "importantInfo": [],
+    "statistics": {},
+    "contactInfo": {},
+    "coordinates": {}
+  }
+
+]

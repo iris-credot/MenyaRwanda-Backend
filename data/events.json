@@ -1,0 +1,137 @@
+[
+  {
+    "title": "Kwita Izina Gorilla Naming Ceremony",
+    "description": "Annual gorilla naming ceremony celebrating conservation efforts in Volcanoes National Park.",
+    "image": "",
+    "location": "Volcanoes National Park, Musanze",
+    "date": "2026-09-05",
+    "capacity": 5000,
+    "price": 0
+  },
+  {
+    "title": "Kigali International Peace Marathon",
+    "description": "Annual marathon promoting peace and unity in Kigali city.",
+    "image": "",
+    "location": "Amahoro Stadium, Kigali",
+    "date": "2026-06-14",
+    "capacity": 10000,
+    "price": 20
+  },
+  {
+    "title": "Rwanda Film Festival",
+    "description": "Showcasing local and international films across Kigali.",
+    "image": "",
+    "location": "Kigali Convention Centre",
+    "date": "2026-07-20",
+    "capacity": 3000,
+    "price": 10
+  },
+  {
+    "title": "Kigali Up Music Festival",
+    "description": "Annual music festival featuring African and international artists.",
+    "image": "",
+    "location": "Kigali",
+    "date": "2026-08-10",
+    "capacity": 8000,
+    "price": 25
+  },
+  {
+    "title": "Rwanda Tech Summit",
+    "description": "Technology and innovation conference bringing African tech leaders together.",
+    "image": "",
+    "location": "Kigali Convention Centre",
+    "date": "2026-05-30",
+    "capacity": 2000,
+    "price": 50
+  },
+  {
+    "title": "Lake Kivu Boat Festival",
+    "description": "Cultural and water sports festival at Lake Kivu.",
+    "image": "",
+    "location": "Gisenyi, Rubavu",
+    "date": "2026-07-05",
+    "capacity": 1500,
+    "price": 15
+  },
+  {
+    "title": "Rwanda Coffee Festival",
+    "description": "Celebration of Rwanda’s coffee culture and exports.",
+    "image": "",
+    "location": "Kigali Convention Centre",
+    "date": "2026-08-05",
+    "capacity": 2000,
+    "price": 0
+  },
+  {
+    "title": "Nyungwe Eco Tour Week",
+    "description": "Guided eco-tourism experience in Nyungwe Forest.",
+    "image": "",
+    "location": "Nyungwe National Park",
+    "date": "2026-06-12",
+    "capacity": 200,
+    "price": 80
+  },
+  {
+    "title": "Rwanda Tourism Expo",
+    "description": "Tourism exhibition promoting Rwanda destinations.",
+    "image": "",
+    "location": "Kigali Convention Centre",
+    "date": "2026-09-01",
+    "capacity": 3500,
+    "price": 0
+  },
+  {
+    "title": "Gisenyi Beach Festival",
+    "description": "Beach music and cultural festival at Lake Kivu.",
+    "image": "",
+    "location": "Gisenyi Beach",
+    "date": "2026-07-12",
+    "capacity": 3000,
+    "price": 10
+  },
+  {
+    "title": "Kigali Food Festival",
+    "description": "Street food and restaurant showcase in Kigali.",
+    "image": "",
+    "location": "Kigali City Center",
+    "date": "2026-08-18",
+    "capacity": 4000,
+    "price": 5
+  },
+  {
+    "title": "Rwanda Youth Summit",
+    "description": "Youth leadership and empowerment conference.",
+    "image": "",
+    "location": "BK Arena, Kigali",
+    "date": "2026-06-05",
+    "capacity": 6000,
+    "price": 0
+  },
+  {
+    "title": "Rwanda Art Biennale",
+    "description": "Contemporary art exhibition across Kigali.",
+    "image": "",
+    "location": "Inema Arts Center, Kigali",
+    "date": "2026-09-10",
+    "capacity": 1500,
+    "price": 10
+  },
+  {
+    "title": "Kigali Jazz Night",
+    "description": "Live jazz music night in Kigali.",
+    "image": "",
+    "location": "Kigali Serena Hotel",
+    "date": "2026-07-30",
+    "capacity": 600,
+    "price": 20
+  },
+  {
+    "title": "Rwanda Business Forum",
+    "description": "Networking event for investors and entrepreneurs.",
+    "image": "",
+    "location": "Kigali Convention Centre",
+    "date": "2026-08-12",
+    "capacity": 3000,
+    "price": 100
+  }
+]

@@ -1,6 +1,6 @@
 [
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462d3",
     "name": "Five Volcanoes Boutique Hotel",
     "description": "Luxury hotel near Volcanoes National Park offering gorilla trekking access.",
     "type": "hotel",
@@ -15,7 +15,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462d4",
     "name": "Akagera Game Lodge",
     "description": "Safari lodge located inside Akagera National Park.",
     "type": "lodge",
@@ -30,7 +30,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462d5",
     "name": "Nyungwe Top View Hill Hotel",
     "description": "Scenic hotel overlooking Nyungwe Forest.",
     "type": "hotel",
@@ -44,8 +44,8 @@
     "rating": 4.4
   },
 
-  {
-    "attraction": "000000000000000000000000",
+  { 
+    "attraction": "6a0381aa478395cb803462d8",
     "name": "Lake Kivu Serena Hotel",
     "description": "Luxury lakeside hotel offering beach views and relaxation.",
     "type": "resort",
@@ -60,7 +60,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462da",
     "name": "Rusumo Border Lodge",
     "description": "Simple lodge near Rusumo Falls for travelers.",
     "type": "guesthouse",
@@ -75,7 +75,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462dc",
     "name": "Gishwati Lodge",
     "description": "Eco-lodge near Gishwati-Mukura National Park.",
     "type": "lodge",
@@ -90,7 +90,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462e5",
     "name": "Kigali Marriott Hotel",
     "description": "Luxury 5-star hotel in Kigali city center.",
     "type": "hotel",
@@ -105,7 +105,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462e6",
     "name": "Radisson Blu Hotel Kigali",
     "description": "Modern hotel connected to Kigali Convention Centre.",
     "type": "hotel",
@@ -120,7 +120,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462e7",
     "name": "Heaven Boutique Hotel",
     "description": "Popular boutique hotel with fine dining in Kigali.",
     "type": "hotel",
@@ -135,7 +135,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462dc",
     "name": "Poivre Noir Boutique Hotel",
     "description": "Upscale boutique hotel with French-inspired dining.",
     "type": "hotel",
@@ -150,7 +150,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462e9",
     "name": "Kigali Convention Centre Business Suites",
     "description": "Business-oriented accommodation near conference center.",
     "type": "hotel",
@@ -165,7 +165,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462d8",
     "name": "Kivu Lodge",
     "description": "Relaxed lakeside lodge on Lake Kivu.",
     "type": "lodge",
@@ -180,7 +180,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462ed",
     "name": "One&Only Gorilla’s Nest Resort",
     "description": "Ultra-luxury resort near Volcanoes National Park.",
     "type": "resort",
@@ -195,7 +195,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462ec",
     "name": "Congo Nile Trail Campsite",
     "description": "Camping site along scenic Congo Nile Trail.",
     "type": "camp",
@@ -210,7 +210,7 @@
   },
 
   {
-    "attraction": "000000000000000000000000",
+    "attraction": "6a0381aa478395cb803462ef",
     "name": "Inema Arts Guesthouse",
     "description": "Creative stay near Kigali arts center.",
     "type": "guesthouse",

@@ -7,6 +7,8 @@ const swagger = require('./swagger.json');
 const dotenv = require('dotenv');
 dotenv.config();
 
+//mongodb://iriscredotteta:Niwenshuti250@ac-9q9mfo1-shard-00-00.qexuxqn.mongodb.net:27017,ac-9q9mfo1-shard-00-01.qexuxqn.mongodb.net:27017,ac-9q9mfo1-shard-00-02.qexuxqn.mongodb.net:27017/RwandaMenya?ssl=true&replicaSet=atlas-by4k1l-shard-0&authSource=admin&appName=Cluster0
+
 const connection = process.env.MONGODB_URI;
 const port = process.env.PORT;
 const BACKEND_URL = process.env.RENDER_EXTERNAL_URL || "https://menyarwanda-backend.onrender.com";

@@ -114,8 +114,7 @@ contactInfo: {
 
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Owner',
-    required: true
+    ref: 'Owner'
   },
   
   

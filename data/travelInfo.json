@@ -1,0 +1,112 @@
+[
+  {
+    "attraction": "6a0381aa478395cb803462d3",
+    "nearestCity": "Musanze",
+    "distanceFromKigali": "110 km (2.5 hours drive)",
+    "transportOptions": ["Private car", "Tour bus", "Taxi"],
+    "emergencyContacts": ["RDB: 114"],
+    "accessibility": "Moderate hiking required",
+    "recommendedStayDuration": "2-3 days",
+    "tips": ["Book gorilla permits early", "Carry rain jacket"],
+    "rules": ["Maintain 7m distance from gorillas"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d4",
+    "nearestCity": "Kayonza",
+    "distanceFromKigali": "110 km (2.5 hours drive)",
+    "transportOptions": ["Safari jeep", "Private car"],
+    "emergencyContacts": ["Akagera HQ: 111"],
+    "accessibility": "Safari vehicles required",
+    "recommendedStayDuration": "2 days",
+    "tips": ["Best for Big Five safari"],
+    "rules": ["Stay inside vehicle during safari"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d5",
+    "nearestCity": "Rusizi",
+    "distanceFromKigali": "225 km (5-6 hours drive)",
+    "transportOptions": ["Tour bus", "Car"],
+    "emergencyContacts": ["RDB: 114"],
+    "accessibility": "Forest hiking required",
+    "recommendedStayDuration": "2-3 days",
+    "tips": ["Wear hiking boots", "Bring insect repellent"],
+    "rules": ["Stay on marked trails"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d6",
+    "nearestCity": "Musanze",
+    "distanceFromKigali": "120 km",
+    "transportOptions": ["Car", "Tour guide"],
+    "emergencyContacts": ["114"],
+    "accessibility": "Difficult hike",
+    "recommendedStayDuration": "2 days",
+    "tips": ["High altitude climb"],
+    "rules": ["Guide required"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d7",
+    "nearestCity": "Musanze",
+    "distanceFromKigali": "115 km",
+    "transportOptions": ["Car"],
+    "emergencyContacts": ["114"],
+    "accessibility": "Moderate hike",
+    "recommendedStayDuration": "1 day",
+    "tips": ["Crater lake at summit"],
+    "rules": ["Follow ranger instructions"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d8",
+    "nearestCity": "Gisenyi",
+    "distanceFromKigali": "150 km",
+    "transportOptions": ["Bus", "Car"],
+    "emergencyContacts": ["112"],
+    "accessibility": "Easy access",
+    "recommendedStayDuration": "2-3 days",
+    "tips": ["Sunset views are best"],
+    "rules": ["Water safety rules apply"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462d9",
+    "nearestCity": "Rwamagana",
+    "distanceFromKigali": "50 km",
+    "transportOptions": ["Car", "Motorbike"],
+    "emergencyContacts": ["Local tourism office"],
+    "accessibility": "Easy",
+    "recommendedStayDuration": "1 day",
+    "tips": ["Picnic destination"],
+    "rules": ["No littering"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462da",
+    "nearestCity": "Kirehe",
+    "distanceFromKigali": "240 km",
+    "transportOptions": ["Car"],
+    "emergencyContacts": ["112"],
+    "accessibility": "Easy",
+    "recommendedStayDuration": "2 hours",
+    "tips": ["Waterfall viewpoint"],
+    "rules": ["Stay behind barriers"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462db",
+    "nearestCity": "Karongi",
+    "distanceFromKigali": "150 km",
+    "transportOptions": ["Car"],
+    "emergencyContacts": ["Local guide"],
+    "accessibility": "Moderate walk",
+    "recommendedStayDuration": "2 hours",
+    "tips": ["Historical legend site"],
+    "rules": ["Respect cultural site"]
+  },
+  {
+    "attraction": "6a0381aa478395cb803462dc",
+    "nearestCity": "Rubavu",
+    "distanceFromKigali": "180 km",
+    "transportOptions": ["Car"],
+    "emergencyContacts": ["114"],
+    "accessibility": "Forest trails",
+    "recommendedStayDuration": "1-2 days",
+    "tips": ["Birdwatching hotspot"],
+    "rules": ["No off-trail walking"]
+  }
+]
