@@ -1,4 +1,4 @@
-const AttractionContent = require('../Models/AttractionContent.js');
+const AttractionContent = require('../Models/attractionContent');
 const asyncWrapper = require('../Middleware/async');
 
 const Attraction = require('../Models/attraction');
