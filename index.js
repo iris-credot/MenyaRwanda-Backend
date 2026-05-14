@@ -21,7 +21,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5174",
-    "https://menyarwanda-frontend-n1y6.onrender.com"
+    "https://menyarwanda-frontend.onrender.com"
   ],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
