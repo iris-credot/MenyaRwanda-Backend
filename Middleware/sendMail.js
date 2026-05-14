@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASS,
   },
-   family: 4,
+   
 });
 
 // Optional: verify connection once at startup
