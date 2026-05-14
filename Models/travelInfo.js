@@ -9,7 +9,7 @@ const travelInfoSchema = new mongoose.Schema(
       ref: "Attraction",
       required: [true, "Attraction ID is required"],
       unique: true, // ensures only one travel info document per attraction
-      index: true,
+      
     },
 
     // Location & distance
