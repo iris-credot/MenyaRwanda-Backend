@@ -183,109 +183,117 @@ const retrieveAllDocs = async (query) => {
       `users:${users.length} favorites:${favorites.length}`
     );
 
-    const formatted = [];
+const formatted = [];
 
-    // Attractions (highest priority for tourism)
-    attractions.forEach((a) => {
-      if (a.name || a.description)
-        formatted.push(
-          `[ATTRACTION]\n` +
-          `Name: ${a.name || "N/A"}\n` +
-          `Description: ${a.description || "N/A"}\n` +
-          `Location: ${a.location || a.district || "N/A"}\n` +
-          `Category: ${a.category || "N/A"}`
-        );
-    });
+// ── Attractions (natural language) ─────────────────────────────
+attractions.forEach((a) => {
+  if (a.name || a.description) {
+    formatted.push(
+      `${a.name || "A tourist attraction"} is located in ${
+        a.location || a.district || a.province || "Rwanda"
+      }. ${
+        a.description ||
+        "It is one of the interesting places to visit in Rwanda."
+      } ${
+        a.category ? `It is known for ${a.category}.` : ""
+      }`
+    );
+  }
+});
 
-    // Events
-    events.forEach((e) => {
-      if (e.title || e.description)
-        formatted.push(
-          `[EVENT]\n` +
-          `Name: ${e.title || "N/A"}\n` +
-          `Description: ${e.description || "N/A"}\n` +
-          `Location: ${e.location || "N/A"}\n` +
-          `Date: ${e.date ? new Date(e.date).toDateString() : "N/A"}`
-        );
-    });
+// ── Events ─────────────────────────────────────────────────────
+events.forEach((e) => {
+  if (e.title || e.description) {
+    formatted.push(
+      `${e.title || "An event"} takes place in ${
+        e.location || "Rwanda"
+      } ${
+        e.date
+          ? `on ${new Date(e.date).toDateString()}`
+          : ""
+      }. ${e.description || ""}`
+    );
+  }
+});
 
-    // Foods
-    foods.forEach((f) => {
-      if (f.name || f.description)
-        formatted.push(
-          `[FOOD]\n` +
-          `Name: ${f.name || "N/A"}\n` +
-          `Description: ${f.description || "N/A"}\n` +
-          `Category: ${f.category || "N/A"}`
-        );
-    });
+// ── Food ───────────────────────────────────────────────────────
+foods.forEach((f) => {
+  if (f.name || f.description) {
+    formatted.push(
+      `${f.name || "A local dish"} is a ${
+        f.category || "Rwandan food"
+      }. ${f.description || ""}`
+    );
+  }
+});
 
-    // Documents
-    docs.forEach((d) => {
-      if (d.title || d.content)
-        formatted.push(
-          `[DOCUMENT]\n` +
-          `Title: ${d.title || "N/A"}\n` +
-          `${d.content || ""}`
-        );
-    });
+// ── Documents ──────────────────────────────────────────────────
+docs.forEach((d) => {
+  if (d.title || d.content) {
+    formatted.push(
+      `${d.title || "Information"}: ${d.content || ""}`
+    );
+  }
+});
 
-    // Reviews
-    reviews.forEach((r) => {
-      if (r.comment)
-        formatted.push(`[REVIEW]\n${r.comment}`);
-    });
+// ── Reviews ────────────────────────────────────────────────────
+reviews.forEach((r) => {
+  if (r.comment) {
+    formatted.push(`A visitor said: "${r.comment}"`);
+  }
+});
 
-    // Owners / Businesses
-    owners.forEach((o) => {
-      if (o.businessName)
-        formatted.push(
-          `[BUSINESS PARTNER]\n` +
-          `Business Name: ${o.businessName}`
-        );
-    });
+// ── Owners / Businesses ────────────────────────────────────────
+owners.forEach((o) => {
+  if (o.businessName) {
+    formatted.push(
+      `${o.businessName} is a local business operating in Rwanda.`
+    );
+  }
+});
 
-    // Users — public info only, never expose email/password
-    users.forEach((u) => {
-      const displayName =
-        u.names ||
-        `${u.firstName || ""} ${u.lastName || ""}`.trim() ||
-        u.username;
-      if (displayName)
-        formatted.push(
-          `[COMMUNITY MEMBER]\n` +
-          `Name: ${displayName}\n` +
-          `Bio: ${u.bio || "N/A"}\n` +
-          `Location: ${u.address || "N/A"}`
-        );
-    });
+// ── Users ──────────────────────────────────────────────────────
+users.forEach((u) => {
+  const displayName =
+    u.names ||
+    `${u.firstName || ""} ${u.lastName || ""}`.trim() ||
+    u.username;
 
-    // Favorites — surface popular attractions with count
-    if (favorites.length > 0) {
-      const popularityMap = {};
-      favorites.forEach((fav) => {
-        const attraction = fav.attractionId;
-        if (!attraction) return;
-        const id = attraction._id?.toString();
-        if (!popularityMap[id]) {
-          popularityMap[id] = { ...attraction, count: 0 };
-        }
-        popularityMap[id].count++;
-      });
+  if (displayName) {
+    formatted.push(
+      `${displayName} is a community member${
+        u.bio ? `. ${u.bio}` : ""
+      }`
+    );
+  }
+});
 
-      Object.values(popularityMap)
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 5)
-        .forEach((a) => {
-          formatted.push(
-            `[POPULAR ATTRACTION]\n` +
-            `Name: ${a.name || "N/A"}\n` +
-            `Description: ${a.description || "N/A"}\n` +
-            `Location: ${a.location || "N/A"}\n` +
-            `Favorited by: ${a.count} user${a.count !== 1 ? "s" : ""}`
-          );
-        });
+// ── Favorites (important: convert to insight, not structure) ──
+if (favorites.length > 0) {
+  const popularityMap = {};
+
+  favorites.forEach((fav) => {
+    const attraction = fav.attractionId;
+    if (!attraction) return;
+
+    const id = attraction._id?.toString();
+    if (!popularityMap[id]) {
+      popularityMap[id] = { ...attraction, count: 0 };
     }
+    popularityMap[id].count++;
+  });
+
+  Object.values(popularityMap)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5)
+    .forEach((a) => {
+      formatted.push(
+        `${a.name || "A place"} is one of the most popular attractions in Rwanda, favored by ${a.count} visitors. ${
+          a.description || ""
+        }`
+      );
+    });
+}
 
     return formatted;
 

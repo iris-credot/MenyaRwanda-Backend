@@ -36,21 +36,33 @@ const safeContext = contextArray
   .slice(0, 4)
   .join("\n\n---\n\n").slice(0, 3000);
     // Step 2: Build short focused prompt
-    const prompt = hasContext
-      ? `You are "Menya Rwanda Assistant", a Rwanda tourism guide.
+ const prompt = hasContext
+  ? `You are "Menya Rwanda Assistant", a friendly tourism guide for Rwanda.
 
-RELEVANT DATA FROM DATABASE:
+RULES:
+- Reply like a human chatting, NOT a report
+- Do NOT use labels like [ATTRACTION], [EVENT], etc.
+- Do NOT format responses as structured lists unless user asks
+- Keep answers short, natural, and conversational
+- Use the database context ONLY when relevant
+- If multiple places exist, mention them naturally in sentences
+- Always end with a simple follow-up question
+
+DATABASE CONTEXT:
 ${safeContext}
 
 USER: ${message}
+`
+  : `You are "Menya Rwanda Assistant", a friendly Rwanda tourism guide.
 
-Reply helpfully using the data above. Only use records relevant to the user's question. Ignore irrelevant records. Be friendly and organized. End with a follow-up question.`
-
-      : `You are "Menya Rwanda Assistant", a Rwanda tourism expert.
+RULES:
+- Reply like a natural conversation (like ChatGPT)
+- No structured formatting, no headers, no labels
+- Keep it simple and human
+- End with a follow-up question
 
 USER: ${message}
-
-Answer helpfully about Rwanda. Be warm, specific, and engaging. End with a follow-up question.`;
+`;
  console.log("🧠 Sending to Gemini...");
     // Step 3: Call Gemini with 45s timeout
     const response = await Promise.race([
