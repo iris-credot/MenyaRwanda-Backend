@@ -185,74 +185,83 @@ const retrieveAllDocs = async (query) => {
 
 const formatted = [];
 
-// ── Attractions (natural language) ─────────────────────────────
+// ── helper: natural sentence builder ─────────────────────────
+const joinSentence = (...parts) =>
+  parts.filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+
+// ── Attractions (story-style, not database-style) ───────────
 attractions.forEach((a) => {
   if (a.name || a.description) {
     formatted.push(
-      `${a.name || "A tourist attraction"} is located in ${
-        a.location || a.district || a.province || "Rwanda"
-      }. ${
-        a.description ||
-        "It is one of the interesting places to visit in Rwanda."
-      } ${
-        a.category ? `It is known for ${a.category}.` : ""
-      }`
+      joinSentence(
+        `${a.name || "This place"}`,
+        `is a beautiful attraction in`,
+        `${a.location || a.district || a.province || "Rwanda"}.`,
+        `${a.description || "It is worth visiting for its unique experience."}`,
+        a.category ? `It is especially known for ${a.category}.` : ""
+      )
     );
   }
 });
 
-// ── Events ─────────────────────────────────────────────────────
+// ── Events (natural + conversational) ───────────────────────
 events.forEach((e) => {
   if (e.title || e.description) {
     formatted.push(
-      `${e.title || "An event"} takes place in ${
-        e.location || "Rwanda"
-      } ${
-        e.date
-          ? `on ${new Date(e.date).toDateString()}`
-          : ""
-      }. ${e.description || ""}`
+      joinSentence(
+        `${e.title || "An event"}`,
+        `is happening in`,
+        `${e.location || "Rwanda"}`,
+        e.date ? `on ${new Date(e.date).toDateString()}.` : ".",
+        `${e.description || ""}`
+      )
     );
   }
 });
 
-// ── Food ───────────────────────────────────────────────────────
+// ── Food (descriptive, human tone) ──────────────────────────
 foods.forEach((f) => {
   if (f.name || f.description) {
     formatted.push(
-      `${f.name || "A local dish"} is a ${
-        f.category || "Rwandan food"
-      }. ${f.description || ""}`
+      joinSentence(
+        `${f.name || "A local dish"}`,
+        `is a popular`,
+        `${f.category || "Rwandan food"} in Rwanda.`,
+        `${f.description || ""}`
+      )
     );
   }
 });
 
-// ── Documents ──────────────────────────────────────────────────
+// ── Documents (clean informational sentence) ────────────────
 docs.forEach((d) => {
   if (d.title || d.content) {
     formatted.push(
-      `${d.title || "Information"}: ${d.content || ""}`
+      joinSentence(
+        `${d.title || "Information"}.`,
+        `${d.content || ""}`
+      )
     );
   }
 });
 
-// ── Reviews ────────────────────────────────────────────────────
+// ── Reviews (human voice preserved) ─────────────────────────
 reviews.forEach((r) => {
   if (r.comment) {
-    formatted.push(`A visitor said: "${r.comment}"`);
+    formatted.push(`Visitors often say: "${r.comment}"`);
   }
 });
 
-// ── Owners / Businesses ────────────────────────────────────────
+// ── Businesses (soft description, not label-like) ───────────
 owners.forEach((o) => {
   if (o.businessName) {
     formatted.push(
-      `${o.businessName} is a local business operating in Rwanda.`
+      `${o.businessName} is a trusted local business operating in Rwanda.`
     );
   }
 });
 
-// ── Users ──────────────────────────────────────────────────────
+// ── Users (natural community mention) ───────────────────────
 users.forEach((u) => {
   const displayName =
     u.names ||
@@ -261,14 +270,16 @@ users.forEach((u) => {
 
   if (displayName) {
     formatted.push(
-      `${displayName} is a community member${
-        u.bio ? `. ${u.bio}` : ""
-      }`
+      joinSentence(
+        `${displayName}`,
+        `is a community member in Rwanda.`,
+        u.bio ? `${u.bio}` : ""
+      )
     );
   }
 });
 
-// ── Favorites (important: convert to insight, not structure) ──
+// ── Favorites (INSIGHT instead of raw data) ─────────────────
 if (favorites.length > 0) {
   const popularityMap = {};
 
@@ -288,9 +299,7 @@ if (favorites.length > 0) {
     .slice(0, 5)
     .forEach((a) => {
       formatted.push(
-        `${a.name || "A place"} is one of the most popular attractions in Rwanda, favored by ${a.count} visitors. ${
-          a.description || ""
-        }`
+        `${a.name || "One of the top attractions"} is very popular among visitors in Rwanda, especially loved by ${a.count} people.`
       );
     });
 }
