@@ -9,6 +9,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.AUTH_PASS,
   },
 });
+console.log("Email:", process.env.AUTH_EMAIL);
+console.log("Pass length:", process.env.AUTH_PASS?.length);
 
 // Optional: verify connection once at startup
 transporter.verify((error, success) => {
